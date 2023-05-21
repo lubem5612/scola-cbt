@@ -1,0 +1,41 @@
+{
+    "name": "transave/scola-cbt",
+    "description": "A package for conducting computer based aptitude tests for applicants",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lubem Tser",
+            "email": "lubem@raadaa.com",
+            "homepage": "https://raadaa.com"
+        }
+    ],
+    "homepage": "https://github.com/transave/scola-cbt",
+    "keywords": ["Laravel", "ScolaCbt"],
+    "require": {
+        "illuminate/support": "~9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Transave\\ScolaCbt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Transave\\ScolaCbt\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Transave\\ScolaCbt\\ScolaCbtServiceProvider"
+            ],
+            "aliases": {
+                "ScolaCbt": "Transave\\ScolaCbt\\Facades\\ScolaCbt"
+            }
+        }
+    }
+}
