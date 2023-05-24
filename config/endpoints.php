@@ -1,9 +1,10 @@
 <?php
 
+
 return [
     "routes" => [
         'users' => [
-            'model' => \App\Models\User::class,
+            'model' => \Transave\ScolaCbt\Models\User::class,
             'rules' => [
                 'store' => [
                     'email' => 'required|email',
@@ -11,6 +12,25 @@ return [
                 ],
                 'update' => [
                     'name' => 'sometimes|string|max:60'
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => [],
+        ],
+
+        'students' => [
+            'model' => \Transave\ScolaCbt\Models\Student::class,
+            'rules' => [
+                'store' => [
+                    'user_id' => 'required|exists_users,id',
+                    'admission_number' => 'required|string',
+                ],
+                'update' => [
+                    'user_id' => 'required|exists_users,id',
+                    'admission_number' => 'required|string',
                 ]
             ],
             'order' => [
