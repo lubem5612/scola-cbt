@@ -3,9 +3,11 @@
 namespace Transave\ScolaCbt;
 
 use Illuminate\Support\ServiceProvider;
+use Transave\ScolaCbt\Helpers\PublishMigrations;
 
 class ScolaCbtServiceProvider extends ServiceProvider
 {
+    use PublishMigrations;
     /**
      * Perform post-registration booting of services.
      *
@@ -62,9 +64,10 @@ class ScolaCbtServiceProvider extends ServiceProvider
         ], 'cbt-config');
 
         // Publishing migrations
-        $this->publishes([
-            __DIR__.'/database/migrations' => database_path('migrations'),
-        ], 'cbt-migrations');
+        $this->registerMigrations(__DIR__.'/database/migrations');
+//        $this->publishes([
+//            __DIR__.'/database/migrations' => database_path('migrations'),
+//        ], 'cbt-migrations');
         
         // Publishing the views.
         /*$this->publishes([
