@@ -13,11 +13,7 @@
     "keywords": ["Laravel", "ScolaCbt"],
     "require": {
         "illuminate/contracts": "7.* || ^8.15 || 9.0 - 9.34 || ^9.36 || ^10.0",
-        "ext-json": "*",
-        "maatwebsite/excel": "^3.1",
-        "pusher/pusher-php-server": "^7.2",
-        "lorisleiva/laravel-actions": "^2.5",
-        "matthewbdaly/laravel-azure-storage": "^2.0"
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~9.0",
