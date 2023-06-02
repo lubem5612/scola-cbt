@@ -38,5 +38,9 @@
                 "ScolaCbt": "Transave\\ScolaCbt\\Facades\\ScolaCbt"
             }
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-f": "vendor/bin/phpunit --filter"
     }
 }
