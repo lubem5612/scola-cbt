@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Auth\Login;
+use Transave\ScolaCbt\Actions\Auth\Register;
 
 class AuthController extends Controller
 {
@@ -21,4 +22,10 @@ class AuthController extends Controller
         $response = (new Login($data))->execute();
         return $response;
     }
+
+    public function register(Request $request)
+    {
+        return (new Register())->handle($request);
+    }
+
 }
