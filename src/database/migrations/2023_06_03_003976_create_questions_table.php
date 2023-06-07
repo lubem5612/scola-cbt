@@ -12,17 +12,16 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->id();
-            $table->string('subject');
-            $table->string('question_type');
-            $table->integer('unit_score');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('exam_id')->constrained('exams')->cascadeOnDelete();
+            $table->string('question_type', 50);
+            $table->float('score_obtainable', 6, 2)->default(0)->index();
             $table->text('question');
-            $table->string('images')->nullable();
-            $table->json('answers');
-            $table->foreignId('exam_id')->constrained('exams');
+            $table->string('file', 700)->nullable();
+            $table->json('answers')->nullable();
             $table->timestamps();
 
-            $table->index(['subject_id']);
+            $table->index(['question_type']);
         });
     }
 
