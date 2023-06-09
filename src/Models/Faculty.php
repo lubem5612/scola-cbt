@@ -11,4 +11,10 @@ use Transave\ScolaCbt\Helpers\UUIDHelper;
 class Faculty extends Model
 {
     use HasFactory, UUIDHelper;
+
+    protected $table = 'faculties';
+
+    protected $guarded = [
+        "id"
+    ];
 }

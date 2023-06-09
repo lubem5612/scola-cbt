@@ -12,6 +12,8 @@ class Option extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = 'options';
+
     protected $guarded = [
         "id"
     ];

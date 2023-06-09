@@ -22,5 +22,6 @@ class SubjectModelTest extends TestCase
             ++$count;
         }
         $this->assertEquals(20, $count);
+
     }
 }

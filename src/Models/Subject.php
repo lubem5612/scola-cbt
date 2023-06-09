@@ -13,6 +13,8 @@ class Subject extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = "subjects";
+
     protected $guarded = [
         "id"
     ];

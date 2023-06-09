@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Transave\\ScolaCbt\\": "src/"
+            "Transave\\ScolaCbt\\": "src/",
+            "Transave\\ScolaCbt\\database\\factories\\": "/database/migrations"
         }
     },
     "autoload-dev": {
