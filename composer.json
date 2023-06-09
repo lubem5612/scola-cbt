@@ -21,13 +21,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Transave\\ScolaCbt\\": "src/"
+            "Transave\\ScolaCbt\\": "src/",
+            "Transave\\ScolaCbt\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Transave\\ScolaCbt\\Tests\\": "tests",
-            "Database\\Factories\\": "database/factories/"
+            "Transave\\ScolaCbt\\Tests\\": "tests"
         }
     },
     "extra": {

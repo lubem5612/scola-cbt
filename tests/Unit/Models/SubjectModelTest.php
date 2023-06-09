@@ -4,11 +4,14 @@
 namespace Transave\ScolaCbt\Tests\Unit\Models;
 
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase;
 use Transave\ScolaCbt\Models\Subject;
 
 class SubjectModelTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
