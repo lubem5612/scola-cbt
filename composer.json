@@ -26,7 +26,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Transave\\ScolaCbt\\Tests\\": "tests"
+            "Transave\\ScolaCbt\\Tests\\": "tests",
+            "Database\\Factories\\": "database/factories/"
         }
     },
     "extra": {
