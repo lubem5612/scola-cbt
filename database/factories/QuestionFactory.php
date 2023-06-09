@@ -1,6 +1,6 @@
 <?php
 
-namespace Transave\ScolaCbt\database\factories;
+namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Transave\ScolaCbt\Models\Exam;

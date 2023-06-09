@@ -29,6 +29,14 @@ return [
         6 => 'fill in questions',
         7 => 'diagram or chart questions',
         8 => 'audio or video questions',
+    ],
+
+    'user_type' => [
+        1 => 'student',
+        2 => 'staff',
+        3 => 'examiner',
+        4 => 'manager',
+        5 => 'admin'
     ]
 
 ];
