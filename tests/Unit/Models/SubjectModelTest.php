@@ -15,6 +15,11 @@ class SubjectModelTest extends TestCase
         parent::setUp();
     }
 
+    public function test_can_check_if_question_model_exists()
+    {
+        $this->assertTrue(class_exists(Subject::class), 'Subject model does not exist.');
+    }
+
     public function test_can_populate_subjects_table()
     {
         $count = 0;

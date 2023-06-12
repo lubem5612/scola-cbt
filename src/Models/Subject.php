@@ -25,8 +25,8 @@ class Subject extends Model
         return  $this->hasMany(Exam::class);
     }
 
-//    protected static function newFactory()
-//    {
-//        return SubjectFactory::new();
-//    }
+    protected static function newFactory()
+    {
+        return SubjectFactory::new();
+    }
 }
