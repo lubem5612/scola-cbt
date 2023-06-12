@@ -12,6 +12,8 @@ class Session extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = 'sessions';
+
     protected $guarded = [
         "id"
     ];
