@@ -2,8 +2,8 @@
 
 namespace Models;
 
-use Orchestra\Testbench\TestCase;
 use Transave\ScolaCbt\Models\Student;
+use Transave\ScolaCbt\Tests\TestCase;
 
 class StudentModelTest extends TestCase
 {

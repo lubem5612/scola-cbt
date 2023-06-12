@@ -2,8 +2,8 @@
 
 namespace Transave\ScolaCbt\Tests\Unit\Models;
 
-use Orchestra\Testbench\TestCase;
 use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Tests\TestCase;
 
 class UserModelTest extends TestCase
 {
