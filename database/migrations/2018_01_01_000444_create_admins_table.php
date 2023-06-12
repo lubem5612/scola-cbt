@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Transave\ScolaCbt\database\migrations;
 
 
-    use Illuminate\Database\Schema\Blueprint;
-    use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsTable
+class CreateAdminsTable
 {
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
 
@@ -21,7 +20,7 @@ class CreateStudentsTable
 
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('admins');
     }
-
 }
+
