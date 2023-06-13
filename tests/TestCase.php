@@ -6,7 +6,6 @@ namespace Transave\ScolaCbt\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Illuminate\Database\Eloquent\Factories\Factory as EloquentFactory;
 use Transave\ScolaCbt\ScolaCbtServiceProvider;
 
 class TestCase extends BaseTestCase
@@ -17,8 +16,6 @@ class TestCase extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->app->make(EloquentFactory::class)->load(__DIR__.'../database/factories');
-
         // additional setup
     }
 
