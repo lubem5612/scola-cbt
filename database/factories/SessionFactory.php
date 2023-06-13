@@ -1,19 +1,20 @@
 <?php
 
+
 namespace Transave\ScolaCbt\Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Department;
-use Transave\ScolaCbt\Models\Faculty;
 
-class DepartmentFactory extends Factory
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Transave\ScolaCbt\Models\Session;
+
+class SessionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Department::class;
+    protected $model = Session::class;
 
     /**
      * Define the model's default state.
@@ -23,8 +24,7 @@ class DepartmentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'faculty_id' => Faculty::factory(),
+            'name' => $this->faker->name
         ];
     }
 }

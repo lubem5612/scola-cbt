@@ -19,13 +19,12 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $data = $request->only(['email', 'password']);
-        $response = (new Login($data))->execute();
-        return $response;
+        return (new Login($data))->execute();
     }
 
     public function register(Request $request)
     {
-        return (new Register())->handle($request);
+        return (new Register($request->all()))->execute();
     }
 
 }

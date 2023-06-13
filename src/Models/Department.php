@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\DepartmentFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Department extends Model
@@ -18,4 +19,9 @@ class Department extends Model
         "id"
     ];
 
+
+    protected static function newFactory()
+    {
+        return DepartmentFactory::new();
+    }
 }

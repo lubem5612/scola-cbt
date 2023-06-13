@@ -4,6 +4,7 @@ namespace Transave\ScolaCbt\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\AdminFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Admin extends Model
@@ -19,4 +20,8 @@ class Admin extends Model
         return $this->belongsTo(User::class);
     }
 
+    protected static function newFactory()
+    {
+        return AdminFactory::new();
+    }
 }

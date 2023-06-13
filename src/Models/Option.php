@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\OptionFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Option extends Model
@@ -21,6 +22,12 @@ class Option extends Model
     public function question()
     {
         $this->belongsTo(Question::class);
+    }
+
+
+    protected static function newFactory()
+    {
+        return OptionFactory::new();
     }
 
 }

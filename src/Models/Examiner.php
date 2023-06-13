@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\ExaminerFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Examiner extends Model
@@ -21,4 +22,9 @@ class Examiner extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    protected static function newFactory()
+    {
+        return ExaminerFactory::new();
+    }
 }
