@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ManagesUsers;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Models\Staff;
+use Transave\ScolaCbt\Http\Models\Staff;
 
 class RegisterStaff
 {

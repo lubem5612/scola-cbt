@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ManagesUsers;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Models\Admin;
+use Transave\ScolaCbt\Http\Models\Admin;
 
 class RegisterAdmin
 {
