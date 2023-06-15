@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Actions\Auth;
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class RegisterUser
 {
@@ -42,7 +43,7 @@ class RegisterUser
 
     private function createUser()
     {
-        $user = \Transave\ScolaCbt\Models\User::query()->create($this->request);
+        $user = User::query()->create($this->request);
         return $this->sendSuccess($user, 'created successfully');
     }
 

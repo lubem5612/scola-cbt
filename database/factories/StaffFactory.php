@@ -1,22 +1,18 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Database\Factories;
 
-
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Transave\ScolaCbt\Http\Models\Student;
-use Transave\ScolaCbt\Http\Models\User;
+use Transave\ScolaCbt\Http\Models\Admin;
 
-class StudentFactory extends Factory
+class StaffFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Student::class;
+    protected $model = Admin::class;
 
     /**
      * Define the model's default state.

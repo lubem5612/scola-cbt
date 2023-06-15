@@ -1,24 +1,27 @@
 <?php
 
-namespace Transave\ScolaCbt\Models;
+namespace Transave\ScolaCbt\Http\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Transave\ScolaCbt\Database\Factories\ExamFactory;
+use Transave\ScolaCbt\Database\Factories\AdminFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
-class Exam extends Model
+class Admin extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = "exams";
-
     protected $guarded = [
-        'id'
+        "id"
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected static function newFactory()
     {
-        return ExamFactory::new();
+        return AdminFactory::new();
     }
 }

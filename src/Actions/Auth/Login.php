@@ -35,7 +35,7 @@ class Login
     {
         $isAuth = auth()->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
         if ($isAuth) {
-            $token = auth()->user()->createToken(uniqid())->plainTextToken;
+            $token = auth()->user()->createToken(uniqid())->accessToken;;
             return $this->sendSuccess($token, 'login successful');
         }
         return $this->sendError('authentication failed');

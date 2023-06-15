@@ -18,7 +18,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'transave');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'transave');
          $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-         $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
+         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -65,9 +65,9 @@ class ScolaCbtServiceProvider extends ServiceProvider
 
         // Publishing migrations
         $this->registerMigrations(__DIR__ . '/../database/migrations');
-//        $this->publishes([
-//            __DIR__.'/database/migrations' => database_path('migrations'),
-//        ], 'cbt-migrations');
+        $this->publishes([
+            __DIR__.'/../database/migrations' => database_path('migrations'),
+        ], 'cbt-migrations');
         
         // Publishing the views.
         /*$this->publishes([
@@ -87,4 +87,5 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // Registering package commands.
         // $this->commands([]);
     }
+
 }

@@ -2,9 +2,11 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Exam;
-use Transave\ScolaCbt\Models\User;
-use Carbon\Carbon;
+use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\Session;
+use Transave\ScolaCbt\Http\Models\Course;
+use Transave\ScolaCbt\Http\Models\User;
 
 class ExamFactory extends Factory
 {
@@ -14,22 +16,19 @@ class ExamFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'exam_type' => $this->faker->randomElement(['Graded', 'Mock']),
-            'session' => $this->faker->date(),
-            'semester' => $this->faker->randomElement(['First', 'Second']),
-            'total_score' => $this->faker->numberBetween(10, 100),
-            'faculty' => $this->faker->word,
-            'department' => $this->faker->word,
-            'level' => $this->faker->randomElement(['100', '200', '300', '400', '500', '600']),
-            'exam_mode' => $this->faker->randomElement(['Multiple Choice', 'Essay']),
-            'answer_type' => $this->faker->randomElement(['Multiple Choice', 'Essay']),
-            'duration' => $this->faker->time(),
-            'start_date' => $this->faker->dateTime(),
-            'end_date' => $this->faker->dateTime(),
-            'instruction' => $this->faker->sentence,
-            'venue' => $this->faker->word,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'course_id' => Course::factory(),
+            'department_id' => Department::factory(),
+            'session_id' => Session::factory(),
+            'semester' => $this->faker->randomElement(config('scola-cbt.semesters')),
+            'level' => $this->faker->randomElement(config('scola-cbt.levels')),
+            'exam_type' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
+            'max_score_obtainable' => 100,
+            'exam_mode' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
+            'duration' => $this->faker->randomDigit(),
+            'start_date' => $this->faker->time,
+            'end_date' => $this->faker->time,
+            'instruction' => $this->faker->sentence(20),
+            'venue' => $this->faker->city,
         ];
     }
 }

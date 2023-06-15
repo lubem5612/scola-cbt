@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Actions\Auth;
-
 
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ManagesUsers;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\Examiner;
+use Transave\ScolaCbt\Http\Models\Admin;
 
-class RegisterExaminer
+class RegisterAdmin
 {
+
     use ResponseHelper, ValidationHelper, ManagesUsers;
 
     private $request;
@@ -23,24 +22,25 @@ class RegisterExaminer
     public function execute()
     {
         try {
-            return $this->validateRequest()->uploadProfilePicture()->createExaminer();
+            return $this->validateRequest()->uploadProfilePicture()->createAdmin();
         }catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
     }
 
-    private function createExaminer()
+
+    private function createAdmin()
     {
         $response = $this->userRegistration($this->request);
         if (!$response['success']) {
-            return $this->sendError('error in creating user', ['message' => $response['message']]);
+            return $this->sendError('error in creating admin', ['message' => $response['message']]);
         }
 
-        $examinerData = Arr::except($this->request, ['first_name', 'last_name', 'email', 'role', 'password']);
-        $examinerData['user_id'] = $response['data']['id'];
-        $examiner = Examiner::query()->create($examinerData);
+        $adminData = Arr::except($this->request, ['first_name', 'last_name', 'email', 'role', 'password']);
+        $adminData['user_id'] = $response['data']['id'];
+        $admin = admin::query()->create($adminData);
 
-        return $this->sendSuccess($examiner->load('user'), 'examiner created successfully');
+        return $this->sendSuccess($admin->load('user'), 'admin created successfully');
     }
 
     private function uploadProfilePicture()
@@ -58,5 +58,4 @@ class RegisterExaminer
 
         return $this;
     }
-
 }

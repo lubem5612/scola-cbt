@@ -5,11 +5,11 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Subject;
+use Transave\ScolaCbt\Http\Models\Course;
 
-class SubjectFactory extends Factory
+class CourseFactory extends Factory
 {
-    protected $model = Subject::class;
+    protected $model = Course::class;
 
     /**
      * Define the model's default state.

@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Transave\ScolaCbt\Models;
+namespace Transave\ScolaCbt\Http\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\StudentFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Student extends Model
@@ -17,4 +18,10 @@ class Student extends Model
     protected $guarded = [
         "id"
     ];
+
+
+    protected static function newFactory()
+    {
+        return StudentFactory::new();
+    }
 }

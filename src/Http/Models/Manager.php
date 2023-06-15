@@ -1,14 +1,13 @@
 <?php
 
-
-namespace Transave\ScolaCbt\Models;
-
+namespace Transave\ScolaCbt\Http\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Transave\ScolaCbt\Database\Factories\ManagerFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
-class Examiner extends Model
+class Manager extends Model
 {
     use HasFactory, UUIDHelper;
 
@@ -21,4 +20,9 @@ class Examiner extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    protected static function newFactory()
+    {
+        return ManagerFactory::new();
+    }
 }

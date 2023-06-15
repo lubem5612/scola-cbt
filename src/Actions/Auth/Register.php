@@ -1,46 +1,57 @@
 <?php
+
+
 namespace Transave\ScolaCbt\Actions\Auth;
 
-use Illuminate\Http\Request;
+
+use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
-use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Models\User;
 
 class Register
 {
-    use  ResponseHelper, ValidationHelper;
+    use ResponseHelper;
+    private $request;
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
 
-    private Request $request;
-    private User $user;
-
-    public function handle(Request $request)
+    public function execute()
     {
         try {
-            return $this
-                ->setProperties($request)
-                ->createUser()
-                ->sendSuccess($this->user, 'registration successful');
-        }catch (\Exception $exception){
+            return $this->register();
+        }catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
     }
 
-    private function setProperties(Request $request) : self {
-        $this->request = $request;
-        return $this;
-    }
-
-    private function createUser() : self {
-        $this->user = new User;
-        $this->user->fill([
-            'first_name' => $this->request->input('first_name'),
-            'last_name' => $this->request->input('last_name'),
-            'email' => $this->request->input('email'),
-            'password' => bcrypt($this->request->input('password')),
-            'role' => 'student',
-        ]);
-        $this->user->save();
-
-        return $this;
+    private function register()
+    {
+        if (Arr::has($this->request, 'role')) {
+            switch ($this->request['role']) {
+                case 'admin' : {
+                    return (new RegisterAdmin($this->request))->execute();
+                    break;
+                }
+                case 'examiner' : {
+                    return (new RegisterExaminer($this->request))->execute();
+                    break;
+                }
+                case 'manager' : {
+                    return (new RegisterManager($this->request))->execute();
+                    break;
+                }
+                case 'staff' : {
+                    return (new RegisterStaff($this->request))->execute();
+                    break;
+                }
+                default : {
+                    abort(501, 'user type not allowed');
+                    break;
+                }
+            }
+        }else {
+            return (new RegisterStudent($this->request))->execute();
+        }
     }
 }

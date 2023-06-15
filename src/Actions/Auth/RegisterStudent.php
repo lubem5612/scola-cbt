@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Actions\Auth;
-
 
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ManagesUsers;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\Examiner;
+use Transave\ScolaCbt\Http\Models\Student;
 
-class RegisterExaminer
+class RegisterStudent
 {
+
     use ResponseHelper, ValidationHelper, ManagesUsers;
 
     private $request;
@@ -23,24 +22,25 @@ class RegisterExaminer
     public function execute()
     {
         try {
-            return $this->validateRequest()->uploadProfilePicture()->createExaminer();
+            return $this->validateRequest()->uploadProfilePicture()->createStudent();
         }catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
     }
 
-    private function createExaminer()
+
+    private function createStudent()
     {
         $response = $this->userRegistration($this->request);
         if (!$response['success']) {
-            return $this->sendError('error in creating user', ['message' => $response['message']]);
+            return $this->sendError('error in creating student', ['message' => $response['message']]);
         }
 
-        $examinerData = Arr::except($this->request, ['first_name', 'last_name', 'email', 'role', 'password']);
-        $examinerData['user_id'] = $response['data']['id'];
-        $examiner = Examiner::query()->create($examinerData);
+        $studentData = Arr::except($this->request, ['first_name', 'last_name', 'email', 'role', 'password']);
+        $studentData['user_id'] = $response['data']['id'];
+        $student = Student::query()->create($studentData);
 
-        return $this->sendSuccess($examiner->load('user'), 'examiner created successfully');
+        return $this->sendSuccess($student->load('user'), 'student created successfully');
     }
 
     private function uploadProfilePicture()
@@ -58,5 +58,4 @@ class RegisterExaminer
 
         return $this;
     }
-
 }
