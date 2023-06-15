@@ -2,7 +2,7 @@
 
 namespace Transave\ScolaCbt\Tests\Unit\Models;
 
-use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
 class UserModelTest extends TestCase

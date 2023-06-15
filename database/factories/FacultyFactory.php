@@ -3,7 +3,7 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Faculty;
+use Transave\ScolaCbt\Http\Models\Faculty;
 
 class FacultyFactory extends Factory
 {

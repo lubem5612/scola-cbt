@@ -3,8 +3,8 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Department;
-use Transave\ScolaCbt\Models\Faculty;
+use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Faculty;
 
 class DepartmentFactory extends Factory
 {

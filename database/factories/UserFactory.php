@@ -6,7 +6,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Http\Models\User;
 
 class UserFactory extends Factory
 {

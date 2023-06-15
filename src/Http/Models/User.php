@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Transave\ScolaCbt\Models;
+namespace Transave\ScolaCbt\Http\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

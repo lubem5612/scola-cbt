@@ -5,7 +5,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Session;
+use Transave\ScolaCbt\http\Models\Session;
 
 class SessionFactory extends Factory
 {

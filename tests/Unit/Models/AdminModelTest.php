@@ -5,8 +5,8 @@ namespace Transave\ScolaCbt\Tests\Unit\Models;
 
 
 use Faker\Factory;
-use Transave\ScolaCbt\Models\Admin;
-use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Http\Models\Admin;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
 class AdminModelTest extends TestCase
@@ -36,7 +36,7 @@ class AdminModelTest extends TestCase
             ]))
             ->create();
         $admin = Admin::query()->inRandomOrder()->first();
-        $this->assertEquals(count($admins), 3);
+        $this->assertCount(3, $admins);
         $this->assertTrue($admin->user instanceof User);
     }
 }

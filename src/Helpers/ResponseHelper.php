@@ -71,7 +71,7 @@ trait ResponseHelper
         $response = [
             "success" => false,
             "message" => $exception->getMessage(),
-            "status" => "error",
+            "data" => [],
             "errors" => $exception->getTrace(),
         ];
         Log::error($exception->getTraceAsString());

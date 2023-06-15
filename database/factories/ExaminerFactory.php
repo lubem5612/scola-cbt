@@ -3,7 +3,7 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Examiner;
+use Transave\ScolaCbt\Http\Models\Examiner;
 
 class ExaminerFactory extends Factory
 {

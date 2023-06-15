@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
@@ -14,6 +15,10 @@ Route::group(['prefix' => 'cbt', 'middleware' => ['api']], function() use($prefi
     });
 
     //other public routes here
+    Route::as('cbt.')->group(function() {
+        Route::post('login', [ AuthController::class, 'login'])->name('login');
+        Route::post('register', [ AuthController::class, 'register'])->name('register');
+    });
 
 });
 

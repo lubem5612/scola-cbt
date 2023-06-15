@@ -37,6 +37,11 @@ return [
         3 => 'examiner',
         4 => 'manager',
         5 => 'admin'
-    ]
+    ],
+
+    'route' => [
+        'prefix' => 'cbt',
+        'middleware' => 'api',
+    ],
 
 ];

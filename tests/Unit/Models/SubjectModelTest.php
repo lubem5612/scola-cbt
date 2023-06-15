@@ -5,7 +5,7 @@ namespace Transave\ScolaCbt\Tests\Unit\Models;
 
 
 use Transave\ScolaCbt\Tests\TestCase;
-use Transave\ScolaCbt\Models\Course;
+use Transave\ScolaCbt\Http\Models\Course;
 
 class SubjectModelTest extends TestCase
 {

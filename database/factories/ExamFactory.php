@@ -2,11 +2,11 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Department;
-use Transave\ScolaCbt\Models\Exam;
-use Transave\ScolaCbt\Models\Session;
-use Transave\ScolaCbt\Models\Course;
-use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\Session;
+use Transave\ScolaCbt\Http\Models\Course;
+use Transave\ScolaCbt\Http\Models\User;
 
 class ExamFactory extends Factory
 {

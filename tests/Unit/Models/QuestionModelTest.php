@@ -2,7 +2,7 @@
 
 namespace Models;
 
-use Transave\ScolaCbt\Models\Question;
+use Transave\ScolaCbt\Http\Models\Question;
 use Transave\ScolaCbt\Tests\TestCase;
 
 class QuestionModelTest extends TestCase

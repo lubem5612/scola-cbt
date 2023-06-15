@@ -3,8 +3,8 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Exam;
-use Transave\ScolaCbt\Models\Question;
+use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\Question;
 
 class QuestionFactory extends Factory
 {

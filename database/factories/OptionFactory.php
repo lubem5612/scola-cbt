@@ -3,7 +3,7 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Option;
+use Transave\ScolaCbt\Http\Models\Option;
 
 class OptionFactory extends Factory
 {

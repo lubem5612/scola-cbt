@@ -1,27 +1,33 @@
 <?php
 
 
-namespace Transave\ScolaCbt\Models;
+namespace Transave\ScolaCbt\Http\Models;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Transave\ScolaCbt\Database\Factories\FacultyFactory;
+use Transave\ScolaCbt\Database\Factories\OptionFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
-class Faculty extends Model
+class Option extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = 'faculties';
+    protected $table = 'options';
 
     protected $guarded = [
         "id"
     ];
 
+    public function question()
+    {
+        $this->belongsTo(Question::class);
+    }
+
 
     protected static function newFactory()
     {
-        return FacultyFactory::new();
+        return OptionFactory::new();
     }
+
 }

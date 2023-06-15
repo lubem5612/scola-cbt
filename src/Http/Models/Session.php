@@ -1,31 +1,27 @@
 <?php
 
-namespace Transave\ScolaCbt\Models;
+
+namespace Transave\ScolaCbt\Http\Models;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Transave\ScolaCbt\Database\Factories\StaffFactory;
+use Transave\ScolaCbt\Database\Factories\SessionFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
-class Staff extends Model
+class Session extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = 'staff';
+    protected $table = 'sessions';
 
     protected $guarded = [
         "id"
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
 
     protected static function newFactory()
     {
-        return StaffFactory::new();
+        return SessionFactory::new();
     }
-
 }

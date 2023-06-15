@@ -3,8 +3,8 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Admin;
-use Transave\ScolaCbt\Models\User;
+use Transave\ScolaCbt\Http\Models\Admin;
+use Transave\ScolaCbt\Http\Models\User;
 
 class AdminFactory extends Factory
 {
@@ -22,9 +22,8 @@ class AdminFactory extends Factory
      */
     public function definition()
     {
-        $user = User::factory()->create();
         return [
-            'user_id' => $user->id,
+            'user_id' => User::factory(),
             'address' => $this->faker->address,
             'next_of_kin' => $this->faker->name,
             'highest_qualification' => $this->faker->word,

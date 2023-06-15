@@ -5,7 +5,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Models\Course;
+use Transave\ScolaCbt\Http\Models\Course;
 
 class CourseFactory extends Factory
 {
