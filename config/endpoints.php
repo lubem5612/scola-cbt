@@ -4,7 +4,7 @@
 return [
     "routes" => [
         'users' => [
-            'model' => \Transave\ScolaCbt\Models\User::class,
+            'model' => \Transave\ScolaCbt\Http\Models\User::class,
             'rules' => [
                 'store' => [
                     'email' => 'required|email',
