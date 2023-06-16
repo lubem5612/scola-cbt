@@ -4,6 +4,7 @@
 namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Helpers\RestFulAPIHelper;
+use function Illuminate\Routing\Controllers\except;
 
 
 class RestfulAPIController extends Controller
@@ -13,7 +14,7 @@ class RestfulAPIController extends Controller
     public function __construct()
     {
         $this->api = new RestFulAPIHelper();
-
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
 
     public function index(Request $request, $endpoint)

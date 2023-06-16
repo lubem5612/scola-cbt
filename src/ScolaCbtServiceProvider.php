@@ -2,6 +2,7 @@
 
 namespace Transave\ScolaCbt;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 
@@ -18,7 +19,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'transave');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'transave');
          $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+         $this->registerRoutes();
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
@@ -87,5 +88,21 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // Registering package commands.
         // $this->commands([]);
     }
+
+    protected function registerRoutes()
+    {
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
+    }
+
+    protected function routeConfiguration()
+    {
+        return [
+            'prefix' => config('scola-cbt.route.prefix'),
+            'middleware' => config('scola-cbt.route.middleware'),
+        ];
+    }
+
 
 }

@@ -4,9 +4,12 @@
 namespace Transave\ScolaCbt\Actions\Auth;
 
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class Login
 {
@@ -33,12 +36,17 @@ class Login
 
     private function authenticateUser()
     {
-        $isAuth = auth()->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
-        if ($isAuth) {
-            $token = auth()->user()->createToken(uniqid())->accessToken;;
-            return $this->sendSuccess($token, 'login successful');
+        $user = User::query()->where($this->username, $this->data['email'])->first();
+        if (empty($user)) {
+            return $this->sendError('user not found', [], 404);
         }
-        return $this->sendError('authentication failed');
+        if (!Hash::check($this->data['password'], $user->password)) {
+            return $this->sendError('password does not match user', [], 404);
+        }
+
+        if (method_exists(Auth::class, 'login')) Auth::login($user, true);
+        $token = $user->createToken(uniqid())->plainTextToken;
+        return $this->sendSuccess($token, 'login successful');
     }
 
     private function username()
