@@ -41,7 +41,7 @@ class Login
             $token = auth()->guard('api')->user()->createToken(uniqid())->plainTextToken;
             return $this->sendSuccess($token, 'login successful');
         }
-        return $this->sendError('authentication failed');
+        return $this->sendError('authentication failed', [], 401);
     }
 
     private function username()
