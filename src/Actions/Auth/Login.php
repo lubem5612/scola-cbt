@@ -36,25 +36,12 @@ class Login
 
     private function authenticateUser()
     {
-        $isAuth = auth()->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
+        $isAuth = auth()->guard('api')->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
         if ($isAuth) {
-            $token = auth()->user()->createToken(uniqid())->plainTextToken;
+            $token = auth()->guard('api')->user()->createToken(uniqid())->plainTextToken;
             return $this->sendSuccess($token, 'login successful');
         }
         return $this->sendError('authentication failed');
-
-//        $user = User::query()->where($this->username, $this->data['email'])->first();
-//        if (empty($user)) {
-//            return $this->sendError('user not found', [], 404);
-//        }
-//        if (!Hash::check($this->data['password'], $user->password)) {
-//            return $this->sendError('password does not match user', [], 404);
-//        }
-//
-//        if (method_exists(Auth::class, 'login'))
-//            Auth::login($user, true);
-//        $token = $user->createToken(uniqid())->plainTextToken;
-//        return $this->sendSuccess($token, 'login successful');
     }
 
     private function username()

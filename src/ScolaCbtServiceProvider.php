@@ -28,13 +28,18 @@ class ScolaCbtServiceProvider extends ServiceProvider
             $this->bootForConsole();
         }
 
+        Config::set('auth.defaults', [
+            'guard' => 'api',
+            'passwords' => 'users',
+        ]);
+
         Config::set('auth.guards.api', [
-            'driver' => 'token',
+            'driver' => 'session',
             'provider' => 'users',
             'hash' => false,
         ]);
 
-        Config::set('auth.providers.api', [
+        Config::set('auth.providers.users', [
             'driver' => 'eloquent',
             'model' => User::class,
         ]);
