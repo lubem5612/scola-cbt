@@ -2,9 +2,11 @@
 
 namespace Transave\ScolaCbt;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
+use Transave\ScolaCbt\Http\Models\User;
 
 class ScolaCbtServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,17 @@ class ScolaCbtServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+
+        Config::set('auth.guards.api', [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ]);
+
+        Config::set('auth.providers.api', [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ]);
     }
 
     /**

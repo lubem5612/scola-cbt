@@ -36,17 +36,25 @@ class Login
 
     private function authenticateUser()
     {
-        $user = User::query()->where($this->username, $this->data['email'])->first();
-        if (empty($user)) {
-            return $this->sendError('user not found', [], 404);
+        $isAuth = auth()->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
+        if ($isAuth) {
+            $token = auth()->user()->createToken(uniqid())->plainTextToken;
+            return $this->sendSuccess($token, 'login successful');
         }
-        if (!Hash::check($this->data['password'], $user->password)) {
-            return $this->sendError('password does not match user', [], 404);
-        }
+        return $this->sendError('authentication failed');
 
-        if (method_exists(Auth::class, 'login')) Auth::login($user, true);
-        $token = $user->createToken(uniqid())->plainTextToken;
-        return $this->sendSuccess($token, 'login successful');
+//        $user = User::query()->where($this->username, $this->data['email'])->first();
+//        if (empty($user)) {
+//            return $this->sendError('user not found', [], 404);
+//        }
+//        if (!Hash::check($this->data['password'], $user->password)) {
+//            return $this->sendError('password does not match user', [], 404);
+//        }
+//
+//        if (method_exists(Auth::class, 'login'))
+//            Auth::login($user, true);
+//        $token = $user->createToken(uniqid())->plainTextToken;
+//        return $this->sendSuccess($token, 'login successful');
     }
 
     private function username()
