@@ -41,7 +41,7 @@ return [
 
     'route' => [
         'prefix' => 'cbt',
-        'middleware' => 'api',
+        'middleware' => 'web',
     ],
 
 ];

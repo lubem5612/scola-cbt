@@ -3,6 +3,7 @@
 namespace Transave\ScolaCbt;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 use Transave\ScolaCbt\Http\Models\User;
@@ -17,26 +18,31 @@ class ScolaCbtServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Config::set('auth.guards.api', [
-            'driver' => 'passport',
-            'provider' => 'users',
-        ]);
-
-        // Will use the EloquentUserProvider driver with the Admin model
-        Config::set('auth.providers.users', [
-            'driver' => 'eloquent',
-            'model' => User::class
-        ]);
-
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'transave');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'transave');
          $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+         $this->registerRoutes();
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+
+        Config::set('auth.defaults', [
+            'guard' => 'api',
+            'passwords' => 'users',
+        ]);
+
+        Config::set('auth.guards.api', [
+            'driver' => 'session',
+            'provider' => 'users',
+            'hash' => false,
+        ]);
+
+        Config::set('auth.providers.users', [
+            'driver' => 'eloquent',
+            'model' => User::class,
+        ]);
     }
 
     /**
@@ -100,5 +106,21 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // Registering package commands.
         // $this->commands([]);
     }
+
+    protected function registerRoutes()
+    {
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
+    }
+
+    protected function routeConfiguration()
+    {
+        return [
+            'prefix' => config('scola-cbt.route.prefix'),
+            'middleware' => config('scola-cbt.route.middleware'),
+        ];
+    }
+
 
 }

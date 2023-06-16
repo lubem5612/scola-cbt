@@ -4,7 +4,7 @@
 namespace Transave\ScolaCbt\Tests\Feature\Auth;
 
 
-use Laravel\Passport\Passport;
+use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
@@ -25,7 +25,7 @@ class LoginTest extends TestCase
         ]);
 
         $loginData = ['email' => 'sampledata@test.com', 'password' => 'sample1234'];
-        Passport::actingAs($user);
+        Sanctum::actingAs($user);
 
         $this->json('POST', 'cbt/login', $loginData, ['Accept' => 'application/json'])
             ->assertStatus(200)

@@ -7,28 +7,22 @@ use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
-
-Route::group(['prefix' => 'cbt', 'middleware' => ['web']], function() use($prefix){
-    Route::group(['prefix' => $prefix], function () {
-        Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
-        Route::get('{endpoint}/{id}', [RestfulAPIController::class, 'show']);
-    });
-
-    //other public routes here
-    Route::as('cbt.')->group(function() {
-        Route::post('login', [ AuthController::class, 'login'])->name('login');
-        Route::post('register', [ AuthController::class, 'register'])->name('register');
-    });
-
+/**
+ |
+ | General routes for RestFul Controller
+ | Examples: GET:/cbt/general/sessions, GET:/cbt/general/sessions/1, POST:/cbt/general/sessions,
+ | PATCH:/cbt/general/sessions/3, DELETE:/cbt/general/sessions/2
+ |
+ */
+Route::prefix($prefix)->as('cbt.')->group(function() {
+    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
+    Route::get('{endpoint}/{id}', [RestfulAPIController::class, 'show']);
+    Route::post('{endpoint}', [RestfulAPIController::class, 'store']);
+    Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [RestfulAPIController::class, 'update']);
+    Route::delete('{endpoint}/{id}', [RestfulAPIController::class, 'destroy']);
 });
 
-Route::group(['prefix' => 'api', 'middleware' => ['web']], function() use($prefix){
-    Route::group(['prefix' => $prefix], function () {
-        Route::post('{endpoint}', [RestfulAPIController::class, 'store']);
-        Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [RestfulAPIController::class, 'update']);
-        Route::delete('{endpoint}/{id}', [RestfulAPIController::class, 'destroy']);
-    });
-
-    //other secured routes here
-
+Route::as('cbt.')->group(function () {
+    Route::post('login', [ AuthController::class, 'login'])->name('login');
+    Route::post('register', [ AuthController::class, 'register'])->name('register');
 });

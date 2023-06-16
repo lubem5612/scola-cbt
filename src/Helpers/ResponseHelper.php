@@ -72,9 +72,21 @@ trait ResponseHelper
             "success" => false,
             "message" => $exception->getMessage(),
             "data" => [],
-            "errors" => $exception->getTraceAsString(),
+            "errors" => $this->formatServerError($exception),
         ];
         Log::error($exception->getTraceAsString());
         return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
+    }
+
+    private function formatServerError(\Exception $e)
+    {
+        $errors = [];
+        foreach ($e->getTrace() as $error) {
+            if ($error['line'] && $error['file']) {
+                $message = "error on line {$error['line']} in the file {$error['file']}";
+                array_push($errors, $message);
+            }
+        }
+        return $errors;
     }
 }

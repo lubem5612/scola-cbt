@@ -4,11 +4,12 @@
 namespace Transave\ScolaCbt\Actions\Auth;
 
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Auth;
-use Laravel\Passport\HasApiTokens;
+use Transave\ScolaCbt\Http\Models\User;
 
 class Login
 {
@@ -37,7 +38,7 @@ class Login
     {
         $isAuth = auth()->guard('api')->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
         if ($isAuth) {
-            $token = auth()->guard('api')->user()->createToken(uniqid())->accessToken;;
+            $token = auth()->guard('api')->user()->createToken(uniqid())->plainTextToken;
             return $this->sendSuccess($token, 'login successful');
         }
         return $this->sendError('authentication failed');
