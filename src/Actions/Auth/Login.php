@@ -35,9 +35,9 @@ class Login
 
     private function authenticateUser()
     {
-        $isAuth = Auth::attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
+        $isAuth = auth()->guard('api')->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
         if ($isAuth) {
-            $token = Auth::user()->createToken(uniqid())->accessToken;;
+            $token = auth()->guard('api')->user()->createToken(uniqid())->accessToken;;
             return $this->sendSuccess($token, 'login successful');
         }
         return $this->sendError('authentication failed');

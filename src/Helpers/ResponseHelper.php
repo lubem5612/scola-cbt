@@ -72,7 +72,7 @@ trait ResponseHelper
             "success" => false,
             "message" => $exception->getMessage(),
             "data" => [],
-            "errors" => $exception->getTrace(),
+            "errors" => $exception->getTraceAsString(),
         ];
         Log::error($exception->getTraceAsString());
         return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
