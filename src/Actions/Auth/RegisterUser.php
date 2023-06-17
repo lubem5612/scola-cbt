@@ -4,15 +4,18 @@
 namespace Transave\ScolaCbt\Actions\Auth;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\User;
+use Transave\ScolaCbt\Http\Notifications\WelcomeNotification;
 
 class RegisterUser
 {
     use ValidationHelper, ResponseHelper;
-    private $request;
+    private $request, $user;
 
     public function __construct(array  $request)
     {
@@ -22,7 +25,14 @@ class RegisterUser
     public function execute()
     {
         try{
-            return $this->validateRequest()->setUserPassword()->setUserRole()->createUser();
+            return $this
+                ->validateRequest()
+                ->setUserPassword()
+                ->setUserRole()
+                ->setVerificationToken()
+                ->sendNotification()
+                ->createUser()
+                ->buildResponse('created successfully', true, $this->user);
         }catch (\Exception $exception){
             return $this->sendServerError($exception);
         }
@@ -36,15 +46,40 @@ class RegisterUser
 
     private function setUserRole() :self
     {
-        if (!Arr::exists($this->request, 'role')) {
+        if (array_key_exists('role', $this->request)) {
             $this->request['role'] = 'student';
         }
+        return $this;
     }
 
     private function createUser()
     {
-        $user = User::query()->create($this->request);
-        return $this->sendSuccess($user, 'created successfully');
+        $inputs = Arr::only($this->request, ['email', 'password', 'first_name', 'last_name', 'role']);
+        $this->user = User::query()->create($inputs);
+        if (empty($this->user)) {
+            return $this->buildResponse('failed in creating user', false, null);
+        }
+        return $this;
+    }
+
+    private function setVerificationToken() : self
+    {
+        $this->request['token'] = rand(100000, 999999);
+        $this->request['email_verified_at'] = Carbon::now();
+        return $this;
+    }
+
+    private function sendNotification()
+    {
+        try {
+            Notification::route('mail', $this->user->email)
+                ->notify(new WelcomeNotification([
+                    "token" => $this->request['token'],
+                    "user" => $this->user
+                ]));
+        } catch (\Exception $exception) {
+        }
+        return $this;
     }
 
     private function validateRequest() : self

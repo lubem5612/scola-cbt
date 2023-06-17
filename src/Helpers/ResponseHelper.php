@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Helpers;
 
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 trait ResponseHelper
 {
@@ -40,6 +41,7 @@ trait ResponseHelper
         $response = [
             'success' => false,
             'message' => $error,
+            'data' => null
         ];
 
         if(!empty($errorMessages)){
@@ -68,12 +70,21 @@ trait ResponseHelper
 
     public function sendServerError(\Exception $exception, $code=500)
     {
-        $response = [
-            "success" => false,
-            "message" => $exception->getMessage(),
-            "data" => [],
-            "errors" => $this->formatServerError($exception),
-        ];
+        if ($this->isValidationError($exception)) {
+            $response = [
+                "success" => false,
+                "message" => "Validation error",
+                "data" => null,
+                "errors" => $exception->getMessage(),
+            ];
+        }else {
+            $response = [
+                "success" => false,
+                "message" => $exception->getMessage(),
+                "data" => null,
+                "errors" => $this->formatServerError($exception),
+            ];
+        }
         Log::error($exception->getTraceAsString());
         return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
     }
@@ -88,5 +99,11 @@ trait ResponseHelper
             }
         }
         return $errors;
+    }
+
+    private function isValidationError($exception)
+    {
+        $errorASString = implode(',', $this->formatServerError($exception));
+        return Str::contains($errorASString, 'ValidationHelper.php');
     }
 }

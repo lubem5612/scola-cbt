@@ -3,7 +3,7 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Transave\ScolaCbt\Http\Models\Admin;
+use Transave\ScolaCbt\Http\Models\Staff;
 
 class StaffFactory extends Factory
 {
@@ -12,7 +12,7 @@ class StaffFactory extends Factory
      *
      * @var string
      */
-    protected $model = Admin::class;
+    protected $model = Staff::class;
 
     /**
      * Define the model's default state.

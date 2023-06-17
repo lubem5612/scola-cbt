@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Helpers;
 
 
 
+
 use Illuminate\Support\Facades\Validator;
 
 trait ValidationHelper
@@ -17,10 +18,7 @@ trait ValidationHelper
     protected function validate(array $input, array $rules)
     {
         $validator = Validator::make($input, $rules);
-        if ($validator->fails()) {
-            abort(response()->json(['message' => 'validation failed', 'errors' => $validator->errors()], 422));
-        }else {
-            return;
-        }
+        abort_if($validator->fails(), 422, response()->json($validator->errors())->getContent());
     }
+
 }

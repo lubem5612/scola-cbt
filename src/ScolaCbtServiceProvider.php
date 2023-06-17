@@ -19,7 +19,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'transave');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'transave');
+         $this->loadViewsFrom(__DIR__.'/../resources/views', 'cbt');
          $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
          $this->registerRoutes();
 
@@ -89,9 +89,9 @@ class ScolaCbtServiceProvider extends ServiceProvider
         ], 'cbt-migrations');
         
         // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/transave'),
-        ], 'scola-cbt.views');*/
+        $this->publishes([
+            __DIR__.'/../resources/views' => base_path('resources/views/vendor/cbt'),
+        ], 'views');
 
         // Publishing assets.
         /*$this->publishes([

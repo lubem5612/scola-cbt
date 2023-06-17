@@ -5,8 +5,12 @@ namespace Transave\ScolaCbt\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Transave\ScolaCbt\Actions\Auth\ForgotPassword;
 use Transave\ScolaCbt\Actions\Auth\Login;
 use Transave\ScolaCbt\Actions\Auth\Register;
+use Transave\ScolaCbt\Actions\Auth\ResendEmailVerification;
+use Transave\ScolaCbt\Actions\Auth\ResetPassword;
+use Transave\ScolaCbt\Actions\Auth\VerifyEmail;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 
 class AuthController extends Controller
@@ -73,6 +77,28 @@ class AuthController extends Controller
         }catch (\Exception $e) {
             return $this->sendServerError($e);
         }
+    }
+
+    /**
+     * Verify created account
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     */
+    public function verifyEmail(Request $request)
+    {
+        return (new VerifyEmail($request->all()))->execute();
+    }
+
+    /**
+     * Resend account verification token for auth user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     */
+    public function resendToken(Request $request)
+    {
+        return (new ResendEmailVerification($request->user()))->execute();
     }
 
 }
