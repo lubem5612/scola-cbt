@@ -2,19 +2,24 @@
 
 namespace Transave\ScolaCbt;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
+use Transave\ScolaCbt\Http\Middlewares\AllowIfAdmin;
+use Transave\ScolaCbt\Http\Middlewares\VerifiedAccount;
 use Transave\ScolaCbt\Http\Models\User;
 
 class ScolaCbtServiceProvider extends ServiceProvider
 {
     use PublishMigrations;
+
     /**
      * Perform post-registration booting of services.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function boot(): void
     {
@@ -43,6 +48,11 @@ class ScolaCbtServiceProvider extends ServiceProvider
             'driver' => 'eloquent',
             'model' => User::class,
         ]);
+
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('admin', AllowIfAdmin::class);
+        $router->aliasMiddleware('verify', VerifiedAccount::class);
+
     }
 
     /**

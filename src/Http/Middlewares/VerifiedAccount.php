@@ -7,15 +7,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 
-class AllowIfAdmin
+class VerifiedAccount
 {
     use ResponseHelper;
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
-        if (!empty($user) && $user->role == 'admin') {
+        if (!empty($user) && $user->is_verified) {
             return $next($request);
         }
-        return $this->sendError('you must log in as admin to perform this operation', [], 401);
+        return $this->sendError('you must verify your account to perform this operation', [], 401);
     }
 }
