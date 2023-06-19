@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Http\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Transave\ScolaCbt\Database\Factories\OptionFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
@@ -19,9 +20,9 @@ class Option extends Model
         "id"
     ];
 
-    public function question()
+    public function question() : BelongsTo
     {
-        $this->belongsTo(Question::class);
+        return $this->belongsTo(Question::class);
     }
 
 

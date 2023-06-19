@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
+use Transave\ScolaCbt\Http\Controllers\SearchController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
@@ -15,11 +16,19 @@ $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'gene
  |
  */
 Route::prefix($prefix)->as('cbt.')->group(function() {
-    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
+//    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
     Route::get('{endpoint}/{id}', [RestfulAPIController::class, 'show']);
     Route::post('{endpoint}', [RestfulAPIController::class, 'store']);
     Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [RestfulAPIController::class, 'update']);
     Route::delete('{endpoint}/{id}', [RestfulAPIController::class, 'destroy']);
+});
+
+Route::prefix('general')->as('cbt.')->group(function () {
+    Route::get('sessions', [SearchController::class, 'indexSessions'])->name('sessions');
+    Route::get('faculties', [SearchController::class, 'indexFaculties'])->name('faculties');
+    Route::get('departments', [SearchController::class, 'indexDepartments'])->name('departments');
+    Route::get('question-options', [SearchController::class, 'indexQuestionOptions'])->name('options');
+    Route::get('courses', [SearchController::class, 'indexCourses'])->name('courses');
 });
 
 Route::as('cbt.')->group(function () {

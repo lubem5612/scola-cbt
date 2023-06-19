@@ -17,14 +17,14 @@ class Question extends Model
         'id'
     ];
 
-    public function Exam()
+    public function exam()
     {
         return $this->belongsTo(Exam::class);
     }
 
     public function options()
     {
-        return $this->hasMany(Option::class);
+        return $this->hasMany(Option::class, 'question_id', 'id');
     }
 
 

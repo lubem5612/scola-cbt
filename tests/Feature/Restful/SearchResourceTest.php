@@ -6,12 +6,16 @@ namespace Transave\ScolaCbt\Tests\Feature\Restful;
 
 use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
+use Transave\ScolaCbt\Http\Models\Course;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Faculty;
+use Transave\ScolaCbt\Http\Models\Option;
 use Transave\ScolaCbt\Http\Models\Question;
+use Transave\ScolaCbt\Http\Models\Session;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
-class CreateResourceTest extends TestCase
+class SearchResourceTest extends TestCase
 {
     private $user, $faker;
     public function setUp(): void
@@ -24,13 +28,10 @@ class CreateResourceTest extends TestCase
 
     /** @test */
 
-    function can_create_session()
+    function can_get_sessions()
     {
-        $data = [
-            'name' => $this->faker->name,
-            'is_active' => $this->faker->randomElement(['no', 'yes'])
-        ];
-        $response = $this->json('POST', '/cbt/general/sessions', $data, ['Accept' => 'application/json']);
+        Session::factory()->count(10)->create();
+        $response = $this->json('GET', '/cbt/general/sessions');
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
@@ -39,12 +40,10 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_faculty()
+    function can_get_faculties()
     {
-        $data = [
-            'name' => $this->faker->name
-        ];
-        $response = $this->json('POST', '/cbt/general/faculties', $data, ['Accept' => 'application/json']);
+        Faculty::factory()->count(10)->create();
+        $response = $this->json('GET', '/cbt/general/faculties');
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
@@ -53,14 +52,14 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_department()
+    function can_get_departments()
     {
-        $faculty = Faculty::factory()->create();
-        $data = [
-            'name' => $this->faker->name,
-            'faculty_id' => $faculty->id,
-        ];
-        $response = $this->json('POST', '/cbt/general/departments', $data, ['Accept' => 'application/json']);
+        Department::factory()
+            ->count(3)
+            ->for(Faculty::factory()->create())
+            ->create();
+
+        $response = $this->json('GET', '/cbt/general/departments');
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
@@ -69,14 +68,10 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_course()
+    function can_get_courses()
     {
-        $data = [
-            'name' => $this->faker->name,
-            'credit_load' => rand(1, 6),
-            'code' => $this->faker->countryCode.'-'.$this->faker->randomDigit()
-        ];
-        $response = $this->json('POST', '/cbt/general/courses', $data, ['Accept' => 'application/json']);
+        Course::factory()->count(10)->create();
+        $response = $this->json('GET', '/cbt/general/courses');
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
@@ -85,15 +80,15 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_question_option()
+    function can_get_question_options()
     {
         $question = Question::factory()->create();
-        $data = [
-            'content' => $this->faker->sentence,
-            'question_id' => $question->id,
-            'is_correct_option' => $this->faker->randomElement(['no', 'yes'])
-        ];
-        $response = $this->json('POST', '/cbt/general/question-options', $data, ['Accept' => 'application/json']);
+        Option::factory()
+            ->count(3)
+            ->for($question)
+            ->create();
+
+        $response = $this->json('GET', '/cbt/general/question-options');
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);

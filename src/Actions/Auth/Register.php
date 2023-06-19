@@ -48,7 +48,7 @@ class Register
                     break;
                 }
                 default : {
-                    abort(501, 'user type not allowed');
+                    return (new RegisterStudent($this->request))->execute();
                     break;
                 }
             }
