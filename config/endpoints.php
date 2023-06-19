@@ -3,12 +3,12 @@
 
 return [
     "routes" => [
-        'users' => [
-            'model' => \Transave\ScolaCbt\Http\Models\User::class,
+        'sessions' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Session::class,
             'rules' => [
                 'store' => [
-                    'email' => 'required|email',
-                    'password' => 'required|min:6',
+                    'name' => 'required|unique:sessions,name',
+                    'is_active' => 'sometimes|required|in:no,yes',
                 ],
                 'update' => [
                     'name' => 'sometimes|string|max:60'
@@ -21,16 +21,14 @@ return [
             'relationships' => [],
         ],
 
-        'students' => [
-            'model' => \Transave\ScolaCbt\Models\Student::class,
+        'faculties' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Faculty::class,
             'rules' => [
                 'store' => [
-                    'user_id' => 'required|exists_users,id',
-                    'admission_number' => 'required|string',
+                    'name' => 'required|string|max:50|unique,name',
                 ],
                 'update' => [
-                    'user_id' => 'required|exists_users,id',
-                    'admission_number' => 'required|string',
+                    'name' => 'sometimes|required|string|max:50',
                 ]
             ],
             'order' => [

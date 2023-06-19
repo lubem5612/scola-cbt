@@ -27,7 +27,7 @@ class LoginTest extends TestCase
         $loginData = ['email' => 'sampledata@test.com', 'password' => 'sample1234'];
         Sanctum::actingAs($this->user);
 
-        $response = $this->json('POST', 'cbt/login', $loginData, ['Accept' => 'application/json']);
+        $response = $this->json('POST', route('cbt.login'), $loginData, ['Accept' => 'application/json']);
         $response->assertStatus(200)->assertJsonStructure(["success", "message", "data"]);
 
         $this->assertAuthenticated();

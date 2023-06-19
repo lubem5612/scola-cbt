@@ -12,7 +12,9 @@ class CreateExaminersTable extends Migration
         Schema::create('examiners', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
-
+            $table->foreignUuid('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
+            $table->string('phone', 20)->nullable()->index();
+            $table->string('photo', 700)->nullable();
             $table->timestamps();
         });
     }

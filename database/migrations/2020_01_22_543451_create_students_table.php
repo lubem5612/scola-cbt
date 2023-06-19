@@ -16,9 +16,17 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('phone_number', 20)->nullable();
+            $table->foreignUuid('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
+            $table->string('registration_number', 50)->nullable();
+            $table->string('photo', 700)->nullable();
+            $table->string('current_level', 20)->nullable();
+            $table->string('phone', 20)->nullable();
             $table->string('address', 700)->nullable();
             $table->timestamps();
+
+            $table->index(['phone', 'address']);
+            $table->index(['registration_number']);
+            $table->index(['current_level']);
         });
     }
 

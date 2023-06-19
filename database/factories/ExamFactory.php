@@ -21,7 +21,7 @@ class ExamFactory extends Factory
             'session_id' => Session::factory(),
             'semester' => $this->faker->randomElement(config('scola-cbt.semesters')),
             'level' => $this->faker->randomElement(config('scola-cbt.levels')),
-            'exam_type' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
+            'exam_type' => $this->faker->randomElement(config('scola-cbt.question_type')),
             'max_score_obtainable' => 100,
             'exam_mode' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
             'duration' => $this->faker->randomDigit(),

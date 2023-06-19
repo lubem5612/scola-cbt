@@ -3,6 +3,7 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Question;
 
@@ -14,17 +15,11 @@ class QuestionFactory extends Factory
     {
         return [
             'exam_id' => Exam::factory(),
-            'subject' => $this->faker->word,
-            'question_type' => $this->faker->randomElement(['Multiple Choice', 'Essay']),
-            'unit_score' => $this->faker->numberBetween(1, 5),
-            'question' => $this->faker->sentence,
-            'images' => null,
-            'answers' => json_encode([
-                'option1' => $this->faker->sentence,
-                'option2' => $this->faker->sentence,
-                'option3' => $this->faker->sentence,
-                'option4' => $this->faker->sentence,
-            ]),
+            'question_type' => $this->faker->randomElement(config('scola-cbt.question_type')),
+            'score_obtainable' => rand(50, 100),
+            'question' => $this->faker->sentence(20),
+            'file' => UploadedFile::fake()->create('exam.pdf', 200, 'pdf'),
+            'answers' =>  $this->faker->sentence(20)
         ];
     }
 }

@@ -24,7 +24,8 @@ class SessionFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name
+            'name' => $this->faker->name,
+            'is_active' => $this->faker->randomElement(['yes', 'no'])
         ];
     }
 }

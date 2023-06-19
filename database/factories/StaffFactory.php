@@ -3,6 +3,8 @@
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Staff;
 
 class StaffFactory extends Factory
@@ -22,7 +24,11 @@ class StaffFactory extends Factory
     public function definition()
     {
         return [
-
+            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'department_id' => Department::factory(),
+            'phone' => $this->faker->phoneNumber,
+            'photo' => UploadedFile::fake()->image('profile.jpg'),
+            'address' => $this->faker->sentence
         ];
     }
 }

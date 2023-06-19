@@ -83,6 +83,10 @@ class RegisterTest extends TestCase
         $response = $this->json('POST', route('cbt.register'), $this->request, ['Accept' => 'application/json']);
         $response->assertStatus(200);
         $response->assertJsonStructure(["success", "message", "data"]);
+
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $json['success']);
+        $this->assertNotNull($json['data']);
     }
 
     private function getTestData()

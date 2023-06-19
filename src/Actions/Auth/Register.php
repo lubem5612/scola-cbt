@@ -30,7 +30,9 @@ class Register
         if (Arr::has($this->request, 'role')) {
             switch ($this->request['role']) {
                 case 'admin' : {
-                    return (new RegisterAdmin($this->request))->execute();
+                    $response = (new RegisterUser($this->request))->execute();
+                    if ($response['success']) return $this->sendSuccess($response['data'], 'admin created successfully');
+                    return $this->sendError('unable to create admin');
                     break;
                 }
                 case 'examiner' : {

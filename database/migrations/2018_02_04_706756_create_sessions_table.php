@@ -11,6 +11,7 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
+            $table->enum('is_active', ['yes', 'no'])->default('no')->index();
 
             $table->timestamps();
         });

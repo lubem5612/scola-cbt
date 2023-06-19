@@ -25,6 +25,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'manager', 'examiner', 'staff', 'student']);
             $table->timestamps();
+
+            $table->index(['first_name']);
+            $table->index(['last_name']);
+            $table->index(['is_verified']);
+            $table->index(['role']);
         });
     }
 

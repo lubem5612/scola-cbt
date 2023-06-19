@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'auth_model' => \Transave\ScolaCbt\Http\Models\User::class,
     'levels' => [
         1 => '100',
         2 => '200',
@@ -41,7 +42,7 @@ return [
 
     'route' => [
         'prefix' => 'cbt',
-        'middleware' => 'web',
+        'middleware' => 'api',
     ],
 
 ];

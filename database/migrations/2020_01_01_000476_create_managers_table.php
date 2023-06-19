@@ -12,7 +12,8 @@ class CreateManagersTable extends  Migration
         Schema::create('managers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
-
+            $table->string('phone', 20)->nullable()->index();
+            $table->string('photo', 700)->nullable()->index();
             $table->timestamps();
         });
     }
