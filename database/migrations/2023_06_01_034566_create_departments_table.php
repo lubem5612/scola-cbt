@@ -11,7 +11,7 @@ class CreateDepartmentsTable extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUlid('faculty_id')->constrained('faculties')->cascadeOnDelete();
-            $table->string('name')->unique();
+            $table->string('name', 80)->unique();
 
             $table->timestamps();
         });

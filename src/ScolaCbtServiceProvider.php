@@ -63,6 +63,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/scola-cbt.php', 'scola-cbt');
+        $this->mergeConfigFrom(__DIR__.'/../config/endpoints.php', 'endpoints');
 
         // Register the service the package provides.
         $this->app->singleton('scola-cbt', function ($app) {

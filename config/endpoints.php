@@ -25,7 +25,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Faculty::class,
             'rules' => [
                 'store' => [
-                    'name' => 'required|string|max:50|unique,name',
+                    'name' => 'required|string|max:50|unique:faculties,name',
                 ],
                 'update' => [
                     'name' => 'sometimes|required|string|max:50',
@@ -36,6 +36,67 @@ return [
                 'pattern' => 'DESC',
             ],
             'relationships' => [],
+        ],
+
+        'courses' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Course::class,
+            'rules' => [
+                'store' => [
+                    'name' => 'required|string|unique:courses,name',
+                    'code' => 'required|string|max:10|',
+                    'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
+                ],
+                'update' => [
+                    'name' => 'sometimes|required|string|unique:courses,name',
+                    'code' => 'sometimes|required|string|max:10',
+                    'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => [],
+        ],
+
+        'departments' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Department::class,
+            'rules' => [
+                'store' => [
+                    'name' => 'required|unique:departments,name',
+                    'faculty_id' => 'required|exists:faculties,id',
+                ],
+                'update' => [
+                    'name' => 'sometimes|string|max:60',
+                    'faculty_id' => 'sometimes|required|exists:faculties,id'
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['faculty'],
+        ],
+
+        'question-options' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Option::class,
+            'rules' => [
+                'store' => [
+                    'question_id' => 'required|exists:questions,id',
+                    'is_correct_option' => 'required|string|in:no,yes',
+                    'content' => 'required|string'
+                ],
+                'update' => [
+                    'question_id' => 'sometimes|required|exists:questions,id',
+                    'is_correct_option' => 'sometimes|required|string|in:no,yes',
+                    'content' => 'sometimes|required|string'
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['question'],
         ],
     ],
 

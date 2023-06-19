@@ -20,6 +20,7 @@ class CourseFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'code' => 'SC-'.rand(100, 999),
             'credit_load' => rand(1, 6)
         ];
     }

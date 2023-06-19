@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RestFulAPIHelper
 {
+    use ResponseHelper;
     /**
      * @var \Illuminate\Config\Repository|mixed
      */
@@ -21,13 +22,12 @@ class RestFulAPIHelper
     public function fetchAllResources($request, $endpoint)
     {
         try {
-
             if(!array_key_exists($endpoint, $this->routes)) {
-                return $this->returnResponse(null, ['message' => 'endpoint not fount'], 400);
+                return $this->buildResponse('endpoint not found', false, null, 404);
             }
 
             if (!array_key_exists('model', $this->routes[$endpoint])) {
-                return $this->returnResponse(null, ['message' => 'model not specified'], 500);
+                return $this->buildResponse('model not found', false, null, 502);
             }
 
             if (array_key_exists('order', $this->routes[$endpoint]) &&
@@ -53,10 +53,10 @@ class RestFulAPIHelper
                 $results = $builder->get();
             }
 
-            return $this->returnResponse($results->toArray());
+            return $this->buildResponse('resources fetched successfully', true, $results->toArray());
 
         } catch (\Exception $exception) {
-            return $this->returnResponse(null, ['message' => $exception->getMessage(), 'data' =>$exception->getTrace()], 500);
+            return $this->buildResponse('server error', false, $exception->getTrace(), 500);
         }
     }
 
@@ -71,7 +71,7 @@ class RestFulAPIHelper
     {
         try {
             if(!array_key_exists($endpoint, $this->routes)) {
-                return $this->returnResponse(null, ['message' => 'endpoint not fount'], 400);
+                return $this->buildResponse('endpoint not found', false, null, 404);
             }
 
             if (array_key_exists('rules', $this->routes[$endpoint]) && array_key_exists('store', $this->routes[$endpoint]['rules'])) {
@@ -79,18 +79,18 @@ class RestFulAPIHelper
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
                     $error = $validator->errors();
-                    return $this->returnResponse(null, ['message' => 'Validation Error', 'data' => $error], 422);
+                    return $this->buildResponse('validation errors', false, $error, 422);
                 }
             }
 
             $input = $request->all();
             if (!array_key_exists('model', $this->routes[$endpoint])) {
-                return $this->returnResponse(null, ['message' => 'model not specified'], 500);
+                return $this->buildResponse('model not specified', false, null, 502);
             }
             $response = $this->routes[$endpoint]['model']::create($input);
-            return $this->returnResponse($response);
+            return $this->buildResponse('resource created successfully', true, $response);
         } catch (\Exception $exception) {
-            return $this->returnResponse(null, ['message' => $exception->getMessage(), 'data' =>$exception->getTrace()], 500);
+            return $this->buildResponse('server error', false, $exception->getTrace(), 500);
         }
     }
 
@@ -105,11 +105,11 @@ class RestFulAPIHelper
     {
         try {
             if(!array_key_exists($endpoint, $this->routes)) {
-                return $this->returnResponse(null, ['message' => 'endpoint not fount'], 400);
+                return $this->buildResponse('endpoint not found', false, null, 404);
             }
 
             if (!array_key_exists('model', $this->routes[$endpoint])) {
-                return $this->returnResponse(null, ['message' => 'model not specified'], 500);
+                return $this->buildResponse('model not found', false, null, 502);
             }
             $builder = $this->routes[$endpoint]['model']::query();
             if (array_key_exists('relationships', $this->routes[$endpoint])) {
@@ -119,12 +119,12 @@ class RestFulAPIHelper
             }
             $resource = $builder->find($id);
             if (empty($resource)) {
-                return $this->returnResponse(null, ['message' => 'resource not fount'], 400);
+                return $this->buildResponse('resource not found', true, null,404);
             }
 
-            return $this->returnResponse($resource, 'resource retrieved successfully.');
+            return $this->buildResponse('resource retrieved successfully', true, $resource);
         } catch (\Exception $exception) {
-            return $this->returnResponse(null, ['message' => $exception->getMessage(), 'data' =>$exception->getTrace()], 500);
+            return $this->buildResponse('server error', false, $exception->getTrace(), 500);
         }
     }
 
@@ -140,7 +140,7 @@ class RestFulAPIHelper
     {
         try {
             if(!array_key_exists($endpoint, $this->routes)) {
-                return $this->returnResponse(null, ['message' => 'endpoint not fount'], 400);
+                return $this->buildResponse('endpoint not found', false, null, 404);
             }
 
             if (array_key_exists('rules', $this->routes[$endpoint]) && array_key_exists('update', $this->routes[$endpoint]['rules'])) {
@@ -148,26 +148,26 @@ class RestFulAPIHelper
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
                     $error = $validator->errors();
-                    return $this->returnResponse(null, ['message' => 'Validation Error', 'data' => $error], 422);
+                    return $this->buildResponse('validation errors', false, $error, 422);
                 }
             }
 
             if (!array_key_exists('model', $this->routes[$endpoint])) {
-                return $this->returnResponse(null, ['message' => 'model not specified'], 500);
+                return $this->buildResponse('model not found', false, null, 502);
             }
             $resource = $this->routes[$endpoint]['model']::find($id);
             if (empty($resource)) {
-                return $this->returnResponse(null, ['message' => 'resource not fount'], 400);
+                return $this->buildResponse('resource not found', true, null,404);
             }
             $updated = $resource->fill($request->all())->save();
 
             if ($updated) {
-                return $this->returnResponse($resource);
+                return $this->buildResponse('resource updated successfully', true, $resource);
             }
-            return $this->returnResponse(null, ['message' => 'error in updating resource', 'data' => []], 500);
+            return $this->buildResponse('error in updating resource', false, null, 502);
 
         } catch (\Exception $exception) {
-            return $this->returnResponse(null, ['message' => $exception->getMessage(), 'data' =>$exception->getTrace()], 500);
+            return $this->buildResponse('server error', false, $exception->getTrace(), 500);
         }
     }
 
@@ -182,35 +182,22 @@ class RestFulAPIHelper
     {
         try {
             if(!array_key_exists($endpoint, $this->routes)) {
-                return $this->returnResponse(null, ['message' => 'endpoint not fount'], 400);
+                return $this->buildResponse('endpoint not found', false, null, 404);
             }
 
             if (!array_key_exists('model', $this->routes[$endpoint])) {
-                return $this->returnResponse(null, ['message' => 'model not specified'], 500);
+                return $this->buildResponse('model not found', false, null, 502);
             }
 
             if ($this->routes[$endpoint]['model']::where('id', $id)->exists()) {
                 $resource = $this->routes[$endpoint]['model']::find($id)->delete();
 
-                return $this->returnResponse($resource);
+                return $this->buildResponse('resource deleted successfully', true, $resource);
             } else {
-                return $this->returnResponse(null, ['message' => 'resource not found in database.', 'data' => []], 500);
+                return $this->buildResponse('resource not found in database', false, null, 404);
             }
         } catch (\Exception $exception) {
-            return $this->returnResponse(null, ['message' => $exception->getMessage(), 'data' =>$exception->getTrace()], 500);
+            return $this->buildResponse('server error', false, $exception->getTrace(), 500);
         }
     }
-
-    private function returnResponse($data, $error = [], $code = '')
-    {
-        $response['data'] = $data; $response['errors'] = null;
-        if ($error) {
-            $response['errors'] = $error;
-        }
-        if ($code) {
-            $response['code'] = $code;
-        }
-        return $response;
-    }
-
 }

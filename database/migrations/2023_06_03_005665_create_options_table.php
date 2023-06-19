@@ -12,7 +12,7 @@ class CreateOptionsTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('question_id')->constrained('questions')->cascadeOnDelete();
             $table->enum('is_correct_option', ['yes', 'no'])->default('on')->index();
-            $table->string('content')->unique();
+            $table->string('content', 700)->index();
 
             $table->timestamps();
         });

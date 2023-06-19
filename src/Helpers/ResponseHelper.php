@@ -57,14 +57,16 @@ trait ResponseHelper
      * @param $message
      * @param bool $success
      * @param $data
+     * @param int $code
      * @return mixed
      */
-    public function buildResponse($message, $success=false, $data=null)
+    public function buildResponse($message, $success=false, $data=null, $code=200)
     {
         return [
             "message" => $message,
             "success" => $success,
             "data" => $data,
+            "code" => $code,
         ];
     }
 
@@ -85,7 +87,8 @@ trait ResponseHelper
                 "errors" => $this->formatServerError($exception),
             ];
         }
-        Log::error($exception->getTraceAsString());
+        if (config('scola-cbt.app_env') == 'development') Log::error($exception->getTraceAsString());
+
         return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
     }
 

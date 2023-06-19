@@ -3,12 +3,14 @@
 
 namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
+use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\RestFulAPIHelper;
 use function Illuminate\Routing\Controllers\except;
 
 
 class RestfulAPIController extends Controller
 {
+    use ResponseHelper;
     private $api;
 
     public function __construct()
@@ -19,71 +21,34 @@ class RestfulAPIController extends Controller
 
     public function index(Request $request, $endpoint)
     {
-        $data = $this->api->fetchAllResources($request, $endpoint);
-        return $this->processData($data, 'resources retrieved successfully');
+        return $this->structureResponse($this->api->fetchAllResources($request, $endpoint));
     }
 
     public function store(Request $request, $endpoint)
     {
-        $data = $this->api->saveResource($request, $endpoint);
-        return $this->processData($data, 'resource created successfully');
+        return $this->structureResponse($this->api->saveResource($request, $endpoint));
     }
 
     public function show($endpoint, $id)
     {
-        $data = $this->api->fetchResource($endpoint, $id);
-        return $this->processData($data, 'resource retrieved successfully');
+        return $this->structureResponse($this->api->fetchResource($endpoint, $id));
     }
 
     public function update(Request $request, $endpoint, $id)
     {
-        $data = $this->api->updateResource($request, $endpoint, $id);
-        return $this->processData($data, 'resource updated successfully');
+        return $this->structureResponse($this->api->updateResource($request, $endpoint, $id));
     }
 
     public function destroy($endpoint, $id)
     {
-        $data = $this->api->deleteResource($endpoint, $id);
-        return $this->processData($data, 'resource deleted successfully');
+        return $this->structureResponse($this->api->deleteResource($endpoint, $id));
     }
 
-    private function returnSuccess($result, $message, $code = '')
+    private function structureResponse(array $data)
     {
-        $code = isset($code)? $code : http_response_code();
-        $response = [
-            'success' => true,
-            'data'    => $result,
-            'message' => $message,
-        ];
-
-        return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
-    }
-
-    private function returnError($error, $errorMessages = [], $code = '')
-    {
-        $code = isset($code)? $code : http_response_code();
-        $response = [
-            'success' => false,
-            'message' => $error,
-        ];
-
-        if(!empty($errorMessages)){
-            $response['errors'] = $errorMessages;
+        if ($data['success']) {
+            return $this->sendSuccess($data['data'], $data['message']);
         }
-
-        return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
-    }
-
-    private function processData($data, $message='')
-    {
-        if ($data['errors']) {
-            $msg = $data['errors']['message'];
-            $result = null;
-            if (array_key_exists('data', $data['errors'])) {
-                $result = $data['errors']['data'];
-            }
-            return $this->returnError($msg, $result, $data['code']);
-        }
-        return $this->returnSuccess($data['data'], $message, http_response_code());
+        return $this->sendError($data['message'], $data['data'], $data['code']);
     }
 }

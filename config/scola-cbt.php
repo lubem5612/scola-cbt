@@ -2,6 +2,9 @@
 
 return [
     'auth_model' => \Transave\ScolaCbt\Http\Models\User::class,
+
+    'app_env' => env('APP_ENV', 'development'),
+
     'levels' => [
         1 => '100',
         2 => '200',
