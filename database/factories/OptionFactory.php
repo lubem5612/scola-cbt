@@ -4,6 +4,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Transave\ScolaCbt\Http\Models\Option;
+use Transave\ScolaCbt\Http\Models\Question;
 
 class OptionFactory extends Factory
 {
@@ -22,6 +23,7 @@ class OptionFactory extends Factory
     public function definition()
     {
         return [
+            'question_id' => Question::factory(),
             'is_correct_option' => $this->faker->randomElement(['yes', 'no']),
             'content' => $this->faker->sentence
         ];
