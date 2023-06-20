@@ -48,4 +48,8 @@ return [
         'middleware' => 'api',
     ],
 
+    'azure' => [
+        'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER').'/',
+    ]
+
 ];
