@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     'auth_model' => \Transave\ScolaCbt\Http\Models\User::class,
 
     'app_env' => env('APP_ENV', 'development'),
@@ -50,6 +51,8 @@ return [
 
     'azure' => [
         'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER').'/',
-    ]
+    ],
+
+    'max_score_obtainable' => env('CBT_MAX_EXAM_SCORE', 100),
 
 ];

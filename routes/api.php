@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
+use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
 
@@ -36,5 +37,14 @@ Route::as('cbt.')->group(function () {
     Route::post('register', [ AuthController::class, 'register'])->name('register');
     Route::get('user', [ AuthController::class, 'user'])->name('user');
     Route::any('logout', [ AuthController::class, 'logout'])->name('logout');
+
+    //Exam Routes
+    Route::prefix('exams')->as('exam.')->group(function() {
+        Route::get('/', [ExamController::class, 'index'])->name('index');
+        Route::post('/', [ExamController::class, 'create'])->name('store');
+        Route::post('/{id}', [ExamController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [ExamController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ExamController::class, 'destroy'])->name('delete');
+    });
 
 });

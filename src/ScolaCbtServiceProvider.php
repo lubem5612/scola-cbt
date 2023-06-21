@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfAdmin;
+use Transave\ScolaCbt\Http\Middlewares\AllowIfExaminer;
+use Transave\ScolaCbt\Http\Middlewares\AllowIfStaff;
 use Transave\ScolaCbt\Http\Middlewares\VerifiedAccount;
 use Transave\ScolaCbt\Http\Models\User;
 
@@ -52,6 +54,8 @@ class ScolaCbtServiceProvider extends ServiceProvider
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('admin', AllowIfAdmin::class);
         $router->aliasMiddleware('verify', VerifiedAccount::class);
+        $router->aliasMiddleware('staff', AllowIfStaff::class);
+        $router->aliasMiddleware('examiner', AllowIfExaminer::class);
 
     }
 
