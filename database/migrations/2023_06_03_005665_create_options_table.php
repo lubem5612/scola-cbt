@@ -11,7 +11,7 @@ class CreateOptionsTable extends Migration
         Schema::create('options', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('question_id')->constrained('questions')->cascadeOnDelete();
-            $table->enum('is_correct_option', ['yes', 'no'])->default('on')->index();
+            $table->enum('is_correct_option', ['yes', 'no'])->default('no')->index();
             $table->string('content', 700)->index();
 
             $table->timestamps();

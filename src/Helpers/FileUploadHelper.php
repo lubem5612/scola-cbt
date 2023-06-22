@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-trait FileUploadHelper
+class FileUploadHelper
 {
     public static $FILE_SIZE = 0;
     public static $UPLOADED_PATH = "";
@@ -17,7 +17,7 @@ trait FileUploadHelper
     public static $MESSAGE = "";
     public static $ERROR = null;
 
-    public static function UploadFile(UploadedFile $file, string $folder)
+    public static function UploadFile(UploadedFile $file, $folder)
     {
         try{
             $extension = $file->getClientOriginalExtension();
@@ -43,7 +43,7 @@ trait FileUploadHelper
         return self::response();
     }
 
-    public static function UploadOrReplaceFile(UploadedFile $file, string $folder, $model, string $column)
+    public static function UploadOrReplaceFile(UploadedFile $file,  $folder, $model,  $column)
     {
         try{
             if($model->$column) {
