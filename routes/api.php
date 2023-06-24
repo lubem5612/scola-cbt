@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Transave\ScolaCbt\Http\Controllers\AnswerController;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
+use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
 
@@ -55,6 +56,15 @@ Route::as('cbt.')->group(function () {
         Route::get('/{id}', [AnswerController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [AnswerController::class, 'update'])->name('update');
         Route::delete('/{id}', [AnswerController::class, 'destroy'])->name('delete');
+    });
+
+    //Question Routes
+    Route::prefix('questions')->as('questions.')->group(function(){
+        Route::get('/', [QuestionController::class, 'index'])->name('index');
+        Route::post('/', [QuestionController::class, 'create'])->name('store');
+        Route::get('/{id}', [QuestionController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [QuestionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [QuestionController::class, 'destroy'])->name('delete');
     });
 
 });
