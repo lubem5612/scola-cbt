@@ -9,7 +9,9 @@ use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfAdmin;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfExaminer;
+use Transave\ScolaCbt\Http\Middlewares\AllowIfManager;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfStaff;
+use Transave\ScolaCbt\Http\Middlewares\AllowIfStudent;
 use Transave\ScolaCbt\Http\Middlewares\VerifiedAccount;
 use Transave\ScolaCbt\Http\Models\User;
 
@@ -56,6 +58,8 @@ class ScolaCbtServiceProvider extends ServiceProvider
         $router->aliasMiddleware('verify', VerifiedAccount::class);
         $router->aliasMiddleware('staff', AllowIfStaff::class);
         $router->aliasMiddleware('examiner', AllowIfExaminer::class);
+        $router->aliasMiddleware('student', AllowIfStudent::class);
+        $router->aliasMiddleware('manager', AllowIfManager::class);
 
     }
 

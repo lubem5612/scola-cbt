@@ -12,7 +12,6 @@ use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Session;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
-use function Symfony\Component\Uid\Factory\create;
 
 class SearchExamTest extends TestCase
 {

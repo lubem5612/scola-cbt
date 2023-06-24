@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Transave\ScolaCbt\Http\Controllers\AnswerController;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
@@ -39,12 +40,21 @@ Route::as('cbt.')->group(function () {
     Route::any('logout', [ AuthController::class, 'logout'])->name('logout');
 
     //Exam Routes
-    Route::prefix('exams')->as('exam.')->group(function() {
+    Route::prefix('exams')->as('exams.')->group(function() {
         Route::get('/', [ExamController::class, 'index'])->name('index');
         Route::post('/', [ExamController::class, 'create'])->name('store');
-        Route::post('/{id}', [ExamController::class, 'show'])->name('show');
+        Route::get('/{id}', [ExamController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [ExamController::class, 'update'])->name('update');
         Route::delete('/{id}', [ExamController::class, 'destroy'])->name('delete');
+    });
+
+    //Answer Routes
+    Route::prefix('answers')->as('answers.')->group(function() {
+        Route::get('/', [AnswerController::class, 'index'])->name('index');
+        Route::post('/', [AnswerController::class, 'create'])->name('store');
+        Route::get('/{id}', [AnswerController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [AnswerController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AnswerController::class, 'destroy'])->name('delete');
     });
 
 });

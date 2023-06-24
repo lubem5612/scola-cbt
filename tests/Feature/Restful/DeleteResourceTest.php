@@ -27,7 +27,7 @@ class DeleteResourceTest extends TestCase
 
     /** @test */
 
-    function can_delete_specified_session()
+    public function can_delete_specified_session()
     {
         Session::factory()->count(10)->create();
         $session = Session::query()->inRandomOrder()->first();
@@ -40,7 +40,7 @@ class DeleteResourceTest extends TestCase
     }
 
     /** @test */
-    function can_delete_specified_faculty()
+    public function can_delete_specified_faculty()
     {
         Faculty::factory()->count(10)->create();
         $faculty = Faculty::query()->inRandomOrder()->first();
@@ -52,7 +52,7 @@ class DeleteResourceTest extends TestCase
     }
 
     /** @test */
-    function can_delete_specified_department()
+    public function can_delete_specified_department()
     {
         Department::factory()->count(10)->create();
         $department = Department::query()->inRandomOrder()->first();
@@ -64,7 +64,7 @@ class DeleteResourceTest extends TestCase
     }
 
     /** @test */
-    function can_delete_specified_course()
+    public function can_delete_specified_course()
     {
         Course::factory()->count(10)->create();
         $course = Course::query()->inRandomOrder()->first();
@@ -76,7 +76,7 @@ class DeleteResourceTest extends TestCase
     }
 
     /** @test */
-    function can_delete_specified_question_option()
+    public function can_delete_specified_question_option()
     {
         Option::factory()->count(10)->create();
         $option = Option::query()->inRandomOrder()->first();

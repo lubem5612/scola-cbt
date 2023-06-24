@@ -12,12 +12,12 @@ use Transave\ScolaCbt\Http\Models\Session;
 class UpdateExam
 {
     use ResponseHelper, ValidationHelper;
-    private $request, $exam, $id;
+    private $request;
+    private Exam $exam;
 
-    public function __construct(array $request, string $id)
+    public function __construct(array $request)
     {
         $this->request = $request;
-        $this->id = $id;
     }
 
     public function execute()
@@ -43,7 +43,7 @@ class UpdateExam
 
     private function setExam() : self
     {
-        $this->exam = Exam::query()->find($this->id);
+        $this->exam = Exam::query()->find($this->request['exam_id']);
         return $this;
     }
 
@@ -74,6 +74,7 @@ class UpdateExam
     private function validateRequest() : self
     {
         $this->validate($this->request, [
+            'exam_id' => 'required|exists:exams,id',
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'sometimes|required|exists:courses,id',
             'department_id' => 'sometimes|required|exists:departments,id',

@@ -26,7 +26,7 @@ class AnswerFactory extends Factory
             'question_id' => Question::factory(),
             'option_id' => Option::factory(),
             'content' => $this->faker->sentence(10),
-            'file' => UploadedFile::fake()->create('file.pdf', 2000, 'pdf')
+            'file' => UploadedFile::fake()->create('file.pdf', 2000, 'application/pdf')
         ];
     }
 }

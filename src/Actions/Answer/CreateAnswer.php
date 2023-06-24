@@ -4,6 +4,7 @@
 namespace Transave\ScolaCbt\Actions\Answer;
 
 
+use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\FileUploadHelper;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
@@ -12,7 +13,7 @@ use Transave\ScolaCbt\Http\Models\Answer;
 class CreateAnswer
 {
     use ResponseHelper, ValidationHelper;
-    private $request, $uploader;
+    private $request, $validatedData;
 
     public function __construct(array $request)
     {
@@ -35,15 +36,15 @@ class CreateAnswer
 
     private function createAnswer()
     {
-        $answer = Answer::query()->create($this->request);
+        $answer = Answer::query()->create($this->validatedData);
         return $this->sendSuccess($answer->load('user', 'question', 'option'), 'answer created successfully');
     }
 
     private function setUser()
     {
-        if (!array_key_exists('user_id', $this->request))
+        if (!array_key_exists('user_id', $this->validatedData))
         {
-            $this->request['user_id'] = auth()->user();
+            $this->validatedData['user_id'] = auth()->user();
         }
         return $this;
     }
@@ -54,7 +55,7 @@ class CreateAnswer
         {
             $response = FileUploadHelper::UploadFile(request()->file('file'), 'cbt/answers');
             if ($response['success']) {
-                $this->request['file'] = $response['upload_url'];
+                $this->validatedData['file'] = $response['upload_url'];
             }
         }
         return $this;
@@ -69,6 +70,7 @@ class CreateAnswer
             'content' => 'sometimes|required|string',
             'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx'
         ]);
+        $this->validatedData = Arr::except($this->validator->validated(), ['file']);
         return $this;
     }
 }

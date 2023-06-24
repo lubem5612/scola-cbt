@@ -24,7 +24,7 @@ class CreateResourceTest extends TestCase
 
     /** @test */
 
-    function can_create_session()
+    public function can_create_session()
     {
         $data = [
             'name' => $this->faker->name,
@@ -39,7 +39,7 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_faculty()
+    public function can_create_faculty()
     {
         $data = [
             'name' => $this->faker->name
@@ -53,7 +53,7 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_department()
+    public function can_create_department()
     {
         $faculty = Faculty::factory()->create();
         $data = [
@@ -69,7 +69,7 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_course()
+    public function can_create_course()
     {
         $data = [
             'name' => $this->faker->name,
@@ -85,7 +85,7 @@ class CreateResourceTest extends TestCase
     }
 
     /** @test */
-    function can_create_question_option()
+    public function can_create_question_option()
     {
         $question = Question::factory()->create();
         $data = [

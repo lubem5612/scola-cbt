@@ -7,7 +7,7 @@ namespace Transave\ScolaCbt\Http\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Transave\ScolaCbt\Database\Factories\CourseFactory;
+use Transave\ScolaCbt\Database\Factories\AnswerFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
 class Answer extends Model
@@ -36,6 +36,6 @@ class Answer extends Model
 
     protected static function newFactory()
     {
-        return CourseFactory::new();
+        return AnswerFactory::new();
     }
 }

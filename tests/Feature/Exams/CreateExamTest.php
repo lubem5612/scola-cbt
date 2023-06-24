@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Tests\Feature\Exams;
 
 use Faker\Factory;
 use Illuminate\Foundation\Auth\User;
+use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Actions\Exam\CreateExam;
 use Transave\ScolaCbt\Http\Models\Course;
 use Transave\ScolaCbt\Http\Models\Department;
@@ -21,6 +22,8 @@ class CreateExamTest extends TestCase
         parent::setUp();
         $this->faker = Factory::create();
         $this->testData();
+        $user = config('scola-cbt.auth_model')::factory()->create(['role' => 'admin']);
+        Sanctum::actingAs($user);
     }
 
     /** @test */
