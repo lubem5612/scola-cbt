@@ -7,6 +7,7 @@ use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
+use Transave\ScolaCbt\Http\Controllers\UserController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
@@ -55,6 +56,11 @@ Route::as('cbt.')->group(function () {
         Route::get('/{id}', [AnswerController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [AnswerController::class, 'update'])->name('update');
         Route::delete('/{id}', [AnswerController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('users')->as('users.')->group(function() {
+        Route::get('/', [UserController::class, 'users'])->name('index');
+        Route::post('/{id}', [UserController::class, 'update'])->name('update');
     });
 
 });

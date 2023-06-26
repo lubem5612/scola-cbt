@@ -6,6 +6,10 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Transave\ScolaCbt\Http\Models\Examiner;
+use Transave\ScolaCbt\Http\Models\Manager;
+use Transave\ScolaCbt\Http\Models\Staff;
+use Transave\ScolaCbt\Http\Models\Student;
 use Transave\ScolaCbt\Http\Models\User;
 
 class UserFactory extends Factory
@@ -47,6 +51,21 @@ class UserFactory extends Factory
             return [
                 'email_verified_at' => null,
             ];
+        });
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            if ($user->role == 'student') {
+                Student::factory()->create(['user_id' => $user->id]);
+            }elseif ($user->role == 'staff') {
+                Staff::factory()->create(['user_id' => $user->id]);
+            }elseif ($user->role == 'manager') {
+                Manager::factory()->create(['user_id' => $user->id]);
+            }elseif ($user->role == 'examiner') {
+                Examiner::factory()->create(['user_id' => $user->id]);
+            }
         });
     }
 }

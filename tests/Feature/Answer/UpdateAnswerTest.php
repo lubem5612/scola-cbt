@@ -29,7 +29,7 @@ class UpdateAnswerTest extends TestCase
 
     public function can_update_answer()
     {
-        $answer = Answer::first();
+        $answer = Answer::query()->first();
         $response = $this->json('POST', "/cbt/answers/{$answer->id}", $this->request);
         $response->assertStatus(200);
 

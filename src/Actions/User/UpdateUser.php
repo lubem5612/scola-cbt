@@ -21,7 +21,11 @@ class UpdateUser
     public function execute()
     {
         try {
-            return $this->validateRequest()->updateAccountDetails()->updateUser();
+            return $this
+                ->validateRequest()
+                ->getUser()
+                ->updateAccountDetails()
+                ->updateUser();
         }catch (\Exception $e) {
             return $this->sendServerError($e);
         }
@@ -41,10 +45,15 @@ class UpdateUser
         return $this;
     }
 
+    private function getUser()
+    {
+        $this->user = config('scola-cbt.auth_model')::query()->find($this->validatedData['user_id']);
+        return $this;
+    }
+
     private function updateUser()
     {
         $userData = Arr::only($this->validatedData, ['first_name', 'last_name']);
-        $this->user = config('scola-cbt.auth_model')::query()->find($this->validatedData['user_id']);
         $this->user->fill($userData)->save();
         return $this->sendSuccess($this->user->refresh(), 'user updated successfully');
     }
