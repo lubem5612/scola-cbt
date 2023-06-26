@@ -7,7 +7,6 @@ use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
-use Transave\ScolaCbt\Http\Controllers\UserController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
@@ -39,6 +38,10 @@ Route::as('cbt.')->group(function () {
     Route::post('register', [ AuthController::class, 'register'])->name('register');
     Route::get('user', [ AuthController::class, 'user'])->name('user');
     Route::any('logout', [ AuthController::class, 'logout'])->name('logout');
+    Route::put('{user}/email', [AuthController::class, 'updateEmail'])->name('updateEmail');
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('changePassword');
+
+
 
     //Exam Routes
     Route::prefix('exams')->as('exams.')->group(function() {
@@ -56,6 +59,15 @@ Route::as('cbt.')->group(function () {
         Route::get('/{id}', [AnswerController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [AnswerController::class, 'update'])->name('update');
         Route::delete('/{id}', [AnswerController::class, 'destroy'])->name('delete');
+    });
+
+    //Question Routes
+    Route::prefix('questions')->as('questions.')->group(function(){
+        Route::get('/', [QuestionController::class, 'index'])->name('index');
+        Route::post('/', [QuestionController::class, 'create'])->name('store');
+        Route::get('/{id}', [QuestionController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [QuestionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [QuestionController::class, 'destroy'])->name('delete');
     });
 
     Route::prefix('users')->as('users.')->group(function() {

@@ -7,13 +7,16 @@ use Transave\ScolaCbt\Tests\TestCase;
 
 class QuestionModelTest extends TestCase
 {
+    private $question;
     public function setUp(): void
     {
         parent::setUp();
+        $this->question = Question::factory()->create();
     }
 
-    public function test_can_check_if_question_model_exists()
+    /** @test */
+    public function exam_model_can_be_initiated_with_factory()
     {
-        $this->assertTrue(class_exists(Question::class), 'Question model does not exist.');
+        $this->assertTrue($this->question instanceof Question);
     }
 }
