@@ -13,7 +13,8 @@ class SearchUsers
     private function searchTerms()
     {
         $search = $this->searchParam;
-        $this->queryBuilder->where(function ($query) use ($search) {
+        $this->queryBuilder->where('role', '!=', 'admin')
+            ->where(function ($query) use ($search) {
             $query
                 ->where('first_name', 'like', "%$search%")
                 ->orWhere('last_name', 'like', "%$search%")

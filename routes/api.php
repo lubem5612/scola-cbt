@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Transave\ScolaCbt\Http\Controllers\AnswerController;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
+use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
+use Transave\ScolaCbt\Http\Controllers\UserController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
