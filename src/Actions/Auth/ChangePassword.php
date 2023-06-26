@@ -11,10 +11,11 @@ class ChangePassword
     use ResponseHelper, ValidationHelper;
 
     private $request;
-    private User $user;
+    private $user;
 
-    public function __construct(array $request)
+    public function __construct(User $user, array $request)
     {
+        $this->user = $user;
         $this->request = $request;
     }
 
@@ -23,8 +24,7 @@ class ChangePassword
         try {
             return $this
                 ->validatePassword()
-                ->updatePassword()
-                ->buildResponse('Password changed successfully.', true, $this->user, 200);
+                ->updatePassword();
         } catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
@@ -33,14 +33,13 @@ class ChangePassword
     private function validatePassword()
     {
         $this->validate($this->request, [
-            "password" => 'string|min:6',
+            'password' => 'string|min:6',
         ]);
         return $this;
     }
 
     private function updatePassword()
     {
-        $this->user = User::findorfail($this->user->id);
         $this->user->password = bcrypt($this->request['password']);
         $this->user->save();
         return $this->sendSuccess($this->user, 'Password changed successfully');

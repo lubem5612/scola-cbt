@@ -11,6 +11,7 @@ use Transave\ScolaCbt\Http\Models\Question;
 class UpdateQuestion
 {
     use ResponseHelper, ValidationHelper;
+
     private $request, $validatedData;
     private Question $question;
 
@@ -19,29 +20,35 @@ class UpdateQuestion
         $this->request = $request;
     }
 
-    public function execute(){
+    public function execute()
+    {
         try {
-
-        }catch (\Exception $e){
+            return
+                $this->validateRequest()
+                    ->setQuestion()
+                    ->replaceOrUploadFile()
+                    ->updateQuestion();
+        } catch (\Exception $e) {
             return $this->sendServerError($e);
         }
     }
 
 
-    private function updateQuestion(){
+    private function updateQuestion()
+    {
         $this->question->fill($this->validatedData)->save();
         return $this->sendSuccess($this->question->refresh()->load('exam'), 'question updated successfully');
     }
 
-    private function setQuestion(){
+    private function setQuestion()
+    {
         $this->question = Question::query()->find($this->validatedData['question_id']);
         return $this;
     }
 
     private function replaceOrUploadFile()
     {
-        if (request()->hasFile('file'))
-        {
+        if (request()->hasFile('file')) {
             $response = FileUploadHelper::UploadOrReplaceFile(request()->file('file'), 'cbt/questions', $this->question, 'file');
             if ($response['success']) {
                 $this->validatedData['file'] = $response['upload_url'];
@@ -51,7 +58,8 @@ class UpdateQuestion
     }
 
 
-    private function validateRequest(){
+    private function validateRequest()
+    {
         $this->validate($this->request, [
             'question_id' => 'required|exists:questions,id',
             'exam_id' => 'sometimes|required|exists:exams,id',

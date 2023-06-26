@@ -2,8 +2,6 @@
 
 namespace Transave\ScolaCbt\Tests\Feature\Question;
 
-use Carbon\Carbon;
-use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Actions\Question\GetQuestion;
 use Transave\ScolaCbt\Actions\Question\SearchQuestion;
@@ -33,8 +31,9 @@ class SearchQuestionsTest extends TestCase
     }
 
     /** @test */
-    public function can_search_question_via_action_with_relationship(){
-        $response = (new SearchQuestion(Question::class, ['Exam']) )->execute();
+    public function can_search_question_via_action_with_relationship()
+    {
+        $response = (new SearchQuestion(Question::class, ['Exam']))->execute();
         $array = json_decode($response->getContent(), true);
         $this->assertEquals(true, $array['success']);
         $this->assertNotNull($array['data']);
@@ -49,7 +48,4 @@ class SearchQuestionsTest extends TestCase
         $this->assertEquals(true, $array['success']);
         $this->assertNotNull($array['data']);
     }
-
-
-
 }

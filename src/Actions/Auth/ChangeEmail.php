@@ -23,8 +23,7 @@ class ChangeEmail
         try {
             return $this
                 ->validateNewEmail()
-                ->updateEmail()
-                ->buildResponse('Email address changed successfully.', true, $this->user, 200);
+                ->updateEmail();
         } catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
@@ -41,9 +40,9 @@ class ChangeEmail
 
     private function updateEmail()
     {
-        $this->user = User::findorfail($this->user->email);
-        $this->user->fill($this->request)->save();
-        return $this->sendSuccess($this->user, 'Email updated successfully');
+        $user = User::findOrFail($this->user->id);
+        $user->fill($this->request)->save();
+        return $this->sendSuccess($user, 'Email updated successfully');
 
     }
 }

@@ -39,6 +39,10 @@ Route::as('cbt.')->group(function () {
     Route::post('register', [ AuthController::class, 'register'])->name('register');
     Route::get('user', [ AuthController::class, 'user'])->name('user');
     Route::any('logout', [ AuthController::class, 'logout'])->name('logout');
+    Route::put('{user}/email', [AuthController::class, 'updateEmail'])->name('updateEmail');
+    Route::post('change-password', [AuthController::class, 'changePassword'])->name('changePassword');
+
+
 
     //Exam Routes
     Route::prefix('exams')->as('exams.')->group(function() {

@@ -2,6 +2,7 @@
 
 namespace Transave\ScolaCbt\Tests\Feature\Question;
 
+use Faker\Factory;
 use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Http\Models\Exam;
@@ -18,6 +19,7 @@ class UpdateQuestionTest extends TestCase
         $this->user = config('scola-cbt.auth_model')::factory()->create(['role' => 'admin']);
         Sanctum::actingAs($this->user);
         Question::factory()->count(10)->create();
+        $this->faker = Factory::create();
         $this->testData();
     }
 
@@ -27,7 +29,6 @@ class UpdateQuestionTest extends TestCase
     {
         $question = Question::first();
         $response = $this->json('POST', "/cbt/questions/{$question->id}", $this->request);
-        dd($response);
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
@@ -36,7 +37,9 @@ class UpdateQuestionTest extends TestCase
     }
 
     private function testData(){
+        $question = Question::first();
         $this->request = [
+            'question_id' => $question->id,
             'exam_id' => Exam::factory()->create()->id,
             'question_type' => $this->faker->randomElement(config('scola-cbt.question_type')),
             'score_obtainable' => 100,

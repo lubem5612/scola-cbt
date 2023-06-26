@@ -51,7 +51,7 @@ class DeleteQuestion
 
     private function setQuestion(): self
     {
-        $this->question = Question::query()->find($this->question['id']);
+        $this->question = Question::findOrFail($this->request['id']);
         return $this;
     }
 

@@ -22,7 +22,6 @@ class DeleteQuestionTest extends TestCase
     function can_delete_question_successfully(){
         $question = Question::query()->inRandomOrder()->first();
         $response = $this->json('DELETE', "/cbt/questions/{$question->id}");
-        dd($response);
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
