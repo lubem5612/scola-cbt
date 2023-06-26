@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Tests\Feature\Question;
 use Carbon\Carbon;
 use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
+use Transave\ScolaCbt\Actions\Question\GetQuestion;
 use Transave\ScolaCbt\Actions\Question\SearchQuestion;
 use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Question;
@@ -23,9 +24,27 @@ class SearchQuestionsTest extends TestCase
     }
 
     /** @test */
-    function can_search_question_using_via_action()
+    public function can_search_question_via_action()
     {
         $response = (new SearchQuestion(Question::class, []))->execute();
+        $array = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $array['success']);
+        $this->assertNotNull($array['data']);
+    }
+
+    /** @test */
+    public function can_search_question_via_action_with_relationship(){
+        $response = (new SearchQuestion(Question::class, ['Exam']) )->execute();
+        $array = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $array['success']);
+        $this->assertNotNull($array['data']);
+    }
+
+    /** @test */
+    public function can_search_single_question_via_action_with_relationship()
+    {
+        $question = Question::query()->inRandomOrder()->first();
+        $response = (new GetQuestion(['id' => $question->id]))->execute();
         $array = json_decode($response->getContent(), true);
         $this->assertEquals(true, $array['success']);
         $this->assertNotNull($array['data']);

@@ -11,15 +11,14 @@ class SearchQuestion
     private function searchTerms()
     {
         $search = $this->searchParam;
-        $this->queryBuilder->where(function ($query) use ($search) {
+        $this->queryBuilder = $this->queryBuilder->where(function ($query) use ($search) {
             $query
-                ->where('question', function ($query1) use ($search) {
-                    $query1->where('score_obtainable', 'like', "%$search%")
-                        ->orWhere('question_type', 'like', "%$search%")
-                        ->orWhere('question', 'like', "%$search%")
-                        ->orWhere('answers', 'like', "%$search%");
-                });
+                ->where('score_obtainable', 'like', "%$search%")
+                ->orWhere('question_type', 'like', "%$search%")
+                ->orWhere('question', 'like', "%$search%")
+                ->orWhere('answers', 'like', "%$search%");
         });
+
         return $this;
     }
 }

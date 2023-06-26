@@ -23,10 +23,11 @@ class UpdateQuestionTest extends TestCase
 
     /** @test */
 
-    public function can_update_answer()
+    public function can_update_question()
     {
         $question = Question::first();
         $response = $this->json('POST', "/cbt/questions/{$question->id}", $this->request);
+        dd($response);
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
