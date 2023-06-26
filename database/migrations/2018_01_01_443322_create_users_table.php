@@ -31,6 +31,20 @@ class CreateUsersTable extends Migration
             $table->index(['is_verified']);
             $table->index(['role']);
         });
+
+        \Illuminate\Support\Facades\DB::table('users')
+            ->insert([
+                'id' => \Illuminate\Support\Str::uuid(),
+                'first_name' => 'Scola-CBT',
+                'last_name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+                'is_verified' => 1,
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
     }
 
     /**
