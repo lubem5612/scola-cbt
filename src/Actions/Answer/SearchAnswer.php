@@ -15,7 +15,6 @@ class SearchAnswer
         $search = $this->searchParam;
         $this->queryBuilder->where(function ($query) use ($search) {
             $query
-                ->where('content', 'like', "%$search%")
                 ->orWhereHas('user', function ($query1) use ($search) {
                     $query1->where('first_name', 'like', "%$search%")
                         ->orWhere('last_name', 'like', "%$search%")

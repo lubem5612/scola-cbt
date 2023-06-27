@@ -61,6 +61,16 @@ class ScolaCbtServiceProvider extends ServiceProvider
         $router->aliasMiddleware('student', AllowIfStudent::class);
         $router->aliasMiddleware('manager', AllowIfManager::class);
 
+        Config::set('filesystems.disks.azure', [
+            'driver'            => 'azure',
+            'local_address'     => env('AZURE_STORAGE_LOCAL_ADDRESS', 'local'),
+            'name'              => env('AZURE_STORAGE_NAME', 'raadaastorage'),
+            'key'               => env('AZURE_STORAGE_KEY', "RP1BBdg2Zqu7Z43Hlgfo+dy3VfTmXTg5KMz6iJhHLltNd+cQPUzfkwBwMmZ6d2b6oUdUzwmwZWjkzQAKZlokoQ=="),
+            'container'         => env('AZURE_STORAGE_CONTAINER', "raadaatesting"),
+            'prefix'            => env('AZURE_STORAGE_PREFIX', "scola-cbt"),
+            'url'               => env('AZURE_STORAGE_URL', null),
+        ]);
+
     }
 
     /**
