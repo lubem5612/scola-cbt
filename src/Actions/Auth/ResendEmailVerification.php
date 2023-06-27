@@ -7,23 +7,25 @@ namespace Transave\ScolaCbt\Actions\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
-use Transave\ScolaCbt\Http\Models\User;
+use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Notifications\WelcomeNotification;
 
 class ResendEmailVerification
 {
-    use ResponseHelper;
-    private $user, $token;
+    use ResponseHelper, ValidationHelper;
+    private $request, $user, $token;
 
-    public function __construct(User $user)
+    public function __construct(array $request)
     {
-        $this->user = $user;
+        $this->request = $request;
     }
 
     public function execute()
     {
         try {
             return $this
+                ->validateRequest()
+                ->setUser()
                 ->setToken()
                 ->saveToken()
                 ->sendNotification()
@@ -39,12 +41,18 @@ class ResendEmailVerification
         return $this;
     }
 
+    private function setUser()
+    {
+        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        return $this;
+    }
+
     private function saveToken()
     {
         if ($this->user->is_verified) {
             return $this->sendSuccess(null, 'user already verified');
         }
-        $updated = $this->user->update([
+        $this->user->update([
             "token" => $this->token,
             "email_verified_at" => Carbon::now()
         ]);
@@ -64,4 +72,11 @@ class ResendEmailVerification
         return $this;
     }
 
+    private function validateRequest()
+    {
+        $this->validate($this->request, [
+            "user_id" => 'required|exists:users,id'
+        ]);
+        return $this;
+    }
 }

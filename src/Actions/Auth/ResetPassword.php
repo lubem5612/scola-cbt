@@ -45,11 +45,11 @@ class ResetPassword
         $this->user = User::query()->where("email", $this->passwordReset->email)->first();
 
         if (empty($this->user)) {
-            return $this->sendError("No User with the token supplied", [], 404);
+            return $this->sendError("No user with the token supplied", [], 404);
         }
 
         if (Carbon::now()->gt(Carbon::parse($this->passwordReset->created_at)->addHours(1))) {
-            return $this->sendError("Token Expire", [], 403);
+            return $this->sendError("Token expired", [], 403);
         }
         return $this;
     }

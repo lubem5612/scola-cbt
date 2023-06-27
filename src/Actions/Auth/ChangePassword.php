@@ -2,6 +2,7 @@
 
 namespace Transave\ScolaCbt\Actions\Auth;
 
+use Illuminate\Support\Facades\Hash;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\User;
@@ -11,11 +12,10 @@ class ChangePassword
     use ResponseHelper, ValidationHelper;
 
     private $request;
-    private $user;
+    private User $user;
 
-    public function __construct(User $user, array $request)
+    public function __construct(array $request)
     {
-        $this->user = $user;
         $this->request = $request;
     }
 
@@ -23,25 +23,36 @@ class ChangePassword
     {
         try {
             return $this
-                ->validatePassword()
-                ->updatePassword();
+                ->validateRequest()
+                ->setUser()
+                ->changePassword();
         } catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
     }
 
-    private function validatePassword()
+    private function setUser()
+    {
+        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        return $this;
+    }
+    private function validateRequest()
     {
         $this->validate($this->request, [
-            'password' => 'string|min:6',
+            'password' => 'required|string|min:6',
+            'old_password' => 'required|string',
+            'user_id' => 'required|exists:users,id'
         ]);
         return $this;
     }
 
-    private function updatePassword()
+    private function changePassword()
     {
-        $this->user->password = bcrypt($this->request['password']);
-        $this->user->save();
-        return $this->sendSuccess($this->user, 'Password changed successfully');
+        if (Hash::check($this->request['old_password'], $this->user->password)) {
+            $this->user->password = bcrypt($this->request['password']);
+            $this->user->save();
+            return $this->sendSuccess($this->user->refresh(), 'Password changed successfully');
+        }
+        return $this->sendError('password did not match existing one', [], 403);
     }
 }

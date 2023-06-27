@@ -103,27 +103,7 @@ class AuthController extends Controller
      */
     public function resendToken(Request $request)
     {
-        return (new ResendEmailVerification($request->user()))->execute();
-    }
-
-
-    public function updateEmail(Request $request, User $user)
-    {
-        $input = $request->all();
-
-        $action = new ChangeEmail($user, $input);
-        $response = $action->execute();
-
-        return response()->json($response->getContent(), $response->getStatusCode());
-
-    }
-
-    public function changePassword(Request $request)
-    {
-        $user = $request->user();
-        $inputs = $request->all();
-
-        return (new ChangePassword($user, $inputs))->execute();
+        return (new ResendEmailVerification($request->all()))->execute();
     }
 
 }

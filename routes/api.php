@@ -36,14 +36,13 @@ Route::prefix('general')->as('cbt.')->group(function () {
 });
 
 Route::as('cbt.')->group(function () {
+    //Auth Routes
     Route::post('login', [ AuthController::class, 'login'])->name('login');
     Route::post('register', [ AuthController::class, 'register'])->name('register');
     Route::get('user', [ AuthController::class, 'user'])->name('user');
+    Route::post('resend-token', [ AuthController::class, 'resendToken'])->name('resend-token');
+    Route::post('verify-email', [ AuthController::class, 'verifyEmail'])->name('verify-email');
     Route::any('logout', [ AuthController::class, 'logout'])->name('logout');
-    Route::put('{user}/email', [AuthController::class, 'updateEmail'])->name('updateEmail');
-    Route::post('change-password', [AuthController::class, 'changePassword'])->name('changePassword');
-
-
 
     //Exam Routes
     Route::prefix('exams')->as('exams.')->group(function() {
@@ -75,6 +74,8 @@ Route::as('cbt.')->group(function () {
     Route::prefix('users')->as('users.')->group(function() {
         Route::get('/', [UserController::class, 'users'])->name('index');
         Route::post('/{id}', [UserController::class, 'update'])->name('update');
+        Route::patch('change-email', [UserController::class, 'changeEmail'])->name('change-email');
+        Route::patch('change-password', [UserController::class, 'changePassword'])->name('change-password');
     });
 
 });

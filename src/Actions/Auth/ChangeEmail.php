@@ -12,37 +12,43 @@ class ChangeEmail
     private $request;
     private User $user;
 
-    public function __construct(User $user, array $request)
+    public function __construct(array $request)
     {
         $this->request = $request;
-        $this->user = $user;
     }
 
     public function execute()
     {
         try {
             return $this
-                ->validateNewEmail()
+                ->setUser()
+                ->validateRequest()
                 ->updateEmail();
         } catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
     }
 
-    private function validateNewEmail()
+    private function validateRequest()
     {
         $this->validate($this->request, [
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email|unique:users,email',
+            'user_id' => 'required|exists:users,id'
         ]);
         return $this;
     }
 
+    private function setUser()
+    {
+        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        return $this;
+    }
 
     private function updateEmail()
     {
-        $user = User::findOrFail($this->user->id);
-        $user->fill($this->request)->save();
-        return $this->sendSuccess($user, 'Email updated successfully');
-
+        $this->user->update([
+            'email' => $this->request['email']
+        ]);
+        return $this->sendSuccess($this->user->refresh(), 'Email updated successfully');
     }
 }

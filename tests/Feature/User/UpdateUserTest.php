@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Tests\Feature\User;
 
 use Faker\Factory;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Examiner;
@@ -35,6 +36,35 @@ class UpdateUserTest extends TestCase
     {
         $user = config('scola-cbt.auth_model')::query()->inRandomOrder()->first();
         $response = $this->json('POST', "/cbt/users/{$user->id}", $this->request);
+        $response->assertStatus(200);
+
+        $arrayData = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $arrayData['success']);
+        $this->assertNotNull($arrayData['data']);
+    }
+
+    /** @test */
+    function can_change_authenticated_user_email()
+    {
+        $data = [
+            'email' => $this->faker->email,
+        ];
+        $response = $this->json('PATCH', "/cbt/users/change-email", $data);
+        $response->assertStatus(200);
+
+        $arrayData = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $arrayData['success']);
+        $this->assertNotNull($arrayData['data']);
+    }
+
+    /** @test */
+    function can_change_authenticated_user_password()
+    {
+        $data = [
+            'old_password' => 'password',
+            'password' => Str::random(10)
+        ];
+        $response = $this->json('PATCH', "/cbt/users/change-password", $data);
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);

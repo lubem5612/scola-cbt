@@ -12,7 +12,8 @@ use Transave\ScolaCbt\Http\Models\User;
 class VerifyEmail
 {
     use ResponseHelper, ValidationHelper;
-    private $user, $request;
+    private User $user;
+    private array $request;
 
     public function __construct(array $request)
     {
