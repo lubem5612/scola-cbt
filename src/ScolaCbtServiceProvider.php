@@ -102,7 +102,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
         ], 'cbt-config');
 
         // Publishing migrations
-        $this->registerMigrations(__DIR__ . '/../database/migrations');
+//        $this->registerMigrations(__DIR__ . '/../database/migrations');
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'cbt-migrations');
