@@ -10,8 +10,8 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name', 100)->unique();
-            $table->string('code', 11)->nullable()->index();
+            $table->string('name')->index();
+            $table->string('code')->nullable()->index();
             $table->integer('credit_load')->default(1)->index();
 
             $table->timestamps();
