@@ -43,12 +43,12 @@ return [
             'rules' => [
                 'store' => [
                     'name' => 'required|string',
-                    'code' => 'required|string',
+                    'code' => 'required|string|max:10',
                     'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
                 ],
                 'update' => [
                     'name' => 'sometimes|required|string',
-                    'code' => 'sometimes|required|string',
+                    'code' => 'sometimes|required|string|max:10',
                     'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
                 ]
             ],
