@@ -10,6 +10,7 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('department_id')->constrained('departments')->cascadeOnDelete();
             $table->string('name', 100)->index();
             $table->string('code',11)->nullable()->index();
             $table->integer('credit_load')->default(1)->index();

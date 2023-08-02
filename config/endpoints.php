@@ -42,6 +42,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Course::class,
             'rules' => [
                 'store' => [
+                    'department_id' => 'required|exists:departments,id',
                     'name' => 'required|string',
                     'code' => 'required|string|max:10',
                     'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
