@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Tests\Feature\Restful;
 
 use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Question;
 use Transave\ScolaCbt\Http\Models\User;
@@ -74,7 +75,8 @@ class CreateResourceTest extends TestCase
         $data = [
             'name' => $this->faker->name,
             'credit_load' => rand(1, 6),
-            'code' => $this->faker->countryCode.'-'.$this->faker->randomDigit()
+            'code' => $this->faker->countryCode.'-'.$this->faker->randomDigit(),
+            'department_id' => Department::factory()->create()->id,
         ];
         $response = $this->json('POST', '/cbt/general/courses', $data, ['Accept' => 'application/json']);
         $response->assertStatus(200);

@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Transave\ScolaCbt\Http\Models\Course;
+use Transave\ScolaCbt\Http\Models\Department;
 
 class CourseFactory extends Factory
 {
@@ -21,7 +22,8 @@ class CourseFactory extends Factory
         return [
             'name' => $this->faker->name,
             'code' => 'SC-'.rand(100, 999),
-            'credit_load' => rand(1, 6)
+            'credit_load' => rand(1, 6),
+            'department_id' => Department::factory(),
         ];
     }
 }
