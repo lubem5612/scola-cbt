@@ -51,7 +51,7 @@ class SearchAnswersTest extends TestCase
         $perPage = 2;
         $this->testData();
         $response = $this->json('GET', "/cbt/answers?per_page={$perPage}");
-dd($response);
+
         $array = json_decode($response->getContent(), true);
         $this->assertEquals(true, $array['success']);
         $this->assertNotNull($array['data']);
