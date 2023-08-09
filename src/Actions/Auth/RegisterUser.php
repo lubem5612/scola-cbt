@@ -46,7 +46,7 @@ class RegisterUser
 
     private function setUserRole() :self
     {
-        if (array_key_exists('role', $this->request)) {
+        if (!array_key_exists('role', $this->request)) {
             $this->request['role'] = 'student';
         }
         return $this;
