@@ -13,7 +13,7 @@ class DeleteQuestionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->question = Question::factory(10)->create();
+        Question::factory(10)->create();
         $user = config('scola-cbt.auth_model')::factory()->create(['role' => 'admin']);
         Sanctum::actingAs($user);
     }
