@@ -44,7 +44,7 @@ class CreateAnswer
     {
         if (!array_key_exists('user_id', $this->validatedData))
         {
-            $this->validatedData['user_id'] = auth()->user();
+            $this->validatedData['user_id'] = auth()->id();
         }
         return $this;
     }
