@@ -27,7 +27,6 @@ class RegisterTest extends TestCase
         $json = json_decode($response->getContent(), true);
         $this->assertArrayHasKey('success', $json);
         $this->assertArrayHasKey('data', $json);
-        dd($json);
 
         $this->assertEquals(true, $json['success']);
         $this->assertNotNull($json['data']);
