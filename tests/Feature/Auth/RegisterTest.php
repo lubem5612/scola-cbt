@@ -5,11 +5,9 @@ namespace Transave\ScolaCbt\Tests\Feature\Auth;
 
 
 use Faker\Factory;
-use Transave\ScolaCbt\Actions\Auth\RegisterExaminer;
-use Transave\ScolaCbt\Actions\Auth\RegisterManager;
-use Transave\ScolaCbt\Actions\Auth\RegisterStaff;
-use Transave\ScolaCbt\Actions\Auth\RegisterStudent;
-use Transave\ScolaCbt\Actions\Auth\RegisterUser;
+use Illuminate\Http\UploadedFile;
+use Transave\ScolaCbt\Actions\Auth\Register;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -21,57 +19,15 @@ class RegisterTest extends TestCase
         parent::setUp();
         $this->getTestData();
     }
-    /** @test */
-    public function can_register_user()
-    {
-        $response = (new RegisterUser($this->request))->execute();
-        $this->assertEquals(true, $response['success']);
-        $this->assertNotNull($response['data']);
-    }
 
     /** @test */
-    public function can_register_staff()
+    public function can_register_account_action()
     {
-        $response = (new RegisterStaff($this->request))->execute();
+        $response = (new Register($this->request))->execute();
         $json = json_decode($response->getContent(), true);
         $this->assertArrayHasKey('success', $json);
         $this->assertArrayHasKey('data', $json);
-
-        $this->assertEquals(true, $json['success']);
-        $this->assertNotNull($json['data']);
-    }
-
-    /** @test */
-    public function can_register_examiner()
-    {
-        $response = (new RegisterExaminer($this->request))->execute();
-        $json = json_decode($response->getContent(), true);
-        $this->assertArrayHasKey('success', $json);
-        $this->assertArrayHasKey('data', $json);
-
-        $this->assertEquals(true, $json['success']);
-        $this->assertNotNull($json['data']);
-    }
-
-    /** @test */
-    public function can_register_student()
-    {
-        $response = (new RegisterStudent($this->request))->execute();
-        $json = json_decode($response->getContent(), true);
-        $this->assertArrayHasKey('success', $json);
-        $this->assertArrayHasKey('data', $json);
-
-        $this->assertEquals(true, $json['success']);
-        $this->assertNotNull($json['data']);
-    }
-
-    /** @test */
-    public function can_register_manager()
-    {
-        $response = (new RegisterManager($this->request))->execute();
-        $json = json_decode($response->getContent(), true);
-        $this->assertArrayHasKey('success', $json);
-        $this->assertArrayHasKey('data', $json);
+        dd($json);
 
         $this->assertEquals(true, $json['success']);
         $this->assertNotNull($json['data']);
@@ -98,8 +54,11 @@ class RegisterTest extends TestCase
             'last_name' => $faker->name,
             'role' => $faker->randomElement(['student', 'staff', 'admin', 'manager', 'examiner']),
             'password' => 'password1234',
-            'phone_number' => $faker->phoneNumber,
+            'phone' => $faker->phoneNumber,
+            'registration_number' => $faker->randomDigit(),
+            'department_id' => Department::factory()->create()->id,
             'address' => $faker->address,
+            'photo' => UploadedFile::fake()->image('pic.jpg'),
         ];
     }
 
