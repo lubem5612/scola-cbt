@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Auth\ChangeEmail;
 use Transave\ScolaCbt\Actions\Auth\ChangePassword;
+use Transave\ScolaCbt\Actions\User\DeleteUser;
 use Transave\ScolaCbt\Actions\User\SearchUsers;
 use Transave\ScolaCbt\Actions\User\UpdateUser;
 
@@ -65,5 +66,17 @@ class UserController extends Controller
     {
         $input = $request->merge(['user_id' => auth()->id()]);
         return (new ChangePassword($input->all()))->execute();
+    }
+
+
+    /**
+     * Delete a specified account
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     */
+    public function destroy($id)
+    {
+        return (new DeleteUser(['user_id' => $id]))->execute();
     }
 }

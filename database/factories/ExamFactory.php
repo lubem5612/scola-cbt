@@ -24,9 +24,9 @@ class ExamFactory extends Factory
             'exam_type' => $this->faker->randomElement(config('scola-cbt.question_type')),
             'max_score_obtainable' => 100,
             'exam_mode' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
-            'duration' => $this->faker->randomDigit(),
-            'start_date' => $this->faker->time,
-            'end_date' => $this->faker->time,
+            'start_time' => $this->faker->time('H:i'),
+            'end_time' => $this->faker->time('H:i'),
+            'exam_date' => $this->faker->time,
             'instruction' => $this->faker->sentence(20),
             'venue' => $this->faker->city,
         ];

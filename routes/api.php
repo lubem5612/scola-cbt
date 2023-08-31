@@ -76,6 +76,7 @@ Route::as('cbt.')->group(function () {
         Route::post('/{id}', [UserController::class, 'update'])->name('update');
         Route::patch('change-email', [UserController::class, 'changeEmail'])->name('change-email');
         Route::patch('change-password', [UserController::class, 'changePassword'])->name('change-password');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('delete');
     });
 
 });

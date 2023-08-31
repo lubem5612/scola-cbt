@@ -84,9 +84,9 @@ class UpdateExam
             'exam_type' => 'sometimes|required|string',
             'max_score_obtainable' => 'sometimes|required|integer',
             'exam_mode' => 'sometimes|required|string|max:80',
-            'duration' => 'nullable',
-            'start_date' => 'nullable',
-            'end_date' => 'nullable',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'exam_date' => 'nullable',
             'instruction' => 'sometimes|required|string',
             'venue' => 'sometimes|required|string',
         ]);

@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
             $table->float('score_obtainable', 6, 2)->default(0)->index();
             $table->text('question');
             $table->string('file', 700)->nullable();
-            $table->json('answers')->nullable();
+            $table->string('answers')->nullable();
             $table->timestamps();
 
             $table->index(['question_type']);

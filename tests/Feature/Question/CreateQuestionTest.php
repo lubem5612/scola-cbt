@@ -25,6 +25,7 @@ class CreateQuestionTest extends TestCase
 
     public function can_create_question(){
         $response = $this->json('POST', '/cbt/questions', $this->request);
+        dd($response);
         $response->assertStatus(200);
         $arrayData = json_decode($response->getContent(), true);
         $this->assertEquals(true, $arrayData['success']);

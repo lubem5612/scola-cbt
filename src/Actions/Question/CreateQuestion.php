@@ -58,7 +58,7 @@ class CreateQuestion
             'question_type' => 'required|string|max:50',
             'score_obtainable' => 'sometimes|required|integer',
             'question' => 'required|string',
-            'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx',
+            'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx,png',
             'answers' => 'sometimes|required|string',
         ]);
         $this->validatedData = Arr::except($this->validator->validated(), ['file']);
