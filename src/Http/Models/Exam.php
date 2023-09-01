@@ -23,6 +23,11 @@ class Exam extends Model
         return  $this->belongsTo(Session::class);
     }
 
+    public function faculty() : BelongsTo
+    {
+        return  $this->belongsTo(Faculty::class);
+    }
+
     public function course() : BelongsTo
     {
         return  $this->belongsTo(Course::class);

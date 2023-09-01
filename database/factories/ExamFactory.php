@@ -4,6 +4,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Session;
 use Transave\ScolaCbt\Http\Models\Course;
 use Transave\ScolaCbt\Http\Models\User;
@@ -17,6 +18,7 @@ class ExamFactory extends Factory
         return [
             'user_id' => config('scola-cbt.auth_model')::factory(),
             'course_id' => Course::factory(),
+            'faculty_id' => Faculty::factory(),
             'department_id' => Department::factory(),
             'session_id' => Session::factory(),
             'semester' => $this->faker->randomElement(config('scola-cbt.semesters')),

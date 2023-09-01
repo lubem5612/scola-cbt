@@ -36,7 +36,7 @@ class CreateExam
     private function createExam()
     {
         $exam = Exam::query()->create($this->request);
-        return $this->sendSuccess($exam->load('user', 'course', 'department', 'session'), 'exam created successfully');
+        return $this->sendSuccess($exam->load('user', 'course', 'faculty', 'department', 'session'), 'exam created successfully');
     }
 
     private function setSession() : self
@@ -68,6 +68,7 @@ class CreateExam
         $this->validate($this->request, [
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
+            'faculty_id' => 'required|exists:faculties,id',
             'department_id' => 'required|exists:departments,id',
             'session_id' => 'sometimes|required|exists:sessions,id',
             'semester' => 'required|string|max:50',

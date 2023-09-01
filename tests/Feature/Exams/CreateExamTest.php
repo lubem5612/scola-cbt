@@ -5,11 +5,11 @@ namespace Transave\ScolaCbt\Tests\Feature\Exams;
 
 
 use Faker\Factory;
-use Illuminate\Foundation\Auth\User;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Actions\Exam\CreateExam;
 use Transave\ScolaCbt\Http\Models\Course;
 use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Session;
 use Transave\ScolaCbt\Tests\TestCase;
 
@@ -49,6 +49,7 @@ class CreateExamTest extends TestCase
         $this->request = [
             'user_id' => config('scola-cbt.auth_model')::factory()->create()->id,
             'course_id' => Course::factory()->create()->id,
+            'faculty_id' => Faculty::factory()->create()->id,
             'department_id' => Department::factory()->create()->id,
             'session_id' => Session::factory()->create()->id,
             'semester' => $this->faker->randomElement(config('scola-cbt.semesters')),

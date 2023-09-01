@@ -38,7 +38,7 @@ class UpdateExam
     private function updateExam()
     {
         $this->exam->fill($this->request)->save();
-        return $this->sendSuccess($this->exam->refresh()->load('user', 'course', 'department', 'session'), 'exam updated successfully');
+        return $this->sendSuccess($this->exam->refresh()->load('user', 'course', 'faculty', 'department', 'session'), 'exam updated successfully');
     }
 
     private function setExam() : self
@@ -77,6 +77,7 @@ class UpdateExam
             'exam_id' => 'required|exists:exams,id',
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'sometimes|required|exists:courses,id',
+            'faculty_id' => 'sometimes|required|exists:faculties,id',
             'department_id' => 'sometimes|required|exists:departments,id',
             'session_id' => 'sometimes|required|exists:sessions,id',
             'semester' => 'sometimes|required|string|max:50',
