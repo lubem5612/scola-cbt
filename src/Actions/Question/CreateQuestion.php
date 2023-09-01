@@ -39,6 +39,14 @@ class CreateQuestion
         return $this->sendSuccess($question->load('exam'), 'question created successfully');
     }
 
+//    private function setAnswers()
+//    {
+//        if (array_key_exists('answers', $this->validatedData)) {
+//            //[a => big, b => medium, c => large]; [ 1, 3, 4, 6 ]
+//            $this->validatedData['answers'] = json_encode( $this->validatedData['answers']);
+//        }
+//    }
+
     private function uploadFile()
     {
         if (request()->hasFile('file')) {
