@@ -28,7 +28,7 @@ class CreateExamsTable extends Migration
             $table->timestamps();
 
             $table->index(['semester', 'level']);
-            $table->index(['exam_type']);
+            $table->index(['exam_name']);
             $table->index(['max_score_obtainable']);
         });
     }
