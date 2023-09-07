@@ -73,11 +73,12 @@ trait ResponseHelper
     public function sendServerError(\Exception $exception, $code=500)
     {
         if ($this->isValidationError($exception)) {
+            $code = 422;
             $response = [
                 "success" => false,
                 "message" => "Validation error",
                 "data" => null,
-                "errors" => $exception->getMessage(),
+                "errors" => json_decode($exception->getMessage()),
             ];
         }else {
             $response = [

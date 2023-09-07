@@ -1,14 +1,16 @@
 <?php
 
-namespace Transave\ScolaCbt\Actions\Question;
+
+namespace Transave\ScolaCbt\Actions\Option;
+
 
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\FileUploadHelper;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\Question;
+use Transave\ScolaCbt\Http\Models\Option;
 
-class CreateQuestion
+class CreateOption
 {
     use ResponseHelper, ValidationHelper;
 
@@ -26,23 +28,23 @@ class CreateQuestion
                 $this
                     ->validateRequest()
                     ->uploadFile()
-                    ->createQuestion();
+                    ->createQuestionOption();
         } catch (\Exception $e) {
             return $this->sendServerError($e);
         }
     }
 
 
-    private function createQuestion()
+    private function createQuestionOption()
     {
-        $question = Question::query()->create($this->validatedData);
-        return $this->sendSuccess($question->load('exam'), 'question created successfully');
+        $question = Option::query()->create($this->validatedData);
+        return $this->sendSuccess($question->load('question'), 'question option created successfully');
     }
 
     private function uploadFile()
     {
-        if (request()->hasFile('file')) {
-            $response = FileUploadHelper::UploadFile(request()->file('file'), 'cbt/questions');
+        if (array_key_exists('file', $this->request)) {
+            $response = FileUploadHelper::UploadFile($this->request['file'], 'cbt/questions');
             if ($response['success']) {
                 $this->validatedData['file'] = $response['upload_url'];
             }
@@ -53,15 +55,13 @@ class CreateQuestion
     private function validateRequest()
     {
 
-        $this->validate($this->request, [
-            'exam_id' => 'required|exists:exams,id',
-            'question_type' => 'required|string|max:50',
-            'score_obtainable' => 'sometimes|required|integer',
-            'question' => 'required|string',
+        $data = $this->validate($this->request, [
+            'question_id' => 'required|exists:questions,id',
+            'is_correct_option' => 'nullable|in:yes,no',
+            'content' => 'nullable|string',
             'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx,png',
-            'answers' => 'sometimes|required|string',
         ]);
-        $this->validatedData = Arr::except($this->validator->validated(), ['file']);
+        $this->validatedData = Arr::except($data, ['file']);
         return $this;
     }
 }
