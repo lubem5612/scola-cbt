@@ -13,7 +13,7 @@ class CreateOptionsTable extends Migration
             $table->foreignUuid('question_id')->constrained('questions')->cascadeOnDelete();
             $table->enum('is_correct_option', ['yes', 'no'])->default('no')->index();
             $table->string('content', 700)->index();
-            $table->string('file', 700)->index();
+            $table->string('file', 700)->nullable()->index();
 
             $table->timestamps();
         });

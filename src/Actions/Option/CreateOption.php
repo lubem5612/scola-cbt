@@ -59,7 +59,7 @@ class CreateOption
             'question_id' => 'required|exists:questions,id',
             'is_correct_option' => 'nullable|in:yes,no',
             'content' => 'nullable|string',
-            'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx,png',
+            'file' => 'nullable|file|max:4000|mimes:pdf,docx,png',
         ]);
         $this->validatedData = Arr::except($data, ['file']);
         return $this;
