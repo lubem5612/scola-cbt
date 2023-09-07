@@ -25,13 +25,15 @@ trait SearchHelper
     public function execute()
     {
         try {
-            $this->modelHasRelationship();
-            $this->querySingleResource();
-            $this->handleTimeStampQuery();
-            $this->searchTerms();
-            $this->groupedBy();
-            $this->handlePagination();
-            return $this->sendSuccess($this->output, 'query returned Ok');
+            return
+                $this
+                    ->modelHasRelationship()
+                    ->handleTimeStampQuery()
+                    ->searchTerms()
+                    ->groupedBy()
+                    ->handlePagination()
+                    ->querySingleResource()
+                    ->sendSuccess($this->output, 'query returned Ok');
 
         }catch (\Exception $ex) {
             return $this->sendServerError($ex);
@@ -80,18 +82,17 @@ trait SearchHelper
         return $this;
     }
 
-    private function searchTerms()
+    protected function searchTerms()
     {
         //
         return $this;
     }
 
-    private function groupedBy()
+    protected function groupedBy()
     {
         if (is_null($this->id) && !isset($this->id)) {
             $this->queryBuilder = $this->queryBuilder->orderBy("created_at", "DESC");
         }
         return $this;
     }
-
 }

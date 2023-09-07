@@ -6,6 +6,7 @@ use Transave\ScolaCbt\Http\Controllers\AnswerController;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\QuestionController;
+use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
@@ -31,7 +32,7 @@ Route::prefix('general')->as('cbt.')->group(function () {
     Route::get('sessions', [SearchController::class, 'indexSessions'])->name('sessions');
     Route::get('faculties', [SearchController::class, 'indexFaculties'])->name('faculties');
     Route::get('departments', [SearchController::class, 'indexDepartments'])->name('departments');
-    Route::get('question-options', [SearchController::class, 'indexQuestionOptions'])->name('options');
+//    Route::get('question-options', [SearchController::class, 'indexQuestionOptions'])->name('options');
     Route::get('courses', [SearchController::class, 'indexCourses'])->name('courses');
 });
 
@@ -60,6 +61,15 @@ Route::as('cbt.')->group(function () {
         Route::get('/{id}', [AnswerController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [AnswerController::class, 'update'])->name('update');
         Route::delete('/{id}', [AnswerController::class, 'destroy'])->name('delete');
+    });
+
+    //Question Options Routes
+    Route::prefix('question-options')->as('options.')->group(function() {
+        Route::get('/', [ QuestionOptionController::class, 'index'])->name('index');
+        Route::post('/', [QuestionOptionController::class, 'create'])->name('store');
+        Route::get('/{id}', [QuestionOptionController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [QuestionOptionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [QuestionOptionController::class, 'destroy'])->name('delete');
     });
 
     //Question Routes

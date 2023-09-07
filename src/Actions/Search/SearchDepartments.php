@@ -13,6 +13,10 @@ class SearchDepartments
     private function searchTerms()
     {
         $search = $this->searchParam;
+        $item = request()->query('faculty_id');
+        if (isset($item)) {
+            $this->queryBuilder->where('faculty_id', $item);
+        }
         $this->queryBuilder
             ->where('name', 'like', "%{$search}%")
             ->orWhereHas('faculty', function ($query) use ($search) {
