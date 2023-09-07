@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Actions\Exam;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\Question;
 
 class GetExam
 {
@@ -34,7 +35,7 @@ class GetExam
     private function setExam() :self
     {
         $this->exam = Exam::query()
-            ->with(['user', 'course', 'department', 'department.faculty', 'session'])
+            ->with(['user', 'course', 'department', 'department.faculty', 'session', 'questions'])
             ->find($this->request['id']);
         return  $this;
     }
