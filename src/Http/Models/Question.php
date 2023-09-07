@@ -27,6 +27,11 @@ class Question extends Model
         return $this->hasMany(Option::class, 'question_id', 'id');
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'question_id', 'id');
+    }
+
 
     protected static function newFactory()
     {

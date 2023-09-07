@@ -18,7 +18,7 @@ class SearchExam
                 ->where('level', 'like', "%$search%")
                 ->orWhere('semester', 'like', "%$search%")
                 ->orWhere('exam_mode', 'like', "%$search%")
-                ->orWhere('exam_type', 'like', "%$search%");
+                ->orWhere('exam_name', 'like', "%$search%");
         });
 
         return $this;

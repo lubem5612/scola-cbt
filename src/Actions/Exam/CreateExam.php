@@ -73,7 +73,7 @@ class CreateExam
             'session_id' => 'sometimes|required|exists:sessions,id',
             'semester' => 'required|string|max:50',
             'level' => 'required|string|max:20',
-            'exam_type' => 'required|string',
+            'exam_name' => 'required|string|max:250',
             'max_score_obtainable' => 'sometimes|required|integer',
             'exam_mode' => 'sometimes|required|string|max:80',
             'start_time' => 'nullable|date_format:H:i',

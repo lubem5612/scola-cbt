@@ -18,7 +18,7 @@ class CreateExamsTable extends Migration
             $table->foreignUuid('session_id')->constrained('sessions')->cascadeOnDelete();
             $table->string('semester', 20);
             $table->string('level', 20);
-            $table->string('exam_type', 50);
+            $table->string('exam_name', 200);
             $table->float('max_score_obtainable', 6, 2)->default(0);
             $table->string('exam_mode', 50)->index();
             $table->time('start_time')->nullable();
@@ -29,7 +29,7 @@ class CreateExamsTable extends Migration
             $table->timestamps();
 
             $table->index(['semester', 'level']);
-            $table->index(['exam_type']);
+            $table->index(['exam_name']);
             $table->index(['max_score_obtainable']);
         });
     }

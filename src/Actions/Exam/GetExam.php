@@ -34,7 +34,7 @@ class GetExam
     private function setExam() :self
     {
         $this->exam = Exam::query()
-            ->with(['user', 'course', 'department', 'session'])
+            ->with(['user', 'course', 'department', 'department.faculty', 'session'])
             ->find($this->request['id']);
         return  $this;
     }

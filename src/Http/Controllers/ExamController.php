@@ -31,7 +31,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        return (new SearchExam(Exam::class, ['user', 'course', 'department', 'session']))->execute();
+        return (new SearchExam(Exam::class, ['user', 'course', 'department', 'session', 'questions']))->execute();
     }
 
     /**
