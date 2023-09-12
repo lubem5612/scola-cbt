@@ -23,6 +23,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'is_verified',
+        'email_verified_at'
     ];
 
     protected $casts = [
@@ -35,12 +37,12 @@ class User extends Authenticatable
 
     public function staff() : HasOne
     {
-        return $this->hasOne(Staff::class);
+        return $this->hasOne(Staff::class)->with(['department']);
     }
 
     public function examiner() : HasOne
     {
-        return $this->hasOne(Examiner::class);
+        return $this->hasOne(Examiner::class)->with(['department']);
     }
 
     public function manager() : HasOne
@@ -50,7 +52,7 @@ class User extends Authenticatable
 
     public function student() : HasOne
     {
-        return $this->hasOne(Student::class);
+        return $this->hasOne(Student::class)->with(['department']);
     }
 
     public function getDetailsAttribute()

@@ -9,6 +9,7 @@ use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
+use Transave\ScolaCbt\Http\Controllers\StudentController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
@@ -87,6 +88,11 @@ Route::as('cbt.')->group(function () {
         Route::patch('change-email', [UserController::class, 'changeEmail'])->name('change-email');
         Route::patch('change-password', [UserController::class, 'changePassword'])->name('change-password');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('students')->as('students.')->group(function() {
+        Route::get('exports', [ StudentController::class, 'export'])->name('export');
+        Route::post('upload', [StudentController::class, 'upload'])->name('upload');
     });
 
 });

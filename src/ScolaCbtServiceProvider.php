@@ -120,12 +120,12 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // Publishing the views.
         $this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/cbt'),
-        ], 'views');
+        ], 'cbt-views');
 
         // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/transave'),
-        ], 'scola-cbt.views');*/
+        $this->publishes([
+            __DIR__.'/../resources/assets' => public_path('vendor/scola-cbt'),
+        ], 'cbt-assets');
 
         // Publishing the translation files.
         /*$this->publishes([
