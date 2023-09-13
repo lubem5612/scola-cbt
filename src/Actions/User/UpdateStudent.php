@@ -40,8 +40,8 @@ class UpdateStudent
 
     private function handleFileUpload() : self
     {
-        if (request()->hasFile('photo')) {
-            $uploader = FileUploadHelper::UploadOrReplaceFile(request()->file('photo'), 'cbt/profiles', $this->student, 'photo');
+        if (array_key_exists('photo', $this->request)) {
+            $uploader = FileUploadHelper::UploadOrReplaceFile($this->request['photo'], 'cbt/profiles', $this->student, 'photo');
             if ($uploader['success']) {
                 $this->validatedData['photo'] = $uploader['upload_url'];
             }
