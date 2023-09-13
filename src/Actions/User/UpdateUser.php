@@ -24,8 +24,8 @@ class UpdateUser
             return $this
                 ->validateRequest()
                 ->getUser()
-                ->updateAccountDetails()
-                ->updateUser();
+                ->updateUser()
+                ->updateAccountDetails();
         }catch (\Exception $e) {
             return $this->sendServerError($e);
         }
@@ -34,15 +34,15 @@ class UpdateUser
     private function updateAccountDetails()
     {
         if ($this->user->role == 'student') {
-            (new UpdateStudent($this->request))->execute();
+            return (new UpdateStudent($this->request))->execute();
         }elseif ($this->user->role == 'staff') {
-            (new UpdateStaff($this->request))->execute();
+            return (new UpdateStaff($this->request))->execute();
         }elseif ($this->user->role == 'manager') {
-            (new UpdateManager($this->request))->execute();
+            return (new UpdateManager($this->request))->execute();
         }elseif ($this->user->role == 'examiner') {
-            (new UpdateExaminer($this->request))->execute();
+            return (new UpdateExaminer($this->request))->execute();
         }
-        return $this;
+        return $this->sendSuccess($this->user, 'user updated');
     }
 
     private function getUser()
@@ -55,7 +55,7 @@ class UpdateUser
     {
         $userData = Arr::only($this->validatedData, ['first_name', 'last_name']);
         $this->user->fill($userData)->save();
-        return $this->sendSuccess($this->user->refresh(), 'user updated successfully');
+        return $this;
     }
 
     private function validateRequest() : self
