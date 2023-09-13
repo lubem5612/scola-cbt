@@ -63,7 +63,7 @@ class UpdateStaff
             'phone' => 'sometimes|required|string|max:16|min:8',
             'address' => 'sometimes|required|string|max:255',
             'department_id' => 'sometimes|required|exists:departments,id',
-            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif',
+            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif,png,webp',
         ]);
         $this->validatedData = Arr::except($this->validator->validated(), ['photo']);
         return $this;
