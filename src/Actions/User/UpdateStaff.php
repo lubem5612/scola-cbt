@@ -53,7 +53,7 @@ class UpdateStaff
     {
         $input = Arr::only($this->validatedData, ['phone', 'address', 'department_id', 'photo']);
         $this->staff->fill($input)->save();
-        return $this->sendSuccess($this->staff->refresh(), 'staff updated successfully');
+        return $this->sendSuccess($this->staff->user->refresh(), 'staff updated successfully');
     }
 
     private function validateRequest() : self

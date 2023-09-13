@@ -53,7 +53,7 @@ class UpdateExaminer
     {
         $input = Arr::only($this->validatedData, ['phone', 'department_id', 'photo']);
         $this->examiner->fill($input)->save();
-        return $this->sendSuccess($this->examiner->refresh(), 'examiner updated successfully');
+        return $this->sendSuccess($this->examiner->user->refresh(), 'examiner updated successfully');
     }
 
     private function validateRequest() : self
