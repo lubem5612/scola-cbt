@@ -53,7 +53,7 @@ class UpdateStudent
     {
         $input = Arr::only($this->validatedData, ['registration_number', 'phone', 'address', 'department_id', 'current_level', 'photo']);
         $this->student->fill($input)->save();
-        return $this->sendSuccess($this->student->refresh(), 'student updated successfully');
+        return $this->sendSuccess($this->student->user->refresh(), 'student updated successfully');
     }
 
     private function validateRequest() : self
