@@ -53,7 +53,7 @@ class UpdateStaff
     {
         $input = Arr::only($this->validatedData, ['phone', 'address', 'department_id', 'photo']);
         $this->staff->fill($input)->save();
-        return $this->sendSuccess($this->staff->refresh(), 'staff updated successfully');
+        return $this->sendSuccess($this->staff->user->refresh(), 'staff updated successfully');
     }
 
     private function validateRequest() : self
@@ -63,7 +63,7 @@ class UpdateStaff
             'phone' => 'sometimes|required|string|max:16|min:8',
             'address' => 'sometimes|required|string|max:255',
             'department_id' => 'sometimes|required|exists:departments,id',
-            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif',
+            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif,png,webp',
         ]);
         $this->validatedData = Arr::except($this->validator->validated(), ['photo']);
         return $this;

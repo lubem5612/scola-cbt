@@ -34,7 +34,7 @@ class UserController extends Controller
     /**
      * Update a specified user account
      *
-     * @param Request $request
+     * @param Request $request)
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
      */

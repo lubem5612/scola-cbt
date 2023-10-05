@@ -53,7 +53,7 @@ class UpdateManager
     {
         $input = Arr::only($this->validatedData, ['phone', 'photo']);
         $this->manager->fill($input)->save();
-        return $this->sendSuccess($this->manager->refresh(), 'manager updated successfully');
+        return $this->sendSuccess($this->manager->user->refresh(), 'manager updated successfully');
     }
 
     private function validateRequest() : self
@@ -61,7 +61,7 @@ class UpdateManager
         $this->validate($this->request, [
             'user_id' => 'required|exists:users,id',
             'phone' => 'sometimes|required|string|max:16|min:8',
-            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif',
+            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif,png,webp',
         ]);
         $this->validatedData = Arr::except($this->validator->validated(), ['photo']);
         return $this;

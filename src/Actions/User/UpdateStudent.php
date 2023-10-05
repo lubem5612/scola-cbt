@@ -40,8 +40,8 @@ class UpdateStudent
 
     private function handleFileUpload() : self
     {
-        if (request()->hasFile('photo')) {
-            $uploader = FileUploadHelper::UploadOrReplaceFile(request()->file('photo'), 'cbt/profiles', $this->student, 'photo');
+        if (array_key_exists('photo', $this->request)) {
+            $uploader = FileUploadHelper::UploadOrReplaceFile($this->request['photo'], 'cbt/profiles', $this->student, 'photo');
             if ($uploader['success']) {
                 $this->validatedData['photo'] = $uploader['upload_url'];
             }
@@ -53,7 +53,7 @@ class UpdateStudent
     {
         $input = Arr::only($this->validatedData, ['registration_number', 'phone', 'address', 'department_id', 'current_level', 'photo']);
         $this->student->fill($input)->save();
-        return $this->sendSuccess($this->student->refresh(), 'student updated successfully');
+        return $this->sendSuccess($this->student->user->refresh(), 'student updated successfully');
     }
 
     private function validateRequest() : self
@@ -64,7 +64,7 @@ class UpdateStudent
             'phone' => 'sometimes|required|string|max:16|min:8',
             'address' => 'sometimes|required|string|max:255',
             'department_id' => 'sometimes|required|exists:departments,id',
-            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif',
+            'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif,png,webp',
             'current_level' => 'sometimes|required|integer|in:1,2,3,4,5,6'
         ]);
         $this->validatedData = Arr::except($this->validator->validated(), ['photo']);
