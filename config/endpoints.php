@@ -79,26 +79,26 @@ return [
             'relationships' => ['faculty'],
         ],
 
-//        'question-options' => [
-//            'model' => \Transave\ScolaCbt\Http\Models\Option::class,
-//            'rules' => [
-//                'store' => [
-//                    'question_id' => 'required|exists:questions,id',
-//                    'is_correct_option' => 'required|string|in:no,yes',
-//                    'content' => 'required|string'
-//                ],
-//                'update' => [
-//                    'question_id' => 'sometimes|required|exists:questions,id',
-//                    'is_correct_option' => 'sometimes|required|string|in:no,yes',
-//                    'content' => 'sometimes|required|string'
-//                ]
-//            ],
-//            'order' => [
-//                'column' => 'created_at',
-//                'pattern' => 'DESC',
-//            ],
-//            'relationships' => ['question'],
-//        ],
+        'question-options' => [
+            'model' => \Transave\ScolaCbt\Http\Models\Option::class,
+            'rules' => [
+                'store' => [
+                    'question_id' => 'required|exists:questions,id',
+                    'is_correct_option' => 'required|string|in:no,yes',
+                    'content' => 'required|string'
+                ],
+                'update' => [
+                    'question_id' => 'sometimes|required|exists:questions,id',
+                    'is_correct_option' => 'sometimes|required|string|in:no,yes',
+                    'content' => 'sometimes|required|string'
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['question'],
+        ],
     ],
 
     "prefix" => "general",

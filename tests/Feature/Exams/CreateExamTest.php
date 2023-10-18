@@ -54,7 +54,7 @@ class CreateExamTest extends TestCase
             'session_id' => Session::factory()->create()->id,
             'semester' => $this->faker->randomElement(config('scola-cbt.semesters')),
             'level' => $this->faker->randomElement(config('scola-cbt.levels')),
-            'exam_type' => $this->faker->randomElement(config('scola-cbt.question_type')),
+            'exam_name' => $this->faker->name,
             'max_score_obtainable' => 100,
             'exam_mode' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
             'start_time' => $this->faker->time('H:i'),
