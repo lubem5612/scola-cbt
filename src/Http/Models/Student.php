@@ -31,11 +31,15 @@ class Student extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function studentexams()
+    public function studentExams()
     {
         return $this->hasMany(StudentExam::class, 'student_id');
     }
 
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'student_exams', 'student_id', 'exam_id');
+    }
 
     protected static function newFactory()
     {

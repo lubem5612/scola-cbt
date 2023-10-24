@@ -1,20 +1,16 @@
 <?php
 
 
-namespace Transave\ScolaCbt\Actions\StudentExam;
-
+namespace Transave\ScolaCbt\Actions\Result;
 
 
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\StudentExam;
 
-class CreateStudentExam
+class CalculateExamScore
 {
-
     use ResponseHelper, ValidationHelper;
-
-    private array $request;
+    private $request, $student, $user, $exams;
 
     public function __construct(array $request)
     {
@@ -32,17 +28,17 @@ class CreateStudentExam
         }
     }
 
-    private function createStudentExam()
+    private function getStudentUser()
     {
-        $studentExam = StudentExam::create([
-            'student_id' => $this->request['student_id'],
-            'exam_id' => $this->request['course_id'],
-        ]);
-
-        return $this->sendSuccess($studentExam, 'Stored Student exam successfully');
+        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        $this->student = $this->user->student;
+        return $this;
     }
 
-
+    private function getExams()
+    {
+        $this->exams = $this->student->exams->load('options');
+    }
 
     private function validateRequest()
     {

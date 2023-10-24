@@ -49,6 +49,11 @@ class Exam extends Model
         return $this->hasMany(Question::class)->with(['options', 'answers']);
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_exams', 'exam_id', 'student_id');
+    }
+
     protected static function newFactory()
     {
         return ExamFactory::new();

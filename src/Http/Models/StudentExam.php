@@ -10,7 +10,7 @@ use Transave\ScolaCbt\Helpers\UUIDHelper;
 class StudentExam extends Model
 {
     use HasFactory, UUIDHelper;
-    protected $table = "studentexams";
+    protected $table = "student_exams";
 
     protected $guarded = [
         "id"
@@ -22,9 +22,9 @@ class StudentExam extends Model
         return $this->belongsTo(Student::class, 'student_id');
     }
 
-    public function course()
+    public function exam()
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Exam::class, 'exam_id');
     }
 
 

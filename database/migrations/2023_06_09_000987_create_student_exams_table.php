@@ -15,11 +15,10 @@ class CreateStudentExamsTable extends Migration
 
     public function up()
     {
-        Schema::create('studentexams', function (Blueprint $table) {
+        Schema::create('student_exams', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->json('exams');
+            $table->foreignUuid('exam_id')->constrained('exams')->cascadeOnDelete();
             $table->timestamps();
 
 
@@ -34,6 +33,6 @@ class CreateStudentExamsTable extends Migration
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('studentexams');
+        Schema::dropIfExists('student_exams');
     }
 }
