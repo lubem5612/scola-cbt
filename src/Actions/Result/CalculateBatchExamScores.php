@@ -65,7 +65,7 @@ class CalculateBatchExamScores
             $this->exams->where('semester', $this->request['semester']);
         }
 
-        $this->exams = $this->exams->get();
+        $this->exams = $this->exams->all();
     }
 
     private function calculateExamScores()

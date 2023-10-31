@@ -62,7 +62,7 @@ class CalculateExamScore
                     'user_id' => $this->user->id,
                 ])->first();
 
-                if ($answer->isCorrectOption()) {
+                if (!empty($answer) && $answer->isCorrectOption()) {
                     $scores = $scores + (float)$question->score_obtainable;
                 }
             }
