@@ -4,13 +4,17 @@
 namespace Transave\ScolaCbt\Actions\Result;
 
 
+use Illuminate\Support\Facades\Log;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\Answer;
+use Transave\ScolaCbt\Http\Models\StudentExam;
 
 class CalculateExamScore
 {
     use ResponseHelper, ValidationHelper;
-    private $request, $student, $user, $exams;
+    private $request, $student, $user, $exam, $questions, $scores=0;
+    private $isSuccess = false, $responseMessage = '';
 
     public function __construct(array $request)
     {
@@ -20,12 +24,15 @@ class CalculateExamScore
     public function execute()
     {
         try {
-            return $this
-                ->validateRequest()
-                ->createStudentExam();
+            $this->validateRequest();
+            $this->getStudentUser();
+            $this->getExamAnsQuestions();
+            $this->calculateScores();
         } catch (\Exception $e) {
-            return $this->sendServerError($e);
+            Log::error($e);
+            $this->responseMessage = $e->getMessage();
         }
+        return $this->buildResponse();
     }
 
     private function getStudentUser()
@@ -35,15 +42,50 @@ class CalculateExamScore
         return $this;
     }
 
-    private function getExams()
+    private function getExamAnsQuestions()
     {
-        $this->exams = $this->student->exams->load('options');
+        $studentExams = StudentExam::query()
+            ->where('student_id', $this->student->id)
+            ->where('exam_id', $this->request['exam_id'])
+            ->first();
+        $this->exam = $studentExams->exam;
+        $this->questions = $this->exam->questions;
+    }
+
+    private function calculateScores()
+    {
+        $scores = 0;
+        if (!empty($this->questions)) {
+            foreach ($this->questions as $question)
+            {
+                $answer = Answer::query()->where([
+                    'question_id' => $question->id,
+                    'user_id' => $this->user->id,
+                ])->first();
+
+                if ($answer->isCorrectOption()) {
+                    $scores = $scores + (float)$question->score_obtainable;
+                }
+            }
+        }
+        $this->scores = $scores;
+        $this->responseMessage = 'scores returned successfully';
+        $this->isSuccess = true;
+    }
+
+    private function buildResponse()
+    {
+        return [
+            'success' => $this->isSuccess,
+            'message' => $this->responseMessage,
+            'data' => $this->scores,
+        ];
     }
 
     private function validateRequest()
     {
         $this->validate($this->request, [
-            'student_id' => 'required|exists:students,id',
+            'user_id' => 'required|exists:users,id',
             'exam_id' => 'required|exists:exams,id',
         ]);
 

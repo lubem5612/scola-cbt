@@ -34,6 +34,11 @@ class Answer extends Model
         return $this->belongsTo(Option::class);
     }
 
+    public function isCorrectOption()
+    {
+        return $this->option()->where('is_correct_option', 'yes')->exists();
+    }
+
     protected static function newFactory()
     {
         return AnswerFactory::new();
