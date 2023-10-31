@@ -8,6 +8,7 @@ use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
 use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
+use Transave\ScolaCbt\Http\Controllers\ResultController;
 use Transave\ScolaCbt\Http\Controllers\SearchController;
 use Transave\ScolaCbt\Http\Controllers\StudentController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
@@ -97,9 +98,10 @@ Route::as('cbt.')->group(function () {
         Route::post('upload', [StudentController::class, 'upload'])->name('upload');
     });
 
-    //StudentExams Route
-    Route::prefix('studentexams')->as('studentexams.')->group(function (){
-       Route::post('/', [StudentExam::class, 'create'])->name('store');
+    //Results Routes
+    Route::prefix('results')->as('results.')->group(function (){
+       Route::post('/exam', [ ResultController::class, 'calculateSingleExam'])->name('single-exam');
+       Route::post('/exams', [ ResultController::class, 'calculateBatchExams'])->name('batch-exams');
     });
 
 });

@@ -5,14 +5,13 @@ namespace Transave\ScolaCbt\Actions\Result;
 
 
 use Illuminate\Support\Facades\Log;
-use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Answer;
 use Transave\ScolaCbt\Http\Models\StudentExam;
 
 class CalculateExamScore
 {
-    use ResponseHelper, ValidationHelper;
+    use ValidationHelper;
     private $request, $student, $user, $exam, $questions, $scores=0;
     private $isSuccess = false, $responseMessage = '';
 

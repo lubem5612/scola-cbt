@@ -5,12 +5,11 @@ namespace Transave\ScolaCbt\Actions\Result;
 
 
 use Illuminate\Support\Facades\Log;
-use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 
 class CalculateBatchExamScores
 {
-    use ResponseHelper, ValidationHelper;
+    use ValidationHelper;
     private $request, $student, $user;
     private $exams;
     private $scores=0, $responseMessage='', $isSuccess=false;
