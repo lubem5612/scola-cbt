@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Transave\ScolaCbt\Http\Models\Course;
 use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Session;
 use Transave\ScolaCbt\Http\Models\Student;
@@ -31,8 +32,7 @@ class StudentExamFactory extends Factory
     {
         return [
             'student_id' => Student::factory(),
-            'course_id' => Course::factory(),
-            'exams' => [],
+            'exam_id' => Exam::factory(),
         ];
     }
 }
