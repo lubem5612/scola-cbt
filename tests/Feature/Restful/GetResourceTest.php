@@ -8,10 +8,13 @@ use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Http\Models\Course;
 use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Option;
 use Transave\ScolaCbt\Http\Models\Question;
 use Transave\ScolaCbt\Http\Models\Session;
+use Transave\ScolaCbt\Http\Models\Student;
+use Transave\ScolaCbt\Http\Models\StudentExam;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
@@ -100,4 +103,25 @@ class GetResourceTest extends TestCase
         $this->assertEquals(true, $arrayData['success']);
         $this->assertNotNull($arrayData['data']);
     }
+
+
+    /** @test */
+    function can_get_specified_student_exam()
+    {
+        StudentExam::factory()
+            ->count(3)
+            ->for(Student::factory()->create())
+            ->for(Exam::factory()->create())
+            ->create();
+
+        $studentexam = StudentExam::query()->inRandomOrder()->first();
+        $response = $this->json('GET', "/cbt/general/student-exams/{$studentexam->id}");
+        $response->assertStatus(200);
+
+        $arrayData = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $arrayData['success']);
+        $this->assertNotNull($arrayData['data']);
+    }
+
+
 }

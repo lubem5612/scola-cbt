@@ -24,7 +24,7 @@ $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'gene
  |
  */
 Route::prefix($prefix)->as('cbt.')->group(function() {
-//    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
+    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
     Route::get('{endpoint}/{id}', [RestfulAPIController::class, 'show']);
     Route::post('{endpoint}', [RestfulAPIController::class, 'store']);
     Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [RestfulAPIController::class, 'update']);
@@ -37,6 +37,7 @@ Route::prefix('general')->as('cbt.')->group(function () {
     Route::get('departments', [SearchController::class, 'indexDepartments'])->name('departments');
     Route::get('question-options', [SearchController::class, 'indexQuestionOptions'])->name('options');
     Route::get('courses', [SearchController::class, 'indexCourses'])->name('courses');
+    Route::get('student-exams', [SearchController::class, 'indexStudentExams'])->name('student-exams');
 });
 
 Route::as('cbt.')->group(function () {
@@ -98,10 +99,12 @@ Route::as('cbt.')->group(function () {
         Route::post('upload', [StudentController::class, 'upload'])->name('upload');
     });
 
+
     //Results Routes
     Route::prefix('results')->as('results.')->group(function (){
        Route::post('/exam', [ ResultController::class, 'calculateSingleExam'])->name('single-exam');
        Route::post('/exams', [ ResultController::class, 'calculateBatchExams'])->name('batch-exams');
     });
+
 
 });

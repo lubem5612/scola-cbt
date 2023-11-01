@@ -11,6 +11,7 @@ use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Option;
 use Transave\ScolaCbt\Http\Models\Session;
+use Transave\ScolaCbt\Http\Models\StudentExam;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
@@ -86,4 +87,18 @@ class DeleteResourceTest extends TestCase
         $arrayData = json_decode($response->getContent(), true);
         $this->assertEquals(true, $arrayData['success']);
     }
+
+
+    /** @test */
+    public function can_delete_specified_student_exams()
+    {
+        StudentExam::factory()->count(10)->create();
+        $studentexams = StudentExam::query()->inRandomOrder()->first();
+        $response = $this->json('DELETE', "/cbt/general/student-exams/{$studentexams->id}");
+        $response->assertStatus(200);
+
+        $arrayData = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $arrayData['success']);
+    }
+
 }

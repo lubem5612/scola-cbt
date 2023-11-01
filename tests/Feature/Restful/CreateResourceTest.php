@@ -7,8 +7,10 @@ namespace Transave\ScolaCbt\Tests\Feature\Restful;
 use Faker\Factory;
 use Laravel\Sanctum\Sanctum;
 use Transave\ScolaCbt\Http\Models\Department;
+use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\Faculty;
 use Transave\ScolaCbt\Http\Models\Question;
+use Transave\ScolaCbt\Http\Models\Student;
 use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Tests\TestCase;
 
@@ -96,6 +98,21 @@ class CreateResourceTest extends TestCase
             'is_correct_option' => $this->faker->randomElement(['no', 'yes'])
         ];
         $response = $this->json('POST', '/cbt/general/question-options', $data, ['Accept' => 'application/json']);
+        $response->assertStatus(200);
+
+        $arrayData = json_decode($response->getContent(), true);
+        $this->assertEquals(true, $arrayData['success']);
+        $this->assertNotNull($arrayData['data']);
+    }
+
+    /** @test */
+    public function can_create_studentexams()
+    {
+        $data = [
+            'student_id' => Student::factory()->create()->id,
+            'exam_id' => Exam::factory()->create()->id,
+        ];
+        $response = $this->json('POST', '/cbt/general/student-exams', $data, ['Accept' => 'application/json']);
         $response->assertStatus(200);
 
         $arrayData = json_decode($response->getContent(), true);
