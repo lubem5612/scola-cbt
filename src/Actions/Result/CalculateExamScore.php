@@ -47,8 +47,8 @@ class CalculateExamScore
             ->where('student_id', $this->student->id)
             ->where('exam_id', $this->request['exam_id'])
             ->first();
-        $this->exam = $studentExams->exam;
-        $this->questions = $this->exam->questions;
+        $this->exam = $studentExams?->exam;
+        $this->questions = $this?->exam?->questions;
     }
 
     private function calculateScores()
