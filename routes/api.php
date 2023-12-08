@@ -55,6 +55,7 @@ Route::as('cbt.')->group(function () {
         Route::post('/', [ExamController::class, 'create'])->name('store');
         Route::get('/{id}', [ExamController::class, 'show'])->name('show');
         Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [ExamController::class, 'update'])->name('update');
+        Route::post('/exam-link/{id}', [ExamController::class, 'generateLink'])->name('link');
         Route::delete('/{id}', [ExamController::class, 'destroy'])->name('delete');
     });
 

@@ -8,6 +8,7 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Exam\CreateExam;
 use Transave\ScolaCbt\Actions\Exam\DeleteExam;
+use Transave\ScolaCbt\Actions\Exam\ExamLink;
 use Transave\ScolaCbt\Actions\Exam\GetExam;
 use Transave\ScolaCbt\Actions\Exam\SearchExam;
 use Transave\ScolaCbt\Actions\Exam\UpdateExam;
@@ -68,6 +69,26 @@ class ExamController extends Controller
         $inputs = $request->merge(['exam_id' => $id])->all();
         return (new UpdateExam($inputs))->execute();
     }
+
+
+    /**
+     * Generate a link for an exam
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     */
+    public function generateLink(Request $request)
+    {
+        // Assuming $request->id is the exam_id parameter you want to pass to ExamLink
+        $exam_id = $request->id;
+
+        // Create an instance of ExamLink and execute it
+        $examLink = new ExamLink($exam_id);
+        return $examLink->execute();
+    }
+
+
+
 
     /**
      * Delete a specified exam
