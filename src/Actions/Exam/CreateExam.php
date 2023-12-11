@@ -48,7 +48,6 @@ class CreateExam
         return $this;
     }
 
-
     private function setUser() : self
     {
         if (!array_key_exists('user_id', $this->request)) {
@@ -86,7 +85,6 @@ class CreateExam
             'venue' => 'sometimes|required|string',
         ]);
 
-
         if (array_key_exists('duration', $this->request) && array_key_exists('unit_of_time', $this->request)) {
             $duration = $this->request['duration'];
             $unitOfTime = $this->request['unit_of_time'];
@@ -107,7 +105,6 @@ class CreateExam
             // Set stop_time in the request
             $this->request['stop_time'] = $stopTime;
         }
-
         return $this;
     }
 }
