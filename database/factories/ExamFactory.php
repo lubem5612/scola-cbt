@@ -1,4 +1,5 @@
 <?php
+
 namespace Transave\ScolaCbt\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,7 +28,8 @@ class ExamFactory extends Factory
             'max_score_obtainable' => 100,
             'exam_mode' => $this->faker->randomElement(config('scola-cbt.exam_mode')),
             'start_time' => $this->faker->time('H:i'),
-            'end_time' => $this->faker->time('H:i'),
+            'duration' => $this->faker->numberBetween(1, 4),
+            'unit_of_time' => $this->faker->randomElement(['minute', 'hour']),
             'exam_date' => $this->faker->time,
             'instruction' => $this->faker->sentence(20),
             'venue' => $this->faker->city,

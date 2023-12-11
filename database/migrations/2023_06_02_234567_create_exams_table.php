@@ -22,7 +22,12 @@ class CreateExamsTable extends Migration
             $table->float('max_score_obtainable', 6, 2)->default(0);
             $table->string('exam_mode', 50)->index();
             $table->time('start_time')->nullable();
+<<<<<<< HEAD
+            $table->integer('duration')->nullable();
+            $table->enum('unit_of_time', ['minute', 'hour'])->nullable();
+=======
             $table->time('duration');
+>>>>>>> 53daf10495624f96d47bb612c00b82344e488468
             $table->dateTime('exam_date')->nullable();
             $table->text('instruction');
             $table->string('venue')->index();

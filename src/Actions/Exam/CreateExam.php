@@ -4,6 +4,7 @@
 namespace Transave\ScolaCbt\Actions\Exam;
 
 
+use Illuminate\Support\Carbon;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Exam;
@@ -47,6 +48,7 @@ class CreateExam
         return $this;
     }
 
+
     private function setUser() : self
     {
         if (!array_key_exists('user_id', $this->request)) {
@@ -77,11 +79,34 @@ class CreateExam
             'max_score_obtainable' => 'sometimes|required|integer',
             'exam_mode' => 'sometimes|required|string|max:80',
             'start_time' => 'nullable|date_format:H:i',
-            'duration' => 'required|regex:/^(\d{1,2}):([0-5][0-9])$/',
+            'duration' => 'sometimes|required|numeric',
+            'unit_of_time' => 'sometimes|required|in:minute,hour',
             'exam_date' => 'nullable',
             'instruction' => 'sometimes|required|string',
             'venue' => 'sometimes|required|string',
         ]);
+
+
+        if (array_key_exists('duration', $this->request) && array_key_exists('unit_of_time', $this->request)) {
+            $duration = $this->request['duration'];
+            $unitOfTime = $this->request['unit_of_time'];
+
+            // Validate and convert duration to minutes or hours
+            if ($unitOfTime === 'minute') {
+                $this->validate($this->request, [
+                    'duration' => 'integer|min:60',
+                ]);
+                $stopTime = Carbon::parse($this->request['start_time'])->addMinutes($duration);
+            } elseif ($unitOfTime === 'hour') {
+                $this->validate($this->request, [
+                    'duration' => 'integer|min:1',
+                ]);
+                $stopTime = Carbon::parse($this->request['start_time'])->addHours($duration);
+            }
+
+            // Set stop_time in the request
+            $this->request['stop_time'] = $stopTime;
+        }
 
         return $this;
     }
