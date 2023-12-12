@@ -10,6 +10,7 @@ use Transave\ScolaCbt\Actions\Exam\CreateExam;
 use Transave\ScolaCbt\Actions\Exam\DeleteExam;
 use Transave\ScolaCbt\Actions\Exam\ExamLink;
 use Transave\ScolaCbt\Actions\Exam\GetExam;
+use Transave\ScolaCbt\Actions\Exam\GetExamWithStudents;
 use Transave\ScolaCbt\Actions\Exam\SearchExam;
 use Transave\ScolaCbt\Actions\Exam\UpdateExam;
 use Transave\ScolaCbt\Http\Models\Exam;
@@ -22,7 +23,6 @@ class ExamController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum']);
-        $this->middleware(['student'])->only(['show', 'index']);
     }
 
     /**
@@ -45,6 +45,19 @@ class ExamController extends Controller
     {
         return (new GetExam(['id' => $id]))->execute();
     }
+
+    /**
+     * Show a specified exam with associated students
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     */
+    public function showWithStudents($id)
+    {
+        return (new GetExamWithStudents(['id' => $id]))->execute();
+    }
+
+
 
     /**
      * Create an exam

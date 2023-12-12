@@ -33,7 +33,8 @@ return [
         5 => 'matching questions',
         6 => 'fill in questions',
         7 => 'diagram or chart questions',
-        8 => 'audio or video questions',
+        8 => 'audio questions',
+        9 => 'video questions',
     ],
 
     'user_type' => [
