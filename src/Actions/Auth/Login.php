@@ -57,7 +57,7 @@ class Login
 
     private function validateLoginData()
     {
-        $this->validate($this->data, [
+        $this->data = $this->validate($this->data, [
             "email" => ["required"],
             "password" => ["required", "string"]
         ]);
