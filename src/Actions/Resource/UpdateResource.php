@@ -57,8 +57,8 @@ class UpdateResource
         abort_if(!array_key_exists('rules', $this->route), 401, 'rules not found');
         abort_if(!array_key_exists('update', $this->route['rules']), 401, 'validation rules not configured');
 
-        $table = $this->route['table'];
-        $rules = array_merge($this->route['rules']['update'], ['id' => ["required", "exists:$table,id"]]);
+//        $table = $this->route['table'];
+        $rules = array_merge($this->route['rules']['update'], ['id' => ["required"]]);
         $this->validatedInput = $this->validate($this->request['data'], $rules);
         return $this;
     }
