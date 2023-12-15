@@ -4,6 +4,7 @@
 return [
     "routes" => [
         'sessions' => [
+            'table' => 'sessions',
             'model' => \Transave\ScolaCbt\Http\Models\Session::class,
             'rules' => [
                 'store' => [
@@ -22,6 +23,7 @@ return [
         ],
 
         'faculties' => [
+            'table' => 'faculties',
             'model' => \Transave\ScolaCbt\Http\Models\Faculty::class,
             'rules' => [
                 'store' => [
@@ -39,6 +41,7 @@ return [
         ],
 
         'courses' => [
+            'table' => 'courses',
             'model' => \Transave\ScolaCbt\Http\Models\Course::class,
             'rules' => [
                 'store' => [
@@ -61,6 +64,7 @@ return [
         ],
 
         'departments' => [
+            'table' => 'departments',
             'model' => \Transave\ScolaCbt\Http\Models\Department::class,
             'rules' => [
                 'store' => [
@@ -80,6 +84,7 @@ return [
         ],
 
         'question-options' => [
+            'table' => 'options',
             'model' => \Transave\ScolaCbt\Http\Models\Option::class,
             'rules' => [
                 'store' => [
@@ -100,6 +105,7 @@ return [
             'relationships' => ['question'],
         ],
         'student-exams' => [
+            'table' => 'student-exams',
             'model' => \Transave\ScolaCbt\Http\Models\StudentExam::class,
             'rules' => [
                 'store' => [
@@ -118,6 +124,7 @@ return [
             'relationships' => ['student', 'exam'],
         ],
         'exam-settings' => [
+            'table' => 'exam-settings',
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,
             'rules' => [
                 'store' => [

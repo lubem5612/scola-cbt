@@ -7,12 +7,10 @@ use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
 use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
-use Transave\ScolaCbt\Http\Controllers\RestfulAPIController;
+use Transave\ScolaCbt\Http\Controllers\ResourceController;
 use Transave\ScolaCbt\Http\Controllers\ResultController;
-use Transave\ScolaCbt\Http\Controllers\SearchController;
 use Transave\ScolaCbt\Http\Controllers\StudentController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
-use Transave\ScolaCbt\Http\Models\StudentExam;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
 
@@ -24,20 +22,11 @@ $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'gene
  |
  */
 Route::prefix($prefix)->as('cbt.')->group(function() {
-    Route::get('{endpoint}', [RestfulAPIController::class, 'index']);
-    Route::get('{endpoint}/{id}', [RestfulAPIController::class, 'show']);
-    Route::post('{endpoint}', [RestfulAPIController::class, 'store']);
-    Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [RestfulAPIController::class, 'update']);
-    Route::delete('{endpoint}/{id}', [RestfulAPIController::class, 'destroy']);
-});
-
-Route::prefix('general')->as('cbt.')->group(function () {
-    Route::get('sessions', [SearchController::class, 'indexSessions'])->name('sessions');
-    Route::get('faculties', [SearchController::class, 'indexFaculties'])->name('faculties');
-    Route::get('departments', [SearchController::class, 'indexDepartments'])->name('departments');
-    Route::get('question-options', [SearchController::class, 'indexQuestionOptions'])->name('options');
-    Route::get('courses', [SearchController::class, 'indexCourses'])->name('courses');
-    Route::get('student-exams', [SearchController::class, 'indexStudentExams'])->name('student-exams');
+    Route::get('{endpoint}', [ ResourceController::class, 'index']);
+    Route::get('{endpoint}/{id}', [ResourceController::class, 'show']);
+    Route::post('{endpoint}', [ResourceController::class, 'store']);
+    Route::match(['post', 'put', 'patch'],'{endpoint}/{id}', [ResourceController::class, 'update']);
+    Route::delete('{endpoint}/{id}', [ResourceController::class, 'destroy']);
 });
 
 Route::as('cbt.')->group(function () {
