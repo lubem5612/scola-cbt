@@ -1,15 +1,14 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Helpers;
 
-
 use Carbon\Carbon;
+
 
 trait SearchHelper
 {
     use ResponseHelper;
-    private $output, $queryBuilder, $relationshipArray, $searchParam, $perPage, $startAt, $endAt, $id;
+    protected $output, $queryBuilder, $relationshipArray, $searchParam, $perPage, $startAt, $endAt, $id;
 
     public function __construct($model, array $relationshipArray=[], $id=null)
     {
@@ -25,15 +24,13 @@ trait SearchHelper
     public function execute()
     {
         try {
-            return
-                $this
-                    ->modelHasRelationship()
-                    ->handleTimeStampQuery()
-                    ->searchTerms()
-                    ->groupedBy()
-                    ->handlePagination()
-                    ->querySingleResource()
-                    ->sendSuccess($this->output, 'query returned Ok');
+            $this->modelHasRelationship();
+            $this->handleTimeStampQuery();
+            $this->searchTerms();
+            $this->groupedBy();
+            $this->handlePagination();
+            $this->querySingleResource();
+            return $this->sendSuccess($this->output, 'query returned Ok');
 
         }catch (\Exception $ex) {
             return $this->sendServerError($ex);
@@ -63,7 +60,7 @@ trait SearchHelper
         return $this;
     }
 
-    private function querySingleResource()
+    public function querySingleResource()
     {
         if (!is_null($this->id) || isset($this->id)) {
             $this->output = $this->queryBuilder->find($this->id);
@@ -71,28 +68,29 @@ trait SearchHelper
         return $this;
     }
 
-    private function handlePagination()
+    public function handlePagination()
     {
         if (is_null($this->id) && !isset($this->id)) {
             if (isset($this->perPage)) {
                 $this->output = $this->queryBuilder->paginate($this->perPage);
             }else
-                $this->output = $this->queryBuilder->get();
+                $this->output = $this->queryBuilder->paginate(10);
         }
         return $this;
     }
 
-    protected function searchTerms()
+    public function searchTerms()
     {
         //
         return $this;
     }
 
-    protected function groupedBy()
+    public function groupedBy()
     {
         if (is_null($this->id) && !isset($this->id)) {
             $this->queryBuilder = $this->queryBuilder->orderBy("created_at", "DESC");
         }
         return $this;
     }
+
 }

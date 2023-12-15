@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Helpers;
 
 

@@ -1,9 +1,6 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Helpers;
-
-
 use Illuminate\Support\Str;
 
 trait UUIDHelper

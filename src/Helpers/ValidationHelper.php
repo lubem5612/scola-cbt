@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Transave\ScolaCbt\Helpers;
-
 
 
 use Illuminate\Support\Facades\Validator;
 
 trait ValidationHelper
 {
-
     private $validator;
 
     /**
