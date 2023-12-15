@@ -5,13 +5,12 @@ namespace Transave\ScolaCbt\Helpers;
 
 
 
-
-
 use Illuminate\Support\Facades\Validator;
 
 trait ValidationHelper
 {
-    public $validator;
+
+    private $validator;
 
     /**
      * @param array $input
@@ -26,6 +25,16 @@ trait ValidationHelper
             return $this->validator->validated();
         }
         abort(422, response()->json($this->validator->errors())->getContent());
+    }
+
+    /**
+     * @param $string
+     * @return bool
+     */
+    protected function isJsonValidated($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 
 }
