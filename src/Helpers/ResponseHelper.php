@@ -4,6 +4,7 @@
 namespace Transave\ScolaCbt\Helpers;
 
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -88,7 +89,7 @@ trait ResponseHelper
                 "errors" => $this->formatServerError($exception),
             ];
         }
-        if (config('scola-cbt.app_env') == 'development') Log::error($exception->getTraceAsString());
+        if (config('app.env') == 'development') Log::error($exception->getTraceAsString());
 
         return response()->json($response, $code, [], JSON_INVALID_UTF8_SUBSTITUTE );
     }
