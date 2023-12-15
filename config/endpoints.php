@@ -105,7 +105,7 @@ return [
             'relationships' => ['question'],
         ],
         'student-exams' => [
-            'table' => 'student-exams',
+            'table' => 'student_exams',
             'model' => \Transave\ScolaCbt\Http\Models\StudentExam::class,
             'rules' => [
                 'store' => [
@@ -124,7 +124,7 @@ return [
             'relationships' => ['student', 'exam'],
         ],
         'exam-settings' => [
-            'table' => 'exam-settings',
+            'table' => 'exam_settings',
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,
             'rules' => [
                 'store' => [

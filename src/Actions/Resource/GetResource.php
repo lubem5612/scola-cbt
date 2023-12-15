@@ -65,9 +65,9 @@ class GetResource
         abort_unless(array_key_exists($this->request['endpoint'], $this->routeConfig), 401, 'endpoint not found');
         $this->route = $this->routeConfig[$this->request['endpoint']];
 
-//        $table = $this->route['table'];
+        $table = $this->route['table'];
         $this->validatedInput = $this->validate($this->request, [
-            'id' => [ "required" ],
+            'id' => [ "required", "exists:$table,id" ],
             "endpoint" => ["string", "required"],
         ]);
         return $this;
