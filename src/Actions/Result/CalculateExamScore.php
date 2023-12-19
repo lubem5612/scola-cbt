@@ -47,8 +47,10 @@ class CalculateExamScore
             ->where('student_id', $this->student->id)
             ->where('exam_id', $this->request['exam_id'])
             ->first();
-        $this->exam = $studentExams?->exam;
-        $this->questions = $this?->exam?->questions;
+        if (empty($studentExams)) abort(404, 'no exam record for specified student');
+        $this->exam = $studentExams->exam;
+        if (empty($this->exam->questions)) abort(404, 'questions for exams not found');
+        $this->questions = $this->exam->questions;
     }
 
     private function calculateScores()
