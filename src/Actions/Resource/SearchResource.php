@@ -122,7 +122,7 @@ class SearchResource
                             $query1->where('registration_number', 'like', "%$search%")
                                 ->orWhere('current_level', 'like', "%$search%");
                         })
-                        ->orWhereHas('exams', function ($query2) use ($search) {
+                        ->orWhereHas('exam', function ($query2) use ($search) {
                             $query2->where('level', 'like', "%$search%")
                                 ->orWhere('semester', 'like', "%$search%")
                                 ->orWhere('exam_mode', 'like', "%$search%")

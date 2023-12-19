@@ -45,4 +45,13 @@ class Student extends Model
     {
         return StudentFactory::new();
     }
+
+    public function getExamsTakenAttribute()
+    {
+        return $this->exams();
+    }
+
+    protected $appends = [
+        'exams_taken'
+    ];
 }
