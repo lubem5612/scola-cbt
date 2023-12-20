@@ -48,7 +48,7 @@ class Student extends Model
 
     public function getExamsTakenAttribute()
     {
-        return $this->exams();
+        return $this->exams()->get();
     }
 
     protected $appends = [
