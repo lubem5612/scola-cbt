@@ -116,6 +116,11 @@ class SearchResource
             }
             case "student-exams": {
                 $search = $this->searchParam;
+                $student = request()->query('student_id');
+                $exam = request()->query('exam_id');
+                if (isset($student)) $this->queryBuilder->where('student_id', $student);
+                if (isset($exam)) $this->queryBuilder->where('exam_id', $exam);
+
                 $this->queryBuilder->where(function ($query) use ($search) {
                     $query
                         ->orWhereHas('student', function ($query1) use ($search) {
