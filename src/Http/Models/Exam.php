@@ -19,7 +19,7 @@ class Exam extends Model
         'id'
     ];
 
-    protected $attributes = [
+    protected $appends = [
         'faculty_id'
     ];
 
