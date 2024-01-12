@@ -19,6 +19,10 @@ class Exam extends Model
         'id'
     ];
 
+    protected $attributes = [
+        'faculty_id'
+    ];
+
     public function session() : BelongsTo
     {
         return  $this->belongsTo(Session::class);
@@ -52,6 +56,11 @@ class Exam extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'student_exams', 'exam_id', 'student_id');
+    }
+
+    public function getFacultyIdAttribute()
+    {
+        return $this->department()->first()->faculty_id;
     }
 
     protected static function newFactory()
