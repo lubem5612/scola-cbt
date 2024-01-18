@@ -66,7 +66,7 @@ class CreateAnswer
         $this->validate($this->request, [
             'user_id' => 'sometimes|required|exists:users,id',
             'question_id' => 'required|exists:questions,id',
-            'option_id' => 'required|exists:options,id',
+            'option_id' => 'nullable|exists:options,id',
             'content' => 'sometimes|required|string',
             'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx'
         ]);
