@@ -92,7 +92,7 @@ class CreateExam
             // Validate and convert duration to minutes or hours
             if ($unitOfTime === 'minute') {
                 $this->validate($this->request, [
-                    'duration' => 'integer|min:60',
+                    'duration' => 'integer|min:5',
                 ]);
                 $stopTime = Carbon::parse($this->request['start_time'])->addMinutes($duration);
             } elseif ($unitOfTime === 'hour') {
