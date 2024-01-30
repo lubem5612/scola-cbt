@@ -19,6 +19,7 @@ class CreateStudentExamsTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignUuid('exam_id')->constrained('exams')->cascadeOnDelete();
+            $table->integer('attempts')->default(1);
             $table->timestamps();
 
 

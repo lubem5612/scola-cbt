@@ -7,6 +7,8 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Result\CalculateBatchExamScores;
 use Transave\ScolaCbt\Actions\Result\CalculateExamScore;
+use Transave\ScolaCbt\Actions\Result\GetAllStudentExamWithScores;
+use Transave\ScolaCbt\Actions\Result\GetStudentExamWithScores;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 
 class ResultController extends Controller
@@ -23,7 +25,7 @@ class ResultController extends Controller
 
     /**
      * @param Request $request
-     * @return \Transave\ScolaCbt\Helpers\Response
+     * @return \Illuminate\Http\Response
      */
     public function calculateSingleExam(Request $request)
     {
@@ -34,12 +36,22 @@ class ResultController extends Controller
 
     /**
      * @param Request $request
-     * @return \Transave\ScolaCbt\Helpers\Response
+     * @return \Illuminate\Http\Response
      */
     public function calculateBatchExams(Request $request)
     {
         $response = (new CalculateBatchExamScores($request->all()))->execute();
         if ($response['success']) return $this->sendSuccess($response['data'], $response['message']);
         return $this->sendError($response['message']);
+    }
+
+    public function fetchStudentExamScores()
+    {
+        return (new GetAllStudentExamWithScores())->execute();
+    }
+
+    public function fetchStudentExamScore(Request $request)
+    {
+        return (new GetStudentExamWithScores($request->all()))->execute();
     }
 }

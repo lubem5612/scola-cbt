@@ -104,25 +104,6 @@ return [
             ],
             'relationships' => ['question'],
         ],
-        'student-exams' => [
-            'table' => 'student_exams',
-            'model' => \Transave\ScolaCbt\Http\Models\StudentExam::class,
-            'rules' => [
-                'store' => [
-                    'student_id' => 'required|exists:students,id',
-                    'exam_id' => 'required|exists:exams,id',
-                ],
-                'update' => [
-                    'student_id' => 'sometimes|required|exists:students,id',
-                    'exam_id' => 'sometimes|required|exists:exams,id',
-                ]
-            ],
-            'order' => [
-                'column' => 'created_at',
-                'pattern' => 'DESC',
-            ],
-            'relationships' => ['student', 'exam'],
-        ],
         'exam-settings' => [
             'table' => 'exam_settings',
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,

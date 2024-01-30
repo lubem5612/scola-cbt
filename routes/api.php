@@ -10,6 +10,7 @@ use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
 use Transave\ScolaCbt\Http\Controllers\ResourceController;
 use Transave\ScolaCbt\Http\Controllers\ResultController;
 use Transave\ScolaCbt\Http\Controllers\StudentController;
+use Transave\ScolaCbt\Http\Controllers\StudentExamController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
 
 $prefix = !empty(config('endpoints.prefix'))? config('endpoints.prefix') : 'general';
@@ -76,6 +77,14 @@ Route::as('cbt.')->group(function () {
         Route::delete('/{id}', [QuestionController::class, 'destroy'])->name('delete');
     });
 
+    //Question Routes
+    Route::prefix('student-exams')->as('student-exams.')->group(function(){
+        Route::get('/', [StudentExamController::class, 'index'])->name('index');
+        Route::post('/', [StudentExamController::class, 'create'])->name('store');
+        Route::get('/{id}', [StudentExamController::class, 'show'])->name('show');
+        Route::delete('/{id}', [StudentExamController::class, 'destroy'])->name('delete');
+    });
+
     //User Routes
     Route::prefix('users')->as('users.')->group(function() {
         Route::get('/', [UserController::class, 'users'])->name('index');
@@ -88,6 +97,10 @@ Route::as('cbt.')->group(function () {
     Route::prefix('students')->as('students.')->group(function() {
         Route::get('exports', [ StudentController::class, 'export'])->name('export');
         Route::post('upload', [StudentController::class, 'upload'])->name('upload');
+        Route::group(['prefix' => 'exams', 'as' => 'exams.'], function () {
+            Route::get('/', [ResultController::class, 'fetchStudentExamScores'])->name('index');
+            Route::post('/', [ResultController::class, 'fetchStudentExamScore'])->name('show');
+        });
     });
 
 

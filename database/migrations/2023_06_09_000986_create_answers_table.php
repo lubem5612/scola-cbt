@@ -14,6 +14,7 @@ class CreateAnswersTable extends Migration
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignUuid('question_id')->constrained('questions')->cascadeOnDelete();
             $table->foreignUuid('option_id')->nullable()->constrained('options')->cascadeOnDelete();
+            $table->integer('attempts')->default(1);
             $table->text('content')->nullable();
             $table->string('file', 700)->nullable();
 
