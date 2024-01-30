@@ -61,6 +61,17 @@ class GetAllStudentExamWithScores
     {
         $search = $this->search;
 
+        $exam = request()->query('exam_id');
+        $student = request()->query('student_id');
+
+        if (isset($exam)) {
+            $this->queryBuilder->where('exam_id', $exam);
+        }
+
+        if (isset($student)) {
+            $this->queryBuilder->where('student_id', $student);
+        }
+
         $this->queryBuilder->whereHas('exam', function (Builder $builder) use ($search) {
             $builder->where('exam_name', 'like', "%$search%")
                 ->orWhere('exam_mode', 'like', "%$search%");
