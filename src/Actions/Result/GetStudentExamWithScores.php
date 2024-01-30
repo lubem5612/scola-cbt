@@ -2,7 +2,6 @@
 
 namespace Transave\ScolaCbt\Actions\Result;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Answer;
@@ -44,22 +43,23 @@ class GetStudentExamWithScores
         foreach ($this->attempts as $attempt) {
             $item['candidate'] = config('scola-cbt.auth_model')::query()->with(['student'])->find($this->validatedData['user_id']);
 
-            $item['exam'] = Exam::query()->select('id as exam_id', 'exam_name', 'exam_mode')
-                ->where('id', $this->validatedData['exam_id'])->first();
+            $exam = Exam::query()->find($this->validatedData['exam_id']);
+            $item['exam'] = $exam;
+            $questions = $exam->questions;
 
-            $examId = $this->validatedData['exam_id'];
-            $answers =  Answer::query()
-                ->where('user_id', $this->validatedData['user_id'])
-                ->where('attempts', $attempt['attempts'])
-                ->whereHas('question',function (Builder $builder) use ($examId) {
-                    $builder->where('exam_id', $examId);
-                })->get();
+            foreach ($questions as $question) {
+                $answer = Answer::query()->where([
+                    'user_id' => $this->validatedData['user_id'],
+                    'question_id' => $question->id,
+                    'attempts' => $attempt['attempts'],
+                ])->first();
 
-            foreach ($answers as $answer) {
                 if (!empty($answer) && $answer->isCorrectOption()) {
-                    $scores = $scores + (float)$answer->question->score_obtainable;
+                    $scores = $scores + (float)$question->score_obtainable;
                 }
+
             }
+
             $item['scores'] = $scores;
             array_push($this->calculatedData, $item);
         }
@@ -71,7 +71,7 @@ class GetStudentExamWithScores
             ->where([
                 'student_id' => $this->student->id,
                 'exam_id' => $this->validatedData['exam_id']
-            ])->select('attempts')->distinct();
+            ])->select('attempts')->distinct()->get();
     }
 
     private function validateRequest()

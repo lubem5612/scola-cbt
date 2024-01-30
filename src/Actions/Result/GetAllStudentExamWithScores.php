@@ -39,13 +39,13 @@ class GetAllStudentExamWithScores
         foreach ($this->output as $output) {
             $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $output->exam_id]))->execute();
             $collection = json_decode($value->getContent(), true);
-            array_push($this->records, $collection['data']);
+            array_push($this->records, $collection['data'][0]);
         }
     }
 
     private function initiateQueryBuilder()
     {
-        $this->queryBuilder = StudentExam::query();
+        $this->queryBuilder = StudentExam::query()->with(['student.user', 'exam']);
     }
 
     private function queryByPage()
