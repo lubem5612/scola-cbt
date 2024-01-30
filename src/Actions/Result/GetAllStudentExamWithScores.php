@@ -64,11 +64,9 @@ class GetAllStudentExamWithScores
         $this->queryBuilder->whereHas('exam', function (Builder $builder) use ($search) {
             $builder->where('exam_name', 'like', "%$search%")
                 ->orWhere('exam_mode', 'like', "%$search%");
-        })->orWhereHas('user', function (Builder $builder2) use ($search) {
-            $builder2->where('first_name', 'like', "%$search%")
-                ->orWhere('last_name', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%");
+        })->orWhereHas('student', function (Builder $query1) use ($search) {
+            $query1->where('registration_number', 'like', "%$search%")
+                ->orWhere('current_level', 'like', "%$search%");
         });
     }
 }
