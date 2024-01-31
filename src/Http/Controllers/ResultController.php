@@ -52,6 +52,8 @@ class ResultController extends Controller
 
     public function fetchStudentExamScore(Request $request)
     {
-        return (new GetStudentExamWithScores($request->all()))->execute();
+        $response = (new GetStudentExamWithScores($request->all()))->execute();
+        if ($response['success']) return $this->sendSuccess($response['data'], $response['message']);
+        return $this->sendError($response['message']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Transave\ScolaCbt\Actions\Result;
 
+use Illuminate\Support\Facades\Log;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Answer;
@@ -13,6 +14,7 @@ class GetStudentExamWithScores
 {
     use ValidationHelper, ResponseHelper;
     private $request, $validatedData, $userExams, $attempts, $calculatedData = [], $student;
+    private $responseMessage = '', $responseStatus = false;
 
     public function __construct(array $request)
     {
@@ -26,10 +28,14 @@ class GetStudentExamWithScores
             $this->setStudent();
             $this->getDistinctAttempts();
             $this->calculateExamData();
-            return $this->sendSuccess($this->calculatedData, 'result details for student returned');
+            $this->responseMessage = 'result details for student returned';
+            $this->responseStatus = true;
         }catch (\Exception $exception) {
-            return $this->sendServerError($exception);
+            Log::error($exception);
+            $this->responseMessage = $exception->getMessage();
         }
+
+        return $this->buildResponse();
     }
 
     private function setStudent()
@@ -80,5 +86,14 @@ class GetStudentExamWithScores
             'user_id' => 'required|exists:users,id',
             'exam_id' => 'required|exists:exams,id',
         ]);
+    }
+
+    private function buildResponse()
+    {
+        return [
+            'success' => $this->responseStatus,
+            'message' => $this->responseMessage,
+            'data' => $this->calculatedData,
+        ];
     }
 }

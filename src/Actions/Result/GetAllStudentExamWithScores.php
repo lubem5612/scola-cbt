@@ -36,10 +36,18 @@ class GetAllStudentExamWithScores
 
     private function iterateOverUserExams()
     {
+        $exam = request()->query('exam_id');
+
         foreach ($this->output as $output) {
-            $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $output->exam_id]))->execute();
-            $collection = json_decode($value->getContent(), true);
-            array_push($this->records, $collection['data'][0]);
+            if (isset($exam)) {
+                $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $exam]))->execute();
+            }else {
+                $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $output->exam_id]))->execute();
+            }
+
+            if ($value['success']) {
+                array_push($this->records, $value['data']);
+            }
         }
     }
 
@@ -61,12 +69,7 @@ class GetAllStudentExamWithScores
     {
         $search = $this->search;
 
-        $exam = request()->query('exam_id');
         $student = request()->query('student_id');
-
-        if (isset($exam)) {
-            $this->queryBuilder->where('exam_id', $exam);
-        }
 
         if (isset($student)) {
             $this->queryBuilder->where('student_id', $student);
