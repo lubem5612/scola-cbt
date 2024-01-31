@@ -67,7 +67,9 @@ class GetStudentExamWithScores
             }
 
             $item['scores'] = $scores;
-            array_push($this->calculatedData, $item);
+            if (count($item)) {
+                array_push($this->calculatedData, $item);
+            }
         }
     }
 

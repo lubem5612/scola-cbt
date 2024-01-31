@@ -45,7 +45,7 @@ class GetAllStudentExamWithScores
                 $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $output->exam_id]))->execute();
             }
 
-            if ($value['success']) {
+            if ($value['success'] && isset($value['data'])) {
                 array_push($this->records, $value['data']);
             }
         }
