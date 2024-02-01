@@ -47,10 +47,13 @@ class GetStudentExamWithScores
     {
         $scores = 0;
         foreach ($this->attempts as $attempt) {
-            $item['candidate'] = config('scola-cbt.auth_model')::query()->with(['student'])->find($this->validatedData['user_id']);
+            $result = StudentExam::query()->join('students', 'student_exams.student_id', '=', 'students.id')
+                ->join('users', 'users.id', '=', 'students.user_id')
+                ->join('exams', 'exams.id', '=', 'student_exams.exam_id')
+                ->select('exams.exam_name', 'users.first_name', 'users.last_name', 'exams.exam_mode', 'users.email', 'exams.id as exam_id')
+                ->where('student_exams.attempts', $attempt['attempts'])->first();
 
             $exam = Exam::query()->find($this->validatedData['exam_id']);
-            $item['exam'] = $exam;
             $questions = $exam->questions;
 
             foreach ($questions as $question) {
@@ -66,9 +69,9 @@ class GetStudentExamWithScores
 
             }
 
-            $item['scores'] = $scores;
-            if (count($item) && isset($item)) {
-                array_push($this->calculatedData, $item);
+            $result['exam_scores'] = $scores;
+            if (!empty(collect($result)) && isset($result)) {
+                array_push($this->calculatedData, $result);
             }
         }
     }

@@ -45,7 +45,7 @@ class GetAllStudentExamWithScores
                 $value = (new GetStudentExamWithScores(['user_id' => $output->student->user_id, 'exam_id' => $output->exam_id]))->execute();
             }
 
-            if ($value['success'] && isset($value['data'])) {
+            if ($value['success'] && isset($value['data']) && count($value['data'])>0) {
                 array_push($this->records, $value['data']);
             }
         }
@@ -61,7 +61,7 @@ class GetAllStudentExamWithScores
         if (isset($this->perPage)) {
             $this->output = $this->queryBuilder->paginate($this->perPage);
         }else {
-            $this->output = $this->queryBuilder->get();
+            $this->output = $this->queryBuilder->paginate(10);
         }
     }
 
