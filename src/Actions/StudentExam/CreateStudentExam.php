@@ -14,7 +14,7 @@ class CreateStudentExam
 {
     use ResponseHelper, ValidationHelper;
 
-    private $request, $validatedData, $uploader, $student;
+    private $request, $validatedData, $uploader;
 
     public function __construct(array $request)
     {
@@ -25,17 +25,11 @@ class CreateStudentExam
     {
         try {
             $this->validateRequest();
-            $this->setStudent();
             $this->setAttempt();
             return $this->assignUserToExam();
         }catch (\Exception $exception) {
             return $this->sendServerError($exception);
         }
-    }
-
-    private function setStudent()
-    {
-        $this->student = Student::query()->find($this->validatedData['user_id']);
     }
 
     private function assignUserToExam()
@@ -47,7 +41,7 @@ class CreateStudentExam
     private function setAttempt()
     {
         $examsCount = StudentExam::query()->where([
-            'student_id' => $this->student->id,
+            'student_id' => $this->validatedData['student_id'],
             'exam_id' => $this->validatedData['exam_id'],
         ])->count();
         $this->validatedData['attempts'] = $examsCount + 1;
