@@ -16,6 +16,9 @@ class StudentExam extends Model
         "id"
     ];
 
+    protected $appends = [
+        'exam_score'
+    ];
 
     public function student()
     {
@@ -27,6 +30,25 @@ class StudentExam extends Model
         return $this->belongsTo(Exam::class, 'exam_id');
     }
 
+    public function getExamScoreAttribute()
+    {
+        $scores = 0;
+        $questions = Question::query()->where('exam_id', $this->exam_id)->get();
+        $student = Student::query()->find($this->student_id);
+        foreach ($questions as $question) {
+            $answer = Answer::query()->where([
+                'user_id' => $student->user_id,
+                'question_id' => $question->id,
+                'attempts' => $this->attempts,
+            ])->first();
+
+            if (!empty($answer) && $answer->isCorrectOption()) {
+                $scores = $scores + (float)$question->score_obtainable;
+            }
+        }
+
+        return $scores;
+    }
 
     protected static function newFactory()
     {

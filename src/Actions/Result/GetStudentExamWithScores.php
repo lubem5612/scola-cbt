@@ -50,8 +50,20 @@ class GetStudentExamWithScores
             $result = StudentExam::query()->join('students', 'student_exams.student_id', '=', 'students.id')
                 ->join('users', 'users.id', '=', 'students.user_id')
                 ->join('exams', 'exams.id', '=', 'student_exams.exam_id')
-                ->select('exams.exam_name', 'users.first_name', 'users.last_name', 'exams.exam_mode', 'users.email', 'exams.id as exam_id')
+                ->select('exams.*', 'users.first_name', 'users.last_name', 'students.id as student_id', 'users.email')
                 ->where('student_exams.attempts', $attempt['attempts'])->first();
+
+//            $data = $this->validatedData;
+//            $scores = Answer::query()->where(function ($query) use($data, $attempt) {
+//                $query->where('user_id', $data['user_id'])
+//                    ->where('attempts', $attempt['attempts'])
+//                    ->whereHas('question', function ($secondQuery) use ($data, $attempt) {
+//                        $secondQuery->where('exam_id', $data['exam_id'])
+//                            ->whereHas('options', function ($thirdQuery) {
+//                                $thirdQuery->where('is_correct_option', 'yes');
+//                            });
+//                    });
+//            })->count();
 
             $exam = Exam::query()->find($this->validatedData['exam_id']);
             $questions = $exam->questions;

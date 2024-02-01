@@ -60,11 +60,15 @@ class Exam extends Model
 
     public function getFacultyIdAttribute()
     {
-        return $this->department()->first()->faculty_id;
+        return $this->department()->first()->faculty_id? $this->department()->first()->faculty_id : null;
     }
 
     protected static function newFactory()
     {
         return ExamFactory::new();
     }
+
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 }
