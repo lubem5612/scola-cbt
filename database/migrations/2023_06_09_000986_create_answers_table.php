@@ -17,6 +17,7 @@ class CreateAnswersTable extends Migration
             $table->integer('attempts')->default(1);
             $table->text('content')->nullable();
             $table->string('file', 700)->nullable();
+            $table->float('score', 5,2)->nullable();
 
             $table->timestamps();
         });
