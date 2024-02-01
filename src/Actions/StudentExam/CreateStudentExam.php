@@ -55,7 +55,7 @@ class CreateStudentExam
 
     private function validateRequest()
     {
-        $this->validatedData = $this->request($this->request, [
+        $this->validatedData = $this->validate($this->request, [
             'student_id' => 'required|exists:students,id',
             'exam_id' => 'required|exists:exams,id',
             'attempts' => 'sometimes|required|integer'
