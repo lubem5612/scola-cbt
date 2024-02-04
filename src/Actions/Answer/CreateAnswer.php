@@ -73,7 +73,8 @@ class CreateAnswer
             'student_id' => $student->id,
             'exam_id' => $question->exam_id
         ])->latest()->first();
-        $this->validatedData['attempts'] = $studentExam->attempts;
+        if (empty($studentExam)) $this->validatedData['attempts'] = 1;
+        else $this->validatedData['attempts'] = $studentExam->attempts;
         return $this;
     }
 
