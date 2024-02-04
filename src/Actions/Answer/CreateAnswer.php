@@ -9,6 +9,9 @@ use Transave\ScolaCbt\Helpers\FileUploadHelper;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Answer;
+use Transave\ScolaCbt\Http\Models\Question;
+use Transave\ScolaCbt\Http\Models\Student;
+use Transave\ScolaCbt\Http\Models\StudentExam;
 
 class CreateAnswer
 {
@@ -28,6 +31,7 @@ class CreateAnswer
                     ->validateRequest()
                     ->setUser()
                     ->uploadFile()
+                    ->setAttempts()
                     ->createAnswer();
         }catch (\Exception $e) {
             return $this->sendServerError($e);
@@ -58,6 +62,18 @@ class CreateAnswer
                 $this->validatedData['file'] = $response['upload_url'];
             }
         }
+        return $this;
+    }
+
+    private function setAttempts()
+    {
+        $student = Student::query()->where('user_id', $this->validatedData['user_id'])->first();
+        $question = Question::query()->find($this->validatedData['question_id']);
+        $studentExam = StudentExam::query()->where([
+            'student_id' => $student->id,
+            'exam_id' => $question->exam_id
+        ])->latest()->first();
+        $this->validatedData['attempts'] = $studentExam->attempts;
         return $this;
     }
 
