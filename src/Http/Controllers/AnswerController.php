@@ -40,7 +40,7 @@ class AnswerController extends Controller
      */
     public function show($id)
     {
-        return (new GetAnswer(['id' => $id]))->execute();
+        return (new SearchAnswer(Answer::class, [], $id))->execute();
     }
 
     /**
@@ -63,7 +63,7 @@ class AnswerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $inputs = $request->merge(['answer_id' => $id])->all();
+        $inputs = array_merge($request->all(), ['answer_id' => $id]);
         return (new UpdateAnswer($inputs))->execute();
     }
 

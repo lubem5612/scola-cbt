@@ -27,7 +27,6 @@ class UpdateAnswer
             return
                 $this
                     ->validateRequest()
-                    ->setUser()
                     ->setAnswer()
                     ->replaceOrUploadFile()
                     ->updateAnswer();
@@ -38,22 +37,14 @@ class UpdateAnswer
 
     private function updateAnswer()
     {
-        $this->answer->fill($this->validatedData)->save();
+        $data = Arr::only($this->validatedData, ['content', 'file', 'score']);
+        $this->answer->fill($data)->save();
         return $this->sendSuccess($this->answer->refresh()->load('user', 'question', 'option'), 'answer updated successfully');
     }
 
     private function setAnswer()
     {
         $this->answer = Answer::query()->find($this->validatedData['answer_id']);
-        return $this;
-    }
-
-    private function setUser()
-    {
-        if (!array_key_exists('user_id', $this->validatedData))
-        {
-            $this->validatedData['user_id'] = auth()->user();
-        }
         return $this;
     }
 
@@ -71,15 +62,16 @@ class UpdateAnswer
 
     private function validateRequest()
     {
-        $this->validate($this->request, [
+        $validator = $this->validate($this->request, [
             'answer_id' => 'required|exists:answers,id',
             'user_id' => 'sometimes|required|exists:users,id',
             'question_id' => 'sometimes|required|exists:questions,id',
             'option_id' => 'sometimes|required|exists:options,id',
             'content' => 'sometimes|required|string',
+            'score' => 'sometimes|required|numeric',
             'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx'
         ]);
-        $this->validatedData = Arr::except($this->validator->validated(), ['file']);
+        $this->validatedData = Arr::except($validator, ['file']);
         return $this;
     }
 }
