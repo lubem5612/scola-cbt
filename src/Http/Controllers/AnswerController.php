@@ -40,7 +40,7 @@ class AnswerController extends Controller
      */
     public function show($id)
     {
-        return (new SearchAnswer(Answer::class, [], $id))->execute();
+        return (new SearchAnswer(Answer::class, ['option', 'user', 'question'], $id))->execute();
     }
 
     /**
