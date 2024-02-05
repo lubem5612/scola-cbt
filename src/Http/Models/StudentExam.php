@@ -17,7 +17,7 @@ class StudentExam extends Model
     ];
 
     protected $appends = [
-        'exam_score'
+        'exam_score', 'essay_score', 'total_score'
     ];
 
     public function student()
@@ -48,6 +48,24 @@ class StudentExam extends Model
         }
 
         return $scores;
+    }
+
+    public function getEssayScoreAttribute()
+    {
+        $student = Student::query()->find($this->student_id);
+        $scores = Answer::query()->where(function ($query) use($student) {
+            $query->where('user_id', $student->user_id)
+                ->where('attempts', $this->attempts)
+                ->whereHas('question', function ($secondQuery) {
+                    $secondQuery->where('exam_id', $this->exam_id);
+                });
+        })->whereNotNull('score')->sum('score');
+        return $scores;
+    }
+
+    public function getTotalScoreAttribute()
+    {
+        return (float)$this->getEssayScoreAttribute() + (float)$this->getExamScoreAttribute();
     }
 
     protected static function newFactory()
