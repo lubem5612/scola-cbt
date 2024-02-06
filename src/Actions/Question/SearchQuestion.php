@@ -10,6 +10,14 @@ class SearchQuestion
 
     private function searchTerms()
     {
+        $filter = request()->query('is_assigned');
+        if (isset($filter)) {
+            if ($filter == 'true') {
+                $this->queryBuilder->whereNotNull('exam_id');
+            }elseif ($filter == 'false') {
+                $this->queryBuilder->whereNull('exam_id');
+            }
+        }
         $search = $this->searchParam;
         $this->queryBuilder->where(function ($query) use ($search) {
             $query->where('question_type', 'like', "%$search%")
