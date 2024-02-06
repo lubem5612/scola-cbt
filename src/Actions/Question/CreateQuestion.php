@@ -54,7 +54,7 @@ class CreateQuestion
     {
 
         $this->validate($this->request, [
-            'exam_id' => 'required|exists:exams,id',
+            'exam_id' => 'sometimes|required|exists:exams,id',
             'question_type' => 'required|string|max:50',
             'score_obtainable' => 'sometimes|required|integer',
             'question' => 'required|string',

@@ -52,14 +52,21 @@ class StudentExam extends Model
 
     public function getEssayScoreAttribute()
     {
+        $scores = 0;
+        $questions = Question::query()->where('exam_id', $this->exam_id)->get();
         $student = Student::query()->find($this->student_id);
-        $scores = Answer::query()->where(function ($query) use($student) {
-            $query->where('user_id', $student->user_id)
-                ->where('attempts', $this->attempts)
-                ->whereHas('question', function ($secondQuery) {
-                    $secondQuery->where('exam_id', $this->exam_id);
-                });
-        })->whereNotNull('score')->sum('score');
+        foreach ($questions as $question) {
+            $answer = Answer::query()->where([
+                'user_id' => $student->user_id,
+                'question_id' => $question->id,
+                'attempts' => $this->attempts,
+            ])->first();
+
+            if (!empty($answer)) {
+                $scores = $scores + (float)$answer->score;
+            }
+        }
+
         return $scores;
     }
 
