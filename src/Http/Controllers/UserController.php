@@ -32,6 +32,15 @@ class UserController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function user($id)
+    {
+        return (new SearchUsers(config('scola-cbt.auth_model'), [], $id))->execute();
+    }
+
+    /**
      * Update a specified user account
      *
      * @param Request $request)

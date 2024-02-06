@@ -88,6 +88,7 @@ Route::as('cbt.')->group(function () {
     //User Routes
     Route::prefix('users')->as('users.')->group(function() {
         Route::get('/', [UserController::class, 'users'])->name('index');
+        Route::get('/{id}', [UserController::class, 'user'])->name('show');
         Route::post('/{id}', [UserController::class, 'update'])->name('update');
         Route::patch('change-email', [UserController::class, 'changeEmail'])->name('change-email');
         Route::patch('change-password', [UserController::class, 'changePassword'])->name('change-password');
