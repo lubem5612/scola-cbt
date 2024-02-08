@@ -25,7 +25,6 @@ class SearchQuestion
                 ->orWhereHas('exam', function ($query1) use ($search) {
                     $query1->where('semester', 'like', "%$search%")
                         ->orWhere('level', 'like', "%$search%")
-                        ->orWhere('exam_type', 'like', "%$search%")
                         ->orWhere('max_score_obtainable', 'like', "%$search%")
                         ->orWhere('exam_mode', 'like', "%$search%")
                         ->orWhere('venue', 'like', "%$search%")

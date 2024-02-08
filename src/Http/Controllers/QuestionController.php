@@ -25,9 +25,8 @@ class QuestionController extends Controller
         return (new SearchQuestion(Question::class, ['exam']))->execute();
     }
 
-
     public function show($id){
-        return (new GetQuestion(['id' => $id]))->execute();
+        return (new SearchQuestion(Question::class, ['exam'], $id))->execute();
     }
 
     public function create(Request $request){
