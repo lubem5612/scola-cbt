@@ -10,12 +10,12 @@ class SearchOption
 {
     use SearchHelper;
 
-    public function searchTerms()
+    private function searchTerms()
     {
         $question = request()->query('question_id');
 
         if (isset($question)) {
-            $this->queryBuilder = $this->queryBuilder->where('question_id', $question);
+            $this->queryBuilder->where('question_id', $question);
         }
         $search = $this->searchParam;
         $this->queryBuilder->where('is_correct_option', 'like', "%$search%")->orWhere('content', 'like', "%$search%");
