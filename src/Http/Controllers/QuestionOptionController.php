@@ -7,8 +7,8 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Option\CreateOption;
 use Transave\ScolaCbt\Actions\Option\DeleteOption;
+use Transave\ScolaCbt\Actions\Option\SearchOption;
 use Transave\ScolaCbt\Actions\Option\UpdateOption;
-use Transave\ScolaCbt\Actions\Search\SearchOptions;
 use Transave\ScolaCbt\Http\Models\Option;
 
 class QuestionOptionController extends Controller
@@ -19,12 +19,11 @@ class QuestionOptionController extends Controller
     }
 
     public function index(){
-        return (new SearchOptions(Option::class, ['question']))->execute();
+        return (new SearchOption(Option::class, ['question']))->execute();
     }
 
-
     public function show($id){
-        return (new SearchOptions(Option::class, ['question'], $id))->execute();
+        return (new SearchOption(Option::class, ['question'], $id))->execute();
     }
 
     public function create(Request $request){
