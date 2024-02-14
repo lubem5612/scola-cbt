@@ -18,7 +18,11 @@ class SearchOption
             $this->queryBuilder->where('question_id', $question);
         }
         $search = $this->searchParam;
-        $this->queryBuilder->where('is_correct_option', 'like', "%$search%")->orWhere('content', 'like', "%$search%");
+        $this->queryBuilder->where(function ($query) use ($search) {
+            $query->where('is_correct_option', 'like', "%$search%")
+                ->orWhere('content', 'like', "%$search%");
+        });
+
         return $this;
     }
 }
