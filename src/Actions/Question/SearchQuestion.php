@@ -21,6 +21,7 @@ class SearchQuestion
         $search = $this->searchParam;
         $this->queryBuilder->where(function ($query) use ($search) {
             $query->where('question_type', 'like', "%$search%")
+                ->orWhere('question', 'like', "%$search%")
                 ->orWhere('score_obtainable', 'like', "%$search%")
                 ->orWhereHas('exam', function ($query1) use ($search) {
                     $query1->where('semester', 'like', "%$search%")
