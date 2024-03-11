@@ -13,7 +13,7 @@ class CreateExamsTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users');
             $table->foreignUuid('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->foreignUuid('faculty_id')->constrained('courses')->cascadeOnDelete();
+            $table->foreignUuid('faculty_id')->constrained('faculties')->cascadeOnDelete();
             $table->foreignUuid('department_id')->constrained('departments')->cascadeOnDelete();
             $table->foreignUuid('session_id')->constrained('sessions')->cascadeOnDelete();
             $table->string('semester', 20);
