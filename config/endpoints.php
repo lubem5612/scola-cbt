@@ -122,7 +122,7 @@ return [
                 'column' => 'created_at',
                 'pattern' => 'DESC',
             ],
-            'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.department', 'exam.session', 'department', 'department.faculty'],
+            'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.departments', 'exam.session', 'department', 'department.faculty'],
         ],
         'exam-settings' => [
             'table' => 'exam_settings',
