@@ -21,24 +21,20 @@ class Course extends Model
         "id"
     ];
 
-
     public function exams(): HasMany
     {
         return  $this->hasMany(Exam::class);
     }
-
 
     public function studentexams()
     {
         return $this->hasMany(StudentExam::class, 'course_id');
     }
 
-
     public function department(): BelongsTo
     {
         return  $this->belongsTo(Department::class);
     }
-
 
     protected static function newFactory()
     {

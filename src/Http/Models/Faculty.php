@@ -20,15 +20,9 @@ class Faculty extends Model
         "id"
     ];
 
-
     protected static function newFactory()
     {
         return FacultyFactory::new();
     }
 
-
-    public function exams(): HasMany
-    {
-        return  $this->hasMany(Exam::class);
-    }
 }
