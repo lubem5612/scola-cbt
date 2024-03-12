@@ -35,7 +35,7 @@ class Department extends Model
 
     public function getFacultyNameAttribute()
     {
-        return property_exists($this->faculty()->first(), 'name')? $this->faculty()->first()->name : null;
+        return $this->faculty()->first()?->name;
     }
 
     protected static function newFactory()
