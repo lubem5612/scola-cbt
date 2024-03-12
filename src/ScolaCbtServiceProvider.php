@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Transave\ScolaCbt\Console\ExamDepartmentSeeder;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfAdmin;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfExaminer;
@@ -133,7 +134,9 @@ class ScolaCbtServiceProvider extends ServiceProvider
         ], 'scola-cbt.views');*/
 
         // Registering package commands.
-        // $this->commands([]);
+        $this->commands([
+            ExamDepartmentSeeder::class,
+        ]);
     }
 
     protected function registerRoutes()
