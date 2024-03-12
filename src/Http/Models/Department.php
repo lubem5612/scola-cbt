@@ -21,6 +21,8 @@ class Department extends Model
         "id"
     ];
 
+    protected $appends = [ 'faculty_name' ];
+
     public function faculty() : BelongsTo
     {
         return $this->belongsTo(Faculty::class);
@@ -28,7 +30,12 @@ class Department extends Model
 
     public function exams() : BelongsToMany
     {
-        return  $this->BelongsToMany(Exam::class, 'exam_departments', 'department_id', 'exam_id');
+        return $this->BelongsToMany(Exam::class, 'exam_departments', 'department_id', 'exam_id');
+    }
+
+    public function getFacultyNameAttribute()
+    {
+        return property_exists($this->faculty()->first(), 'name')? $this->faculty()->first()->name : null;
     }
 
     protected static function newFactory()

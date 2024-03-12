@@ -32,7 +32,7 @@ class CreateExam
                 ->setMaximumScore()
                 ->createExam()
                 ->setDepartments()
-                ->sendSuccess($this->exam->load('user', 'course', 'faculty', 'departments', 'session'), 'exam created successfully');
+                ->sendSuccess($this->exam->load('user', 'course', 'departments', 'session'), 'exam created successfully');
         }catch (\Exception $e) {
             return $this->sendServerError($e);
         }
@@ -89,7 +89,6 @@ class CreateExam
         $this->validate($this->request, [
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
-            'faculty_id' => 'required|exists:faculties,id',
             'department_ids' => 'nullable|array',
             'department_ids.*' => 'sometimes|required|exists:departments,id',
             'session_id' => 'sometimes|required|exists:sessions,id',

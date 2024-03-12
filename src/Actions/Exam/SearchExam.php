@@ -13,7 +13,8 @@ class SearchExam
     private function searchTerms()
     {
         $search = $this->searchParam;
-//        $department = request()->query('department_id');
+        $department = request()->query('department_id');
+        $faculty = request()->query('faculty_id');
         $course = request()->query('course_id');
         $user = request()->query('user_id');
         $session = request()->query('session_id');
@@ -21,9 +22,20 @@ class SearchExam
         $semester = request()->query('semester');
         $mode = request()->query('exam_mode');
 
-//        if (isset($department)) {
-//            $this->queryBuilder = $this->queryBuilder->where('department_id', $department);
-//        }
+        if (isset($department)) {
+            $this->queryBuilder = $this->queryBuilder
+                ->whereHas('departments', function ($query) use ($department) {
+                    $query->where('id', $department);
+                });
+        }
+        if (isset($faculty)) {
+            $this->queryBuilder = $this->queryBuilder
+                ->whereHas('departments', function ($query) use ($faculty) {
+                    $query->whereHas('faculty', function ($query2) use ($faculty) {
+                        $query2->where('id', $faculty);
+                    });
+                });
+        }
         if (isset($course)) {
             $this->queryBuilder = $this->queryBuilder->where('course_id', $course);
         }

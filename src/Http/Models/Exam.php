@@ -21,7 +21,7 @@ class Exam extends Model
     ];
 
     protected $appends = [
-        'faculty_id'
+        'faculty_ids'
     ];
 
     public function session() : BelongsTo
@@ -29,10 +29,6 @@ class Exam extends Model
         return  $this->belongsTo(Session::class);
     }
 
-    public function faculty() : BelongsTo
-    {
-        return  $this->belongsTo(Faculty::class);
-    }
 
     public function course() : BelongsTo
     {
@@ -59,9 +55,9 @@ class Exam extends Model
         return $this->belongsToMany(Student::class, 'student_exams', 'exam_id', 'student_id');
     }
 
-    public function getFacultyIdAttribute()
+    public function getFacultyIdsAttribute()
     {
-        return $this->department()->first()->faculty_id? $this->department()->first()->faculty_id : null;
+        return $this->departments()->get()->pluck('faculty_id');
     }
 
     protected static function newFactory()
