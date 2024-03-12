@@ -38,9 +38,6 @@ class SearchQuestion
                                 ->orWhere('last_name', 'like', "%$search%")
                                 ->orWhere('email', 'like', "%$search%");
                         })
-                        ->orWhereHas('departments', function ($query2) use ($search) {
-                            $query2->where('name', 'like', "%$search%");
-                        })
                         ->orWhereHas('course', function ($query4) use ($search) {
                             $query4->where('name', 'like', "%$search%")
                                 ->orWhere('code', 'like', "%$search%");
