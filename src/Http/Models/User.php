@@ -37,12 +37,12 @@ class User extends Authenticatable
 
     public function staff() : HasOne
     {
-        return $this->hasOne(Staff::class)->with(['department']);
+        return $this->hasOne(Staff::class)->with(['department', 'department.faculty']);
     }
 
     public function examiner() : HasOne
     {
-        return $this->hasOne(Examiner::class)->with(['department']);
+        return $this->hasOne(Examiner::class)->with(['department', 'department.faculty']);
     }
 
     public function manager() : HasOne
@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function student() : HasOne
     {
-        return $this->hasOne(Student::class)->with(['department']);
+        return $this->hasOne(Student::class)->with(['department', 'department.faculty']);
     }
 
     public function getDetailsAttribute()

@@ -104,6 +104,26 @@ return [
             ],
             'relationships' => ['question'],
         ],
+
+        'exam-departments' => [
+            'table' => 'exam-departments',
+            'model' => \Transave\ScolaCbt\Http\Models\ExamDepartment::class,
+            'rules' => [
+                'store' => [
+                    'exam_id' => 'required|exists:exams,id',
+                    'department_id' => 'required|exists:departments,id',
+                ],
+                'update' => [
+                    'exam_id' => 'sometimes|required|exists:exams,id',
+                    'department_id' => 'sometimes|required|exists:departments,id',
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.department', 'exam.session', 'department', 'department.faculty'],
+        ],
         'exam-settings' => [
             'table' => 'exam_settings',
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,

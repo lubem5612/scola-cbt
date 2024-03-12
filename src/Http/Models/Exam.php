@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Http\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Transave\ScolaCbt\Database\Factories\ExamFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
@@ -38,9 +39,9 @@ class Exam extends Model
         return  $this->belongsTo(Course::class);
     }
 
-    public function department() : BelongsTo
+    public function departments() : BelongsToMany
     {
-        return  $this->belongsTo(Department::class);
+        return  $this->BelongsToMany(Department::class, 'exam_departments', 'exam_id', 'department_id');
     }
 
     public function user() : BelongsTo

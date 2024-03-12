@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Actions\Exam;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\ExamDepartment;
 
 class DeleteExam
 {
@@ -25,6 +26,7 @@ class DeleteExam
             return $this
                 ->validateRequest()
                 ->setExam()
+                ->deleteExamDepartments()
                 ->deleteExam();
         }catch (\Exception $e) {
             return $this->sendServerError($e);
@@ -41,6 +43,12 @@ class DeleteExam
     {
         $this->exam = Exam::query()->find($this->request['id']);
         return  $this;
+    }
+
+    private function deleteExamDepartments()
+    {
+        ExamDepartment::query()->where('exam_id', $this->exam->id)->delete();
+        return $this;
     }
 
     private function validateRequest() : self

@@ -4,9 +4,12 @@
 namespace Transave\ScolaCbt\Actions\Exam;
 
 
+use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\ExamDepartment;
 use Transave\ScolaCbt\Http\Models\Session;
 
 class UpdateExam
@@ -29,6 +32,7 @@ class UpdateExam
                 ->setUser()
                 ->setSession()
                 ->setMaximumScore()
+                ->setDepartments()
                 ->updateExam();
         }catch (\Exception $e) {
             return $this->sendServerError($e);
@@ -38,7 +42,7 @@ class UpdateExam
     private function updateExam()
     {
         $this->exam->fill($this->request)->save();
-        return $this->sendSuccess($this->exam->refresh()->load('user', 'course', 'faculty', 'department', 'session'), 'exam updated successfully');
+        return $this->sendSuccess($this->exam->refresh()->load('user', 'course', 'faculty', 'departments', 'session'), 'exam updated successfully');
     }
 
     private function setExam() : self
@@ -71,6 +75,23 @@ class UpdateExam
         return $this;
     }
 
+    private function setDepartments() : self
+    {
+        if (Arr::exists($this->request, 'department_ids')
+            && is_array($this->request['department_ids'])
+            && count($this->request['department_ids']) > 0) {
+
+            ExamDepartment::query()->where('exam_id', $this->exam->id)->delete();
+            foreach ($this->request['department_ids'] as $department_id) {
+                ExamDepartment::query()->create([
+                    'exam_id' => $this->exam->id,
+                    'department_id' => $department_id
+                ]);
+            }
+        }
+        return $this;
+    }
+
     private function validateRequest() : self
     {
         $this->validate($this->request, [
@@ -78,7 +99,8 @@ class UpdateExam
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'sometimes|required|exists:courses,id',
             'faculty_id' => 'sometimes|required|exists:faculties,id',
-            'department_id' => 'sometimes|required|exists:departments,id',
+            'department_ids' => 'nullable|array',
+            'department_ids.*' => 'sometimes|required|exists:departments,id',
             'session_id' => 'sometimes|required|exists:sessions,id',
             'semester' => 'sometimes|required|string|max:50',
             'level' => 'sometimes|required|string|max:20',

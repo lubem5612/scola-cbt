@@ -7,13 +7,15 @@ namespace Transave\ScolaCbt\Actions\Exam;
 use Illuminate\Support\Carbon;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Exam;
+use Transave\ScolaCbt\Http\Models\ExamDepartment;
 use Transave\ScolaCbt\Http\Models\Session;
 
 class CreateExam
 {
     use ResponseHelper, ValidationHelper;
-    private $request;
+    private $request, $exam;
 
     public function __construct(array $request)
     {
@@ -28,7 +30,9 @@ class CreateExam
                 ->setUser()
                 ->setSession()
                 ->setMaximumScore()
-                ->createExam();
+                ->createExam()
+                ->setDepartments()
+                ->sendSuccess($this->exam->load('user', 'course', 'faculty', 'departments', 'session'), 'exam created successfully');
         }catch (\Exception $e) {
             return $this->sendServerError($e);
         }
@@ -36,8 +40,9 @@ class CreateExam
 
     private function createExam()
     {
-        $exam = Exam::query()->create($this->request);
-        return $this->sendSuccess($exam->load('user', 'course', 'faculty', 'department', 'session'), 'exam created successfully');
+        $this->exam = Exam::query()->create($this->request);
+        return $this;
+
     }
 
     private function setSession() : self
@@ -64,13 +69,29 @@ class CreateExam
         return $this;
     }
 
+    private function setDepartments() : self
+    {
+        if (!array_key_exists('department_ids', $this->request)) {
+            $this->request['department_ids'] = Department::query()->get()->pluck('id')->toArray();
+        }
+        ExamDepartment::query()->where('exam_id', $this->exam->id)->delete();
+        foreach ($this->request['department_ids'] as $department_id) {
+            ExamDepartment::query()->create([
+                'exam_id' => $this->exam->id,
+                'department_id' => $department_id
+            ]);
+        }
+        return $this;
+    }
+
     private function validateRequest() : self
     {
         $this->validate($this->request, [
             'user_id' => 'sometimes|required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
             'faculty_id' => 'required|exists:faculties,id',
-            'department_id' => 'required|exists:departments,id',
+            'department_ids' => 'nullable|array',
+            'department_ids.*' => 'sometimes|required|exists:departments,id',
             'session_id' => 'sometimes|required|exists:sessions,id',
             'semester' => 'required|string|max:50',
             'level' => 'required|string|max:20',

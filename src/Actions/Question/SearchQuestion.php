@@ -18,6 +18,10 @@ class SearchQuestion
                 $this->queryBuilder->whereNull('exam_id');
             }
         }
+        $exam = request()->query('exam_id');
+        if (isset($exam)) {
+            $this->queryBuilder->where('exam_id', $exam);
+        }
         $search = $this->searchParam;
         $this->queryBuilder->where(function ($query) use ($search) {
             $query->where('question_type', 'like', "%$search%")
