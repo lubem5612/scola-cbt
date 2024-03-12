@@ -49,4 +49,15 @@ class SearchQuestion
 
         return $this;
     }
+
+    public function handlePagination()
+    {
+        if (is_null($this->id) && !isset($this->id)) {
+            if (isset($this->perPage)) {
+                $this->output = $this->queryBuilder->paginate($this->perPage);
+            }else
+                $this->output = $this->queryBuilder->get();
+        }
+        return $this;
+    }
 }
