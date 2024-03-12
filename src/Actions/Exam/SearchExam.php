@@ -17,6 +17,8 @@ class SearchExam
         $course = request()->query('course_id');
         $user = request()->query('user_id');
         $session = request()->query('session_id');
+        $level = request()->query('level');
+        $semester = request()->query('semester');
 
         if (isset($department)) {
             $this->queryBuilder = $this->queryBuilder->where('department_id', $department);
@@ -29,6 +31,12 @@ class SearchExam
         }
         if (isset($session)) {
             $this->queryBuilder = $this->queryBuilder->where('session_id', $session);
+        }
+        if (isset($level)) {
+            $this->queryBuilder = $this->queryBuilder->where('level', $level);
+        }
+        if (isset($semester)) {
+            $this->queryBuilder = $this->queryBuilder->where('semester', $semester);
         }
 
         $this->queryBuilder = $this->queryBuilder->where(function ($query) use ($search) {
