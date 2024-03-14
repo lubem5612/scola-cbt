@@ -25,7 +25,7 @@ class SearchExam
         if (isset($department)) {
             $this->queryBuilder = $this->queryBuilder
                 ->whereHas('departments', function ($query) use ($department) {
-                    $query->where('id', $department);
+                    $query->where('departments.id', $department);
                 });
         }
         if (isset($faculty)) {
