@@ -11,6 +11,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('exam_id')->nullable()->constrained('exams')->cascadeOnDelete();
+            $table->foreignUuid('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
             $table->string('question_type', 50);
             $table->float('score_obtainable', 6, 2)->default(0)->index();
             $table->text('question');
