@@ -34,7 +34,7 @@ class QuestionController extends Controller
     }
 
     public function update(Request $request, $id){
-        $inputs = $request->merge(['answer_id' => $id])->all();
+        $inputs = $request->merge(['question_id' => $id])->all();
         return (new UpdateQuestion($inputs))->execute();
     }
 
