@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Transave\ScolaCbt\Database\Factories\DepartmentFactory;
 use Transave\ScolaCbt\Helpers\UUIDHelper;
 
@@ -26,6 +27,11 @@ class Department extends Model
     public function faculty() : BelongsTo
     {
         return $this->belongsTo(Faculty::class);
+    }
+
+    public function questions() : HasMany
+    {
+        return $this->hasMany(Question::class);
     }
 
     public function exams() : BelongsToMany
