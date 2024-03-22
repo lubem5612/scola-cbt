@@ -29,7 +29,7 @@ class CreateQuestion
             $this->uploadQuestionFile();
             $this->createQuestion();
             $this->createOptions();
-            return $this->sendSuccess($this->question->load('exams', 'options'), 'question created successfully');
+            return $this->sendSuccess($this->question->load('exam', 'options'), 'question created successfully');
         } catch (\Exception $e) {
             return $this->sendServerError($e);
         }
