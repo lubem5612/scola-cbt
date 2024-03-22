@@ -61,17 +61,19 @@ class UpdateQuestion
         if (is_array($this->request['options']) && count($this->request['options']) > 0) {
             foreach ($this->request['options'] as $option)
             {
-                $optionModel = Option::query()->find($option['option_id']);
-                $optionData = Arr::only($option, ['is_correct_option', 'content']);
-                $optionData['question_id'] = $this->question->id;
-                if (Arr::exists($option, 'file')) {
-                    $response = FileUploadHelper::UploadOrReplaceFile($option['file'], 'cbt/questions', $optionModel, 'file');
-                    if ($response['success']) {
-                        $optionData['file'] = $response['upload_url'];
+                if (Arr::exists($option, 'option_id')) {
+                    $optionModel = Option::query()->find($option['option_id']);
+                    $optionData = Arr::only($option, ['is_correct_option', 'content']);
+                    $optionData['question_id'] = $this->question->id;
+                    if (Arr::exists($option, 'file')) {
+                        $response = FileUploadHelper::UploadOrReplaceFile($option['file'], 'cbt/questions', $optionModel, 'file');
+                        if ($response['success']) {
+                            $optionData['file'] = $response['upload_url'];
+                        }
                     }
-                }
 
-                $optionModel->fill($optionData)->save();
+                    $optionModel->fill($optionData)->save();
+                }
             }
         }
     }
