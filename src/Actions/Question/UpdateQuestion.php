@@ -89,7 +89,7 @@ class UpdateQuestion
             'question' => 'required|string',
             'file' => 'sometimes|required|file|max:40000|mimes:jpeg,png,jpg,gif,mp4,webm,ogg,mp3,wav',
             'answers' => 'sometimes|required|string',
-            'options' => 'required|array',
+            'options' => 'sometimes|required|array',
             'options.*.option_id' => 'required_unless:options,null|exists:options,id',
             'options.*.is_correct_option' => 'nullable|in:yes,no',
             'options.*.content' => 'nullable|string',
