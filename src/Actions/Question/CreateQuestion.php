@@ -52,7 +52,7 @@ class CreateQuestion
 
     private function createOptions()
     {
-        if (is_array($this->request['options']) && count($this->request['options']) > 0) {
+        if (array_key_exists('options', $this->request) && is_array($this->request['options']) && count($this->request['options']) > 0) {
             foreach ($this->request['options'] as $option)
             {
                 $optionData = Arr::only($option, ['is_correct_option', 'content']);

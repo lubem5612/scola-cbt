@@ -58,7 +58,7 @@ class UpdateQuestion
 
     private function updateOptions()
     {
-        if (is_array($this->request['options']) && count($this->request['options']) > 0) {
+        if (array_key_exists('options', $this->request) && is_array($this->request['options']) && count($this->request['options']) > 0) {
             foreach ($this->request['options'] as $option)
             {
                 if (Arr::exists($option, 'option_id')) {
