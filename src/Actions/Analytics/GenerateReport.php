@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Actions\Analytics;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
+use Transave\ScolaCbt\Http\Models\Answer;
 use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\ExamSetting;
 use Transave\ScolaCbt\Http\Models\Faculty;
@@ -28,7 +29,7 @@ class GenerateReport
     {
         try {
             $this->getTests();
-//            $this->getMarksAnalysis();
+            $this->getMarksAnalysis();
             $this->getScoreDistributionData();
             $this->getStudentDistribution();
             return $this->sendSuccess($this->data, 'report analysis obtained');
@@ -60,9 +61,9 @@ class GenerateReport
             foreach ($questions as $question_index => $question) {
                 $answers = $question->answers;
 
-                if (!empty($answers)) {
-                    $latest = $answers->latest()->first();
-                    $oldest = $answers->oldest()->first();
+                if (count($answers) > 0) {
+                    $latest = Answer::query()->where('question_id', $question->id)->orderBy('desc', 'created_at')->first();
+                    $oldest = Answer::query()->where('question_id', $question->id)->orderBy('asc', 'created_at')->first();
                     $differenceInMinutes = $differenceInMinutes + Carbon::parse($latest->created_at)->diffInMinutes($oldest->created_at);
 
                     foreach ($answers as $answer) {
