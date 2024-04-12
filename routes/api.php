@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Transave\ScolaCbt\Http\Controllers\AnalyticController;
 use Transave\ScolaCbt\Http\Controllers\AnswerController;
 use Transave\ScolaCbt\Http\Controllers\AuthController;
 use Transave\ScolaCbt\Http\Controllers\ExamController;
@@ -111,5 +112,8 @@ Route::as('cbt.')->group(function () {
        Route::post('/exams', [ ResultController::class, 'calculateBatchExams'])->name('batch-exams');
     });
 
+    Route::prefix('reports')->as('reports.')->group(function (){
+        Route::get('/', [ AnalyticController::class, 'report'])->name('index');
+    });
 
 });

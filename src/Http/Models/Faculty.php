@@ -20,6 +20,11 @@ class Faculty extends Model
         "id"
     ];
 
+    public function departments() : HasMany
+    {
+        return $this->hasMany(Department::class);
+    }
+
     protected static function newFactory()
     {
         return FacultyFactory::new();

@@ -39,6 +39,11 @@ class Department extends Model
         return $this->BelongsToMany(Exam::class, 'exam_departments', 'department_id', 'exam_id');
     }
 
+    public function students() : HasMany
+    {
+        return $this->hasMany(Student::class);
+    }
+
     public function getFacultyNameAttribute()
     {
         return $this->faculty()->first()?->name;
