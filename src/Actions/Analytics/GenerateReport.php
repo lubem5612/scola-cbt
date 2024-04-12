@@ -28,7 +28,7 @@ class GenerateReport
     {
         try {
             $this->getTests();
-            $this->getMarksAnalysis();
+//            $this->getMarksAnalysis();
             $this->getScoreDistributionData();
             $this->getStudentDistribution();
             return $this->sendSuccess($this->data, 'report analysis obtained');
