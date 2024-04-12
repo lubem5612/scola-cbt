@@ -59,15 +59,18 @@ class GenerateReport
 
             foreach ($questions as $question_index => $question) {
                 $answers = $question->answers;
-                $latest = $answers->latest()->first();
-                $oldest = $answers->oldest()->first();
-                $differenceInMinutes = $differenceInMinutes + Carbon::parse($latest->created_at)->diffInMinutes($oldest->created_at);
 
-                foreach ($answers as $answer) {
-                    if (!empty($answer) && $answer->isCorrectOption()) {
-                        $scores = $scores + (float)$question->score_obtainable;
-                    }elseif (!is_null($answer->score) && floatval($answer->score)) {
-                        $scores = $scores + floatval($answer->score);
+                if (!empty($answers)) {
+                    $latest = $answers->latest()->first();
+                    $oldest = $answers->oldest()->first();
+                    $differenceInMinutes = $differenceInMinutes + Carbon::parse($latest->created_at)->diffInMinutes($oldest->created_at);
+
+                    foreach ($answers as $answer) {
+                        if (!empty($answer) && $answer->isCorrectOption()) {
+                            $scores = $scores + (float)$question->score_obtainable;
+                        }elseif (!is_null($answer->score) && floatval($answer->score)) {
+                            $scores = $scores + floatval($answer->score);
+                        }
                     }
                 }
 
