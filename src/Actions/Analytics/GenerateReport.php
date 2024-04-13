@@ -45,7 +45,7 @@ class GenerateReport
             ->whereHas('student', function (Builder $builder) {
                 $builder->whereHas('answers', function (Builder $builder2) {
                     $builder2->whereNotNull('answers.user_id');
-                })
+                });
             })->count();
         $this->data['test_completed'] = Exam::query()
             ->whereHas('questions', function (Builder $builder) {
