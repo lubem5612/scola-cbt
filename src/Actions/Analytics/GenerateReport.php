@@ -41,7 +41,12 @@ class GenerateReport
     private function getTests()
     {
         $this->data['test_created'] = Exam::query()->count();
-        $this->data['test_taken'] = StudentExam::query()->count();
+        $this->data['test_taken'] = StudentExam::query()
+            ->whereHas('student', function (Builder $builder) {
+                $builder->whereHas('answers', function (Builder $builder2) {
+                    $builder2->whereNotNull('answers.user_id');
+                })
+            })->count();
         $this->data['test_completed'] = Exam::query()
             ->whereHas('questions', function (Builder $builder) {
                 $builder->whereHas('answers', function (Builder $builder2) {
@@ -53,18 +58,20 @@ class GenerateReport
     private function getMarksAnalysis()
     {
         $scores = 0; $averageScore = 0; $belowAverage = 0; $aboveAverage = 0; $total = 0; $differenceInMinutes = 0; $averageDuration = 0;
-        foreach (StudentExam::query()->lazy() as $studentExams) {
+        foreach (StudentExam::lazy() as $studentExams) {
             $exam = $studentExams->exam;
             $questions = $exam->questions;
-            ++$total;
-
+            $total = $total + 1;
+            $totalQuestions = 0;
             foreach ($questions as $question_index => $question) {
-                $answers = $question->answers;
+                $answers = Answer::query()->where('question_id', $question->id)->orderByDesc('created_at')->get();
 
-                if (count($answers) > 0) {
-                    $latest = Answer::query()->where('question_id', $question->id)->orderBy('desc', 'created_at')->first();
-                    $oldest = Answer::query()->where('question_id', $question->id)->orderBy('asc', 'created_at')->first();
-                    $differenceInMinutes = $differenceInMinutes + Carbon::parse($latest->created_at)->diffInMinutes($oldest->created_at);
+                $totalQuestions = $totalQuestions + 1;
+                if (!empty($answers) && count($answers) > 0) {
+                    $latest = $answers->toArray()[0];
+                    $oldest = $answers->toArray()[count($answers) - 1];
+
+                    $differenceInMinutes = $differenceInMinutes + Carbon::parse($latest['created_at'])->diffInMinutes($oldest['created_at']);
 
                     foreach ($answers as $answer) {
                         if (!empty($answer) && $answer->isCorrectOption()) {
@@ -74,27 +81,30 @@ class GenerateReport
                         }
                     }
                 }
-
-                $averageScore = $scores / ($question_index + 1);
-                $averageDuration = $averageDuration + $differenceInMinutes / ($question_index + 1);
             }
 
+            $averageScore = $scores / $totalQuestions;
+            $averageDuration = $averageDuration + $differenceInMinutes / $totalQuestions;
+
             $examSetting = ExamSetting::query()->where('exam_id', $exam->id)->first();
+
             if (!empty($examSetting)) {
                 $cutOffMarks = $examSetting->pass_mark_value;
-                if ($cutOffMarks > $averageScore) ++ $belowAverage;
-                else ++ $aboveAverage;
+                if ($cutOffMarks > $averageScore) $belowAverage = $belowAverage + 1;
+                else $aboveAverage = $aboveAverage + 1;
             }
 
             $this->calculateScoreDistribution($averageScore);
         }
+
         $this->data['cumulative_below_average_score'] = $belowAverage;
         $this->data['cumulative_above_average_score'] = $aboveAverage;
 
         $this->data['cumulative_pass_ratio'] = $aboveAverage/$total;
         $this->data['cumulative_failure_ratio'] = $belowAverage/$total;
 
-        $this->data['average_time_in_minutes'] = $averageDuration/$total;
+        $this->data['average_time_per_exam_in_minutes'] = $averageDuration/$total;
+        return $this->data;
     }
 
     private function calculateScoreDistribution($score)
@@ -102,7 +112,7 @@ class GenerateReport
         foreach ($this->limitDistribution as $index => $limit) {
             if ($index <= 9 ) {
                 if ($score >= $limit && $score < $this->limitDistribution[$index + 1]) {
-                   $this->countDistribution[$index] = $this->countDistribution[$index] + 1;
+                    $this->countDistribution[$index] = $this->countDistribution[$index] + 1;
                 }
             }elseif ($index == 10) {
                 if ($score == $this->limitDistribution[10]) {
@@ -117,7 +127,7 @@ class GenerateReport
     {
         $scoreData = [];
         foreach ($this->countDistribution as $index => $score) {
-            $item['lower_boundary'] = $index; $item['upper_boundary'] = $index + 10;
+            $item['lower_boundary'] = $this->limitDistribution[$index]; $item['upper_boundary'] = $this->limitDistribution[$index] + 10;
             $item['count'] = $score;
             array_push($scoreData, $item);
         }
@@ -126,20 +136,20 @@ class GenerateReport
 
     private function getStudentDistribution()
     {
+        $studentCount = 0; $departmentScore = 0;
         $studentDistributionData = [];
         foreach (Faculty::query()->lazy() as $faculty)
         {
             $departments = $faculty->departments;
-            $studentCount = 0; $departmentScore = 0;
             foreach ($departments as $department) {
                 $students = $department->students;
                 foreach ($students as $student) {
-                    ++$studentCount;
+                    $studentCount = $studentCount + 1;
                     $exams = $student->exams;
                     foreach ($exams as $exam) {
                         $questions = $exam->questions;
                         foreach ($questions as $question) {
-                            $answers = $question->answers; $scores = 0;
+                            $answers = Answer::query()->where('question_id', $question->id)->lazy(); $scores = 0;
                             foreach ($answers as $answer) {
                                 if (!empty($answer) && $answer->isCorrectOption()) {
                                     $scores = $scores + (float)$question->score_obtainable;

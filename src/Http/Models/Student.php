@@ -31,7 +31,12 @@ class Student extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function studentExams()
+    public function answers() : HasMany
+    {
+        return $this->hasMany(Answer::class, 'user_id', 'user_id');
+    }
+
+    public function studentExams() : HasMany
     {
         return $this->hasMany(StudentExam::class, 'student_id');
     }
