@@ -4,6 +4,7 @@
 namespace Transave\ScolaCbt\Actions\User;
 
 
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
@@ -62,6 +63,7 @@ class BatchStudentUpload
     private function batchCreation()
     {
         foreach ($this->records as $record) {
+            DB::beginTransaction();
             $user = $this->createUser($record);
             if (!empty($user)) {
                 $record['user_id'] = $user->id;
@@ -71,7 +73,9 @@ class BatchStudentUpload
                 array_push($this->failed, $record);
                 continue;
             }
+            DB::commit();
         }
+
         return $this->sendSuccess(['uploaded'=>$this->successful, 'failed'=>$this->failed], 'batch upload executed');
     }
 

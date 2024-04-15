@@ -3,17 +3,21 @@
 
 namespace Transave\ScolaCbt\Exports;
 
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class StudentsExport implements FromView
+class StudentsExport implements FromArray
 {
-    public function view(): View
+    public function array(): array
     {
-        return view('cbt::exports.students', [
-            'students' => [
-                0 => ['first_name' => 'Scola', 'last_name' =>'Student', 'email' => 'student@gmail.com', 'registration_number' => 'SCBT-005-001']
-            ]
-        ]);
+        // TODO: Implement array() method.
     }
+//    public function view(): View
+//    {
+//        return view('cbt::exports.students', [
+//            'students' => [
+//                0 => ['first_name' => 'Scola', 'last_name' =>'Student', 'email' => 'student@gmail.com', 'registration_number' => 'SCBT-005-001']
+//            ]
+//        ]);
+//    }
+
 }

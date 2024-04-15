@@ -15,7 +15,10 @@ class StudentController extends Controller
 
     public function export()
     {
-        return Excel::download(new StudentsExport(), Carbon::now()->format('Y-m-d-Hi').'-students.xlsx');
+        $export = new StudentsExport([
+            ['first_name', 'last_name', 'email', 'registration_number']
+        ]);
+        return Excel::download($export, Carbon::now()->format('Y-m-d-Hi').'-students.xlsx');
     }
 
     public function upload(Request $request)
