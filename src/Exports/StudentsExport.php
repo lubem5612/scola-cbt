@@ -7,19 +7,15 @@ use Maatwebsite\Excel\Concerns\FromArray;
 
 class StudentsExport implements FromArray
 {
+    private $studentsExcel;
+
+    public function __construct(array $data)
+    {
+        $this->studentsExcel = $data;
+    }
     public function array(): array
     {
-        return [
-
-        ];
+        return $this->studentsExcel;
     }
-//    public function view(): View
-//    {
-//        return view('cbt::exports.students', [
-//            'students' => [
-//                0 => ['first_name' => 'Scola', 'last_name' =>'Student', 'email' => 'student@gmail.com', 'registration_number' => 'SCBT-005-001']
-//            ]
-//        ]);
-//    }
 
 }
