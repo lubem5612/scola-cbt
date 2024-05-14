@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\StudentExam\CreateStudentExam;
 use Transave\ScolaCbt\Actions\StudentExam\DeleteStudentExam;
 use Transave\ScolaCbt\Actions\StudentExam\SearchStudentExam;
+use Transave\ScolaCbt\Actions\StudentExam\UpdateStudentExam;
 use Transave\ScolaCbt\Http\Models\StudentExam;
 
 class StudentExamController extends Controller
@@ -28,6 +29,11 @@ class StudentExamController extends Controller
 
     public function create(Request $request){
         return (new CreateStudentExam($request->all()))->execute();
+    }
+
+    public function update(Request $request, $id){
+        $data = $request->merge(['student_exam_id' => $id]);
+        return (new UpdateStudentExam($data->all()))->execute();
     }
 
     public function destroy($id){

@@ -4,10 +4,9 @@
 namespace Transave\ScolaCbt\Actions\StudentExam;
 
 
-use Illuminate\Foundation\Auth\User;
+use Carbon\Carbon;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\Student;
 use Transave\ScolaCbt\Http\Models\StudentExam;
 
 class CreateStudentExam
@@ -26,6 +25,7 @@ class CreateStudentExam
         try {
             $this->validateRequest();
             $this->setAttempt();
+            $this->setStatus();
             return $this->assignUserToExam();
         }catch (\Exception $exception) {
             return $this->sendServerError($exception);
@@ -47,12 +47,18 @@ class CreateStudentExam
         $this->validatedData['attempts'] = $examsCount + 1;
     }
 
+    private function setStatus()
+    {
+        $this->validatedData['status'] = 'ongoing';
+        $this->validatedData['start_time'] = Carbon::now();
+    }
+
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
             'student_id' => 'required|exists:students,id',
             'exam_id' => 'required|exists:exams,id',
-            'attempts' => 'sometimes|required|integer'
+            'attempts' => 'sometimes|required|integer',
         ]);
     }
 }

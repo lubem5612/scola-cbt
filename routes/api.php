@@ -83,6 +83,7 @@ Route::as('cbt.')->group(function () {
         Route::get('/', [StudentExamController::class, 'index'])->name('index');
         Route::post('/', [StudentExamController::class, 'create'])->name('store');
         Route::get('/{id}', [StudentExamController::class, 'show'])->name('show');
+        Route::match(['POST', 'PUT', 'PATCH'],'/{id}', [StudentExamController::class, 'update'])->name('update');
         Route::delete('/{id}', [StudentExamController::class, 'destroy'])->name('delete');
     });
 
