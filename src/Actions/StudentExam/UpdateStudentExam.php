@@ -47,6 +47,7 @@ class UpdateStudentExam
         $this->validatedData = $this->validate($this->request, [
             'student_exam_id' => 'required|exists:student_exams',
             'status' => 'sometimes|required|in:ongoing,terminated,completed',
+            'start_time' => 'nullable|date',
             'end_time' => 'nullable|date'
         ]);
     }
