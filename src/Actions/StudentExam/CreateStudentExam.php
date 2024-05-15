@@ -60,6 +60,8 @@ class CreateStudentExam
     {
         if (!Arr::exists($this->validatedData, 'start_time')) {
             $this->validatedData['start_time'] = Carbon::now();
+        }else {
+            $this->validatedData['start_time'] = Carbon::parse($this->validatedData['start_time']);
         }
     }
 
@@ -70,7 +72,7 @@ class CreateStudentExam
             'exam_id' => 'required|exists:exams,id',
             'attempts' => 'sometimes|required|integer',
             'status' => 'nullable|string|in:ongoing,terminated,completed',
-            'start_time' => 'nullable|date',
+            'start_time' => 'nullable',
         ]);
     }
 }
