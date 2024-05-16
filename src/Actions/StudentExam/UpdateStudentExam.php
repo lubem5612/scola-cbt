@@ -62,7 +62,7 @@ class UpdateStudentExam
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
-            'student_exam_id' => 'required|exists:student_exams',
+            'student_exam_id' => 'required|exists:student_exams,id',
             'status' => 'sometimes|required|in:ongoing,terminated,completed',
             'start_time' => 'nullable',
             'end_time' => 'nullable'
