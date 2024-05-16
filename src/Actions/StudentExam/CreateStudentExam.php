@@ -72,7 +72,7 @@ class CreateStudentExam
             'exam_id' => 'required|exists:exams,id',
             'attempts' => 'sometimes|required|integer',
             'status' => 'nullable|string|in:ongoing,terminated,completed',
-            'start_time' => 'nullable',
+            'start_time' => 'nullable|date',
         ]);
     }
 }
