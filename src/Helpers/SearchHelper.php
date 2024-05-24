@@ -8,12 +8,12 @@ use Carbon\Carbon;
 trait SearchHelper
 {
     use ResponseHelper;
-    protected $output, $queryBuilder, $relationshipArray, $searchParam, $perPage, $startAt, $endAt, $id;
+    protected $output, $queryBuilder, $relationshipArray, $searchParam, $perPage, $startAt, $endAt, $id, $model;
 
     public function __construct($model, array $relationshipArray=[], $id=null)
     {
+        $this->model = $model;
         $this->relationshipArray = $relationshipArray;
-        $this->queryBuilder = $model::query();
         $this->searchParam = request()->query("search");
         $this->perPage = request()->query("per_page");
         $this->endAt = request()->query("end");
@@ -24,6 +24,7 @@ trait SearchHelper
     public function execute()
     {
         try {
+            $this->initQueryForModel();
             $this->modelHasRelationship();
             $this->handleTimeStampQuery();
             $this->searchTerms();
@@ -35,6 +36,11 @@ trait SearchHelper
         }catch (\Exception $ex) {
             return $this->sendServerError($ex);
         }
+    }
+
+    public function initQueryForModel()
+    {
+        $this->queryBuilder = $this->model::query();
     }
 
     private function handleTimeStampQuery()

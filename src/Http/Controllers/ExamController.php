@@ -10,6 +10,7 @@ use Transave\ScolaCbt\Actions\Exam\CreateExam;
 use Transave\ScolaCbt\Actions\Exam\DeleteExam;
 use Transave\ScolaCbt\Actions\Exam\ExamLink;
 use Transave\ScolaCbt\Actions\Exam\GetExam;
+use Transave\ScolaCbt\Actions\Exam\GetExamTimetable;
 use Transave\ScolaCbt\Actions\Exam\GetExamWithStudents;
 use Transave\ScolaCbt\Actions\Exam\SearchExam;
 use Transave\ScolaCbt\Actions\Exam\UpdateExam;
@@ -100,8 +101,10 @@ class ExamController extends Controller
         return $examLink->execute();
     }
 
-
-
+    public function timetable()
+    {
+        return (new GetExamTimetable(Exam::class, []))->execute();
+    }
 
     /**
      * Delete a specified exam
