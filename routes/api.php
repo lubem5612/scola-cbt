@@ -117,6 +117,6 @@ Route::as('cbt.')->group(function () {
         Route::get('/', [ AnalyticController::class, 'report'])->name('index');
     });
 
-    Route::get('exam-timetable', [ExamController::class, 'timetable'])->name('exam.timetable');
+    Route::get('exam-timetables', [ExamController::class, 'timetable'])->name('exam.timetable');
 
 });
