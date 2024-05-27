@@ -13,9 +13,7 @@ class GetExamTimetable
 
     public function initQueryForModel()
     {
-        $this->queryBuilder = Exam::query()
-            ->with('departments:name')
-            ->select('exam_name', 'start_time', 'duration', 'unit_of_time', 'exam_date', 'venue');
+        $this->queryBuilder = Exam::query()->with(['departments:name']);
     }
 
     public function searchTerms()
@@ -33,5 +31,19 @@ class GetExamTimetable
         if (isset($course)) {
             $this->queryBuilder = $this->queryBuilder->where('course_id', $course);
         }
+    }
+
+    public function handlePagination()
+    {
+        if (is_null($this->id) && !isset($this->id)) {
+            if (isset($this->perPage)) {
+                $this->output = $this->queryBuilder->paginate($this->perPage);
+            }else
+                $this->output = $this->queryBuilder->paginate(10);
+
+            $this->output->setCollection($this->output->getCollection()
+                ->makeHidden(['user_id', 'course_id', 'session_id', 'semester', 'level', 'exam_mode', 'max_score_obtainable', 'instruction']));
+        }
+        return $this;
     }
 }
