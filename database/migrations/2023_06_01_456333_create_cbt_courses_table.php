@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoursesTable extends Migration
+return new class extends  Migration
 {
     public function up()
     {
@@ -23,4 +23,4 @@ class CreateCoursesTable extends Migration
     {
         Schema::dropIfExists('cbt_courses');
     }
-}
+};
