@@ -9,11 +9,11 @@ class CreateAnswersTable extends Migration
 {
     public function up()
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('cbt_answers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignUuid('question_id')->constrained('questions')->cascadeOnDelete();
-            $table->foreignUuid('option_id')->nullable()->constrained('options')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('fc_users')->cascadeOnDelete();
+            $table->foreignUuid('question_id')->constrained('cbt_questions')->cascadeOnDelete();
+            $table->foreignUuid('option_id')->nullable()->constrained('cbt_options')->cascadeOnDelete();
             $table->integer('attempts')->default(1);
             $table->text('content')->nullable();
             $table->string('file', 700)->nullable();
@@ -25,6 +25,6 @@ class CreateAnswersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('cbt_answers');
     }
 }

@@ -14,9 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->foreignUuid('department_id')->nullable()
-                ->after('exam_id')->constrained('departments')->cascadeOnDelete();
+        Schema::create('cbt_exam_departments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('exam_id')->nullable()->constrained('cbt_exams')->cascadeOnDelete();
+            $table->foreignUuid('department_id')->constrained('cbt_departments')->cascadeOnDelete();
+
+            $table->timestamps();
         });
     }
 
@@ -27,9 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('questions', function (Blueprint $table) {
-            $table->dropForeign(['department_id']);
-            $table->dropColumn('department_id');
-        });
+        Schema::dropIfExists('cbt_exam_departments');
     }
 };

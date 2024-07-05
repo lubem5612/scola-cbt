@@ -8,9 +8,9 @@ class CreateCoursesTable extends Migration
 {
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('cbt_courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('department_id')->constrained('departments')->cascadeOnDelete();
+            $table->foreignUuid('department_id')->constrained('cbt_departments')->cascadeOnDelete();
             $table->string('name', 100)->index();
             $table->string('code',11)->nullable()->index();
             $table->integer('credit_load')->default(1)->index();
@@ -21,6 +21,6 @@ class CreateCoursesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('cbt_courses');
     }
 }

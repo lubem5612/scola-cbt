@@ -11,7 +11,7 @@ class Question extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = 'questions';
+    protected $table = 'cbt_questions';
 
     protected $guarded = [
         'id'

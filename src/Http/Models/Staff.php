@@ -12,7 +12,7 @@ class Staff extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = 'staff';
+    protected $table = 'cbt_staff';
 
     protected $guarded = [
         "id"

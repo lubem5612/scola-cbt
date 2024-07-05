@@ -11,7 +11,7 @@ use Transave\ScolaCbt\Database\Factories\ExamDepartmentFactory;
 class ExamDepartment extends Model
 {
     use HasFactory;
-    protected $table = "exam_departments";
+    protected $table = "cbt_exam_departments";
     protected $hidden = ['created_at', 'updated_at'];
     protected $guarded = [ 'id' ];
 

@@ -13,6 +13,8 @@ class ExamSetting extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = "cbt_exam_settings";
+
     protected $guarded = [
         "id"
     ];

@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateStudentsTable extends Migration
      * @return void
      */
     public function up() {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('cbt_students', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignUuid('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('fc_users')->cascadeOnDelete();
+            $table->foreignUuid('department_id')->nullable()->constrained('cbt_departments')->cascadeOnDelete();
             $table->string('registration_number', 50)->nullable();
             $table->string('photo', 700)->nullable();
             $table->string('current_level', 20)->nullable();
@@ -36,6 +36,6 @@ class CreateStudentsTable extends Migration
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('cbt_students');
     }
-}
+};

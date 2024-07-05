@@ -8,10 +8,10 @@ class CreateQuestionsTable extends Migration
 {
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('cbt_questions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('exam_id')->nullable()->constrained('exams')->cascadeOnDelete();
-            $table->foreignUuid('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
+            $table->foreignUuid('exam_id')->nullable()->constrained('cbt_exams')->cascadeOnDelete();
+            $table->foreignUuid('department_id')->nullable()->constrained('cbt_departments')->cascadeOnDelete();
             $table->string('question_type', 50);
             $table->float('score_obtainable', 6, 2)->default(0)->index();
             $table->text('question');
@@ -25,6 +25,6 @@ class CreateQuestionsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('cbt_questions');
     }
 }
