@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::table('fc_users', function (Blueprint $table) {
             $table->string('role', 40)->after('job_title')->nullable();
-            $table->binary('profile_image')->nullable()->change();
             $table->boolean('is_verified')->after('role')->default(false);
             $table->timestamp('email_verified_at')->after('is_verified')->nullable();
         });
