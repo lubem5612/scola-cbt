@@ -72,7 +72,7 @@ return new class extends Migration
                 $table->text('disable_reason')->nullable();
                 $table->dateTime('disabled_at')->nullable();
                 $table->uuid('disabling_user_id')->nullable();
-                $table->binary('profile_image');
+                $table->binary('profile_image')->nullable();
                 $table->uuid('organization_id')->nullable();
                 $table->boolean('is_ad_import')->default(0);
                 $table->string('ad_type', 191)->nullable();
