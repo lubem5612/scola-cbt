@@ -63,10 +63,10 @@ class UpdateAnswer
     private function validateRequest()
     {
         $validator = $this->validate($this->request, [
-            'answer_id' => 'required|exists:answers,id',
-            'user_id' => 'sometimes|required|exists:users,id',
-            'question_id' => 'sometimes|required|exists:questions,id',
-            'option_id' => 'sometimes|required|exists:options,id',
+            'answer_id' => 'required|exists:cbt_answers,id',
+            'user_id' => 'sometimes|required|exists:fc_users,id',
+            'question_id' => 'sometimes|required|exists:cbt_questions,id',
+            'option_id' => 'sometimes|required|exists:cbt_options,id',
             'content' => 'sometimes|required|string',
             'score' => 'sometimes|required|numeric',
             'file' => 'sometimes|required|file|max:4000|mimes:pdf,docx'

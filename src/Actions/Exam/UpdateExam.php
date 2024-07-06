@@ -95,12 +95,12 @@ class UpdateExam
     private function validateRequest() : self
     {
         $this->validate($this->request, [
-            'exam_id' => 'required|exists:exams,id',
-            'user_id' => 'sometimes|required|exists:users,id',
-            'course_id' => 'sometimes|required|exists:courses,id',
+            'exam_id' => 'required|exists:cbt_exams,id',
+            'user_id' => 'sometimes|required|exists:fc_users,id',
+            'course_id' => 'sometimes|required|exists:cbt_courses,id',
             'department_ids' => 'nullable|array',
-            'department_ids.*' => 'sometimes|required|exists:departments,id',
-            'session_id' => 'sometimes|required|exists:sessions,id',
+            'department_ids.*' => 'sometimes|required|exists:cbt_departments,id',
+            'session_id' => 'sometimes|required|exists:cbt_sessions,id',
             'semester' => 'sometimes|required|string|max:50',
             'level' => 'sometimes|required|string|max:20',
             'exam_name' => 'sometimes|required|string|max:250',

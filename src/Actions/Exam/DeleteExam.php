@@ -54,7 +54,7 @@ class DeleteExam
     private function validateRequest() : self
     {
         $this->validate($this->request, [
-            'id' => 'required|exists:exams,id'
+            'id' => 'required|exists:cbt_exams,id'
         ]);
         return $this;
     }

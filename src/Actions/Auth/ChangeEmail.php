@@ -32,8 +32,8 @@ class ChangeEmail
     private function validateRequest()
     {
         $this->validate($this->request, [
-            'email' => 'required|email|unique:users,email',
-            'user_id' => 'required|exists:users,id'
+            'email' => 'required|email|unique:fc_users,email',
+            'user_id' => 'required|exists:fc_users,id'
         ]);
         return $this;
     }

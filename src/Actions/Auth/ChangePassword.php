@@ -41,7 +41,7 @@ class ChangePassword
         $this->validate($this->request, [
             'password' => 'required|string|min:6',
             'old_password' => 'required|string',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:fc_users,id'
         ]);
         return $this;
     }

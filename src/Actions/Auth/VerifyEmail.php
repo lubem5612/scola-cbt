@@ -58,7 +58,7 @@ class VerifyEmail
     private function validateRequest()
     {
         $this->validate($this->request, [
-            "token" => 'string|digits_between:100000,999999|exists:users,token'
+            "token" => 'string|digits_between:100000,999999|exists:fc_users,token'
         ]);
         return $this;
     }

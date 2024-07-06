@@ -87,11 +87,11 @@ class CreateExam
     private function validateRequest() : self
     {
         $this->validate($this->request, [
-            'user_id' => 'sometimes|required|exists:users,id',
-            'course_id' => 'required|exists:courses,id',
+            'user_id' => 'sometimes|required|exists:fc_users,id',
+            'course_id' => 'required|exists:cbt_courses,id',
             'department_ids' => 'nullable|array',
-            'department_ids.*' => 'sometimes|required|exists:departments,id',
-            'session_id' => 'sometimes|required|exists:sessions,id',
+            'department_ids.*' => 'sometimes|required|exists:cbt_departments,id',
+            'session_id' => 'sometimes|required|exists:cbt_sessions,id',
             'semester' => 'required|string|max:50',
             'level' => 'required|string|max:20',
             'exam_name' => 'required|string|max:250',
@@ -108,6 +108,7 @@ class CreateExam
         if (array_key_exists('duration', $this->request) && array_key_exists('unit_of_time', $this->request)) {
             $duration = $this->request['duration'];
             $unitOfTime = $this->request['unit_of_time'];
+            $stopTime = null;
 
             // Validate and convert duration to minutes or hours
             if ($unitOfTime === 'minute') {

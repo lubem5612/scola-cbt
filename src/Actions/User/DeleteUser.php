@@ -43,7 +43,7 @@ class DeleteUser
     private function validateRequest(): self
     {
         $this->validate($this->request, [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:fc_users,id',
         ]);
         return $this;
     }

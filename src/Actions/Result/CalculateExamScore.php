@@ -86,8 +86,8 @@ class CalculateExamScore
     private function validateRequest()
     {
         $this->validate($this->request, [
-            'user_id' => 'required|exists:users,id',
-            'exam_id' => 'required|exists:exams,id',
+            'user_id' => 'required|exists:fc_users,id',
+            'exam_id' => 'required|exists:cbt_exams,id',
         ]);
 
         return $this;

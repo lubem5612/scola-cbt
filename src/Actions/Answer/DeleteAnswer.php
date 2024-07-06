@@ -25,7 +25,7 @@ class DeleteAnswer
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse|\Transave\ScolaCbt\Helpers\Response
+     * @return \Illuminate\Http\Response
      */
     public function execute()
     {
@@ -41,7 +41,7 @@ class DeleteAnswer
     }
 
     /**
-     * @return \Transave\ScolaCbt\Helpers\Response
+     * @return \Illuminate\Http\Response
      */
     private function deleteAnswer()
     {
@@ -71,11 +71,12 @@ class DeleteAnswer
 
     /**
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     private function validateRequest() : self
     {
         $this->validate($this->request, [
-            'id' => 'required|exists:answers,id'
+            'id' => 'required|exists:cbt_answers,id'
         ]);
         return $this;
     }

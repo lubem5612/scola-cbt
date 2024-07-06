@@ -59,7 +59,7 @@ class DeleteQuestion
     private function validateRequest(): self
     {
         $this->validate($this->request, [
-            'id' => 'required|exists:questions,id'
+            'id' => 'required|exists:cbt_questions,id'
         ]);
         return $this;
     }

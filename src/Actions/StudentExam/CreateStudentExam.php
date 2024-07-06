@@ -68,8 +68,8 @@ class CreateStudentExam
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
-            'student_id' => 'required|exists:students,id',
-            'exam_id' => 'required|exists:exams,id',
+            'student_id' => 'required|exists:cbt_students,id',
+            'exam_id' => 'required|exists:cbt_exams,id',
             'attempts' => 'sometimes|required|integer',
             'status' => 'nullable|string|in:ongoing,terminated,completed',
             'start_time' => 'nullable|date',

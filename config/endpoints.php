@@ -4,7 +4,7 @@
 return [
     "routes" => [
         'sessions' => [
-            'table' => 'sessions',
+            'table' => 'cbt_sessions',
             'model' => \Transave\ScolaCbt\Http\Models\Session::class,
             'rules' => [
                 'store' => [
@@ -23,7 +23,7 @@ return [
         ],
 
         'faculties' => [
-            'table' => 'faculties',
+            'table' => 'cbt_faculties',
             'model' => \Transave\ScolaCbt\Http\Models\Faculty::class,
             'rules' => [
                 'store' => [
@@ -41,7 +41,7 @@ return [
         ],
 
         'courses' => [
-            'table' => 'courses',
+            'table' => 'cbt_courses',
             'model' => \Transave\ScolaCbt\Http\Models\Course::class,
             'rules' => [
                 'store' => [
@@ -64,7 +64,7 @@ return [
         ],
 
         'departments' => [
-            'table' => 'departments',
+            'table' => 'cbt_departments',
             'model' => \Transave\ScolaCbt\Http\Models\Department::class,
             'rules' => [
                 'store' => [
@@ -84,7 +84,7 @@ return [
         ],
 
         'question-options' => [
-            'table' => 'options',
+            'table' => 'cbt_options',
             'model' => \Transave\ScolaCbt\Http\Models\Option::class,
             'rules' => [
                 'store' => [
@@ -106,7 +106,7 @@ return [
         ],
 
         'exam-departments' => [
-            'table' => 'exam-departments',
+            'table' => 'cbt_exam-departments',
             'model' => \Transave\ScolaCbt\Http\Models\ExamDepartment::class,
             'rules' => [
                 'store' => [
@@ -125,7 +125,7 @@ return [
             'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.departments', 'exam.session', 'department', 'department.faculty'],
         ],
         'exam-settings' => [
-            'table' => 'exam_settings',
+            'table' => 'cbt_exam_settings',
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,
             'rules' => [
                 'store' => [
