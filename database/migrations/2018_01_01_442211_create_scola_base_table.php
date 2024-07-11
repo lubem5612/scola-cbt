@@ -93,6 +93,23 @@ return new class extends Migration
             });
         }
 
+        Schema::table('fc_users', function (Blueprint $table) {
+            if (!Schema::hasColumn('fc_users', 'role')) {
+                $table->string('role', 30)->nullable()->after('password');
+            }
+            if (!Schema::hasColumn('fc_users', 'is_verified')) {
+                $table->boolean('is_verified')->nullable()->after('password');
+            }
+            if (!Schema::hasColumn('fc_users', 'email_verified_at')) {
+                $table->timestamp('email_verified_at')->nullable()->after('is_verified');
+            }
+            if (!Schema::hasColumn('fc_users', 'token')) {
+                $table->string('token')->nullable()->after('email_verified_at');
+            }
+        });
+
+        Schema::dropIfExists('users');
+
     }
 
     /**
