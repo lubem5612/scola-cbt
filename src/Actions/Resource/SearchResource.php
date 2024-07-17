@@ -64,7 +64,7 @@ class SearchResource
                 break;
             }
             case "faculties": {
-                $this->queryBuilder->where('name', 'like', "%$this->searchParam%");
+                $this->queryBuilder->withCount(['departments'])->where('name', 'like', "%$this->searchParam%");
                 break;
             }
             case "courses": {
