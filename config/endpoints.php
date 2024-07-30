@@ -8,7 +8,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Session::class,
             'rules' => [
                 'store' => [
-                    'name' => 'required|unique:sessions,name',
+                    'name' => 'required|unique:cbt_sessions,name',
                     'is_active' => 'sometimes|required|in:no,yes',
                 ],
                 'update' => [
@@ -27,7 +27,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Faculty::class,
             'rules' => [
                 'store' => [
-                    'name' => 'required|string|max:50|unique:faculties,name',
+                    'name' => 'required|string|max:50|unique:cbt_faculties,name',
                 ],
                 'update' => [
                     'name' => 'sometimes|required|string|max:50',
@@ -45,7 +45,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Course::class,
             'rules' => [
                 'store' => [
-                    'department_id' => 'required|exists:departments,id',
+                    'department_id' => 'required|exists:cbt_departments,id',
                     'name' => 'required|string',
                     'code' => 'required|string|max:10',
                     'credit_load' => 'sometimes|required|integer|in:1,2,3,4,5,6',
@@ -68,12 +68,12 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Department::class,
             'rules' => [
                 'store' => [
-                    'name' => 'required|unique:departments,name',
-                    'faculty_id' => 'required|exists:faculties,id',
+                    'name' => 'required|unique:cbt_departments,name',
+                    'faculty_id' => 'required|exists:cbt_faculties,id',
                 ],
                 'update' => [
                     'name' => 'sometimes|string|max:60',
-                    'faculty_id' => 'sometimes|required|exists:faculties,id'
+                    'faculty_id' => 'sometimes|required|exists:cbt_faculties,id'
                 ]
             ],
             'order' => [
@@ -88,12 +88,12 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\Option::class,
             'rules' => [
                 'store' => [
-                    'question_id' => 'required|exists:questions,id',
+                    'question_id' => 'required|exists:cbt_questions,id',
                     'is_correct_option' => 'required|string|in:no,yes',
                     'content' => 'required|string'
                 ],
                 'update' => [
-                    'question_id' => 'sometimes|required|exists:questions,id',
+                    'question_id' => 'sometimes|required|exists:cbt_questions,id',
                     'is_correct_option' => 'sometimes|required|string|in:no,yes',
                     'content' => 'sometimes|required|string'
                 ]
@@ -110,12 +110,12 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\ExamDepartment::class,
             'rules' => [
                 'store' => [
-                    'exam_id' => 'required|exists:exams,id',
-                    'department_id' => 'required|exists:departments,id',
+                    'exam_id' => 'required|exists:cbt_exams,id',
+                    'department_id' => 'required|exists:cbt_departments,id',
                 ],
                 'update' => [
-                    'exam_id' => 'sometimes|required|exists:exams,id',
-                    'department_id' => 'sometimes|required|exists:departments,id',
+                    'exam_id' => 'sometimes|required|exists:cbt_exams,id',
+                    'department_id' => 'sometimes|required|exists:cbt_departments,id',
                 ]
             ],
             'order' => [
@@ -129,7 +129,7 @@ return [
             'model' => \Transave\ScolaCbt\Http\Models\ExamSetting::class,
             'rules' => [
                 'store' => [
-                    'exam_id' => 'required|exists:exams,id',
+                    'exam_id' => 'required|exists:cbt_exams,id',
                     'show_max_scores' => 'sometimes|required|in:0,1',
                     'display_question_randomly' => 'sometimes|required|in:0,1',
                     'allow_multiple_attempts' => 'sometimes|required|in:0,1',
@@ -145,7 +145,7 @@ return [
                     'send_congratulatory_mail' => 'sometimes|required|in:0,1',
                 ],
                 'update' => [
-                    'exam_id' => 'sometimes|required|exists:exams,id',
+                    'exam_id' => 'sometimes|required|exists:cbt_exams,id',
                     'show_max_scores' => 'sometimes|required|in:0,1',
                     'display_question_randomly' => 'sometimes|required|in:0,1',
                     'allow_multiple_attempts' => 'sometimes|required|in:0,1',
