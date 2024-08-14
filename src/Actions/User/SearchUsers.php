@@ -14,6 +14,7 @@ class SearchUsers
     {
         $role = request()->query('role');
         $search = $this->searchParam;
+        $this->queryBuilder->where('role', '!=', 'admin');
         if (isset($role)) {
             $this->queryBuilder->where('role', $role);
         }else {
