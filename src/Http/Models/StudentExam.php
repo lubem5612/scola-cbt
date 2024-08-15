@@ -10,7 +10,7 @@ use Transave\ScolaCbt\Helpers\UUIDHelper;
 class StudentExam extends Model
 {
     use HasFactory, UUIDHelper;
-    protected $table = "student_exams";
+    protected $table = "cbt_student_exams";
 
     protected $guarded = [
         "id"

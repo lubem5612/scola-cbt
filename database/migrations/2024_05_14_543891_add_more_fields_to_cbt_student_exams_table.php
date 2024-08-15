@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('student_exams', function (Blueprint $table) {
+        Schema::table('cbt_student_exams', function (Blueprint $table) {
             $table->enum('status', ['ongoing', 'completed', 'terminated'])->index()->after('attempts')->default('ongoing');
             $table->timestamp('start_time')->after('status')->useCurrent();
             $table->timestamp('end_time')->after('start_time')->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('student_exams', function (Blueprint $table) {
+        Schema::table('cbt_student_exams', function (Blueprint $table) {
             $table->dropIndex(['status']);
             $table->dropColumn('status');
             $table->dropColumn('start_time');

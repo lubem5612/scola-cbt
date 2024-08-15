@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Transave\ScolaCbt\Console\ExamDepartmentSeeder;
+use Transave\ScolaCbt\Console\Seeder;
 use Transave\ScolaCbt\Helpers\PublishMigrations;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfAdmin;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfExaminer;
@@ -136,6 +137,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
         // Registering package commands.
         $this->commands([
             ExamDepartmentSeeder::class,
+            Seeder::class,
         ]);
     }
 

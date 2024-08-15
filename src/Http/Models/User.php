@@ -14,7 +14,7 @@ use Transave\ScolaCbt\Helpers\UUIDHelper;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, UUIDHelper, HasApiTokens;
-    protected $table = "users";
+    protected $table = "fc_users";
 
     protected $guarded = [
         "id"

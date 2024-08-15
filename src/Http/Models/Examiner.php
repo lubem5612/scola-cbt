@@ -14,6 +14,8 @@ class Examiner extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = "cbt_examiners";
+
     protected $guarded = [
         "id"
     ];

@@ -14,7 +14,7 @@ class Exam extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = "exams";
+    protected $table = "cbt_exams";
 
     protected $guarded = [
         'id'
@@ -37,7 +37,7 @@ class Exam extends Model
 
     public function departments() : BelongsToMany
     {
-        return  $this->BelongsToMany(Department::class, 'exam_departments', 'exam_id', 'department_id');
+        return  $this->BelongsToMany(Department::class, 'cbt_exam_departments', 'exam_id', 'department_id');
     }
 
     public function user() : BelongsTo
@@ -52,7 +52,7 @@ class Exam extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_exams', 'exam_id', 'student_id');
+        return $this->belongsToMany(Student::class, 'cbt_student_exams', 'exam_id', 'student_id');
     }
 
     public function getFacultyIdsAttribute()

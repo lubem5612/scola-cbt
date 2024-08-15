@@ -11,6 +11,8 @@ class Manager extends Model
 {
     use HasFactory, UUIDHelper;
 
+    protected $table = "cbt_managers";
+
     protected $guarded = [
         "id"
     ];

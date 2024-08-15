@@ -61,8 +61,8 @@ class UpdateOption
     private function validateRequest()
     {
         $data = $this->validate($this->request, [
-            'option_id' => 'required|exists:options,id',
-            'question_id' => 'nullable|exists:questions,id',
+            'option_id' => 'required|exists:cbt_options,id',
+            'question_id' => 'nullable|exists:cbt_questions,id',
             'is_correct_option' => 'nullable|in:yes,no',
             'content' => 'nullable|string',
             'file' => 'nullable|file|max:4000|mimes:pdf,docx,png',

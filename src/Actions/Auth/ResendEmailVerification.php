@@ -75,7 +75,7 @@ class ResendEmailVerification
     private function validateRequest()
     {
         $this->validate($this->request, [
-            "user_id" => 'required|exists:users,id'
+            "user_id" => 'required|exists:fc_users,id'
         ]);
         return $this;
     }

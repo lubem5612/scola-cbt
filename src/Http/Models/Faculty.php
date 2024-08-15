@@ -14,7 +14,7 @@ class Faculty extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = 'faculties';
+    protected $table = 'cbt_faculties';
 
     protected $guarded = [
         "id"

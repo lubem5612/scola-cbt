@@ -56,7 +56,7 @@ class CreateOption
     {
 
         $data = $this->validate($this->request, [
-            'question_id' => 'required|exists:questions,id',
+            'question_id' => 'required|exists:cbt_questions,id',
             'is_correct_option' => 'nullable|in:yes,no',
             'content' => 'nullable|string',
             'file' => 'nullable|file|max:4000|mimes:pdf,docx,png',

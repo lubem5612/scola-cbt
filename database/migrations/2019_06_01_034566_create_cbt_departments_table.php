@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepartmentsTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('cbt_departments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('faculty_id')->constrained('faculties')->cascadeOnDelete();
+            $table->foreignUuid('faculty_id')->constrained('cbt_faculties')->cascadeOnDelete();
             $table->string('name', 80)->index();
 
             $table->timestamps();
@@ -19,6 +19,6 @@ class CreateDepartmentsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('cbt_departments');
     }
-}
+};

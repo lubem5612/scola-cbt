@@ -51,6 +51,7 @@ class Register
         $data['email_verified_at'] = Carbon::now();
         $data['password'] = bcrypt($this->validatedData['password']);
         $data['role'] = $this->setUserRole();
+        $data['telephone'] = $this->validatedData['phone'];
 
         $this->user = config('scola-cbt.auth_model')::query()->create($data);
         return $this;
@@ -146,7 +147,7 @@ class Register
             'password' => 'required|string|min:6',
             'role' => 'nullable|string|in:admin,manager,student,staff,examiner',
 
-            'department_id' => 'nullable|exists:departments,id',
+            'department_id' => 'nullable|exists:cbt_departments,id',
             'phone' => 'nullable|string|min:8|max:16',
             'photo' => 'nullable|file|max:3000|mimes:jpeg,jpg,png,webp,gif',
             'address' => 'nullable|string|max:255',

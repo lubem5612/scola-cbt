@@ -14,6 +14,7 @@ class SearchUsers
     {
         $role = request()->query('role');
         $search = $this->searchParam;
+        $this->queryBuilder->where('role', '!=', 'admin');
         if (isset($role)) {
             $this->queryBuilder->where('role', $role);
         }else {
@@ -24,6 +25,7 @@ class SearchUsers
                 ->where('first_name', 'like', "%$search%")
                 ->orWhere('last_name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
+                ->orWhere('telephone', 'like', "%$search%")
                 ->orWhereHas('student', function ($query1) use ($search) {
                     $query1->where('phone', 'like', "%$search%")
                         ->orWhere('registration_number', 'like', "%$search%")

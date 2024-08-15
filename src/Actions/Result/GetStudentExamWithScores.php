@@ -47,11 +47,11 @@ class GetStudentExamWithScores
     {
         $scores = 0;
         foreach ($this->attempts as $attempt) {
-            $result = StudentExam::query()->join('students', 'student_exams.student_id', '=', 'students.id')
-                ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('exams', 'exams.id', '=', 'student_exams.exam_id')
-                ->select('exams.*', 'users.first_name', 'users.last_name', 'students.id as student_id', 'users.email')
-                ->where('student_exams.attempts', $attempt['attempts'])->first();
+            $result = StudentExam::query()->join('cbt_students', 'cbt_student_exams.student_id', '=', 'cbt_students.id')
+                ->join('fc_users', 'fc_users.id', '=', 'cbt_students.user_id')
+                ->join('cbt_exams', 'cbt_exams.id', '=', 'cbt_student_exams.exam_id')
+                ->select('cbt_exams.*', 'fc_users.first_name', 'fc_users.last_name', 'cbt_students.id as student_id', 'fc_users.email')
+                ->where('cbt_student_exams.attempts', $attempt['attempts'])->first();
 
 //            $data = $this->validatedData;
 //            $scores = Answer::query()->where(function ($query) use($data, $attempt) {
@@ -100,8 +100,8 @@ class GetStudentExamWithScores
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
-            'user_id' => 'required|exists:users,id',
-            'exam_id' => 'required|exists:exams,id',
+            'user_id' => 'required|exists:fc_users,id',
+            'exam_id' => 'required|exists:cbt_exams,id',
         ]);
     }
 

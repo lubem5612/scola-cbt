@@ -59,7 +59,7 @@ class UpdateManager
     private function validateRequest() : self
     {
         $this->validate($this->request, [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:fc_users,id',
             'phone' => 'sometimes|required|string|max:16|min:8',
             'photo' => 'sometimes|required|file|max:5000|mimes:jpeg,jpg,gif,png,webp',
         ]);

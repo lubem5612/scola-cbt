@@ -38,7 +38,7 @@ class DeleteStudentExam
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
-            'student_exam_id' => 'required|exists:student_exams,id'
+            'student_exam_id' => 'required|exists:cbt_student_exams,id'
         ]);
     }
 }

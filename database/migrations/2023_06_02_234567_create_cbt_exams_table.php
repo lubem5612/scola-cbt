@@ -5,15 +5,15 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 
-class CreateExamsTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('cbt_exams', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users');
-            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->foreignUuid('session_id')->constrained('sessions')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('fc_users');
+            $table->foreignUuid('course_id')->constrained('cbt_courses')->cascadeOnDelete();
+            $table->foreignUuid('session_id')->constrained('cbt_sessions')->cascadeOnDelete();
             $table->string('semester', 20);
             $table->string('level', 20);
             $table->string('exam_name', 200);
@@ -35,6 +35,6 @@ class CreateExamsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('cbt_exams');
     }
-}
+};

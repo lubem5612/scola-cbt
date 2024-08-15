@@ -41,10 +41,17 @@ class BatchStudentUpload
 
     private function createUser($record)
     {
+        $this->validate($record, [
+            'email' => 'required|unique:fc_users,unique',
+            'first_name' => 'required|string|max:80',
+            'last_name' => 'required|string|max:80',
+            'phone' => 'required|string|max:16|min:9',
+        ]);
         return config('scola-cbt.auth_model')::query()->create([
             'email' => $record['email'],
             'first_name' => $record['first_name'],
             'last_name' => $record['last_name'],
+            'telephone' => $record['phone'],
             'password' => bcrypt('secret'),
             'is_verified' => 1,
             'role' => 'student',
@@ -53,6 +60,9 @@ class BatchStudentUpload
 
     private function createStudent($record)
     {
+        $this->validate($record, [
+            'registration_number' => 'required|unique:fc_users,registration_number'
+        ]);
         return Student::query()->create([
             'user_id' => $record['user_id'],
             'registration_number' => $record['registration_number'],
@@ -82,7 +92,7 @@ class BatchStudentUpload
     private function validateRequest()
     {
         $this->validatedData = $this->validate($this->request, [
-            "department_id" => "required|exists:departments,id",
+            "department_id" => "required|exists:cbt_departments,id",
             "file" => "required|file|max:5000"
         ]);
         return $this;

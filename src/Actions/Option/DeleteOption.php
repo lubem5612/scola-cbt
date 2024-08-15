@@ -58,7 +58,7 @@ class DeleteOption
     private function validateRequest(): self
     {
         $this->validatedData = $this->validate($this->request, [
-            'id' => 'required|exists:options,id'
+            'id' => 'required|exists:cbt_options,id'
         ]);
         return $this;
     }

@@ -15,7 +15,7 @@ class Student extends Model
 {
     use HasFactory, UUIDHelper;
 
-    protected $table = "students";
+    protected $table = "cbt_students";
 
     protected $guarded = [
         "id"
@@ -43,7 +43,7 @@ class Student extends Model
 
     public function exams()
     {
-        return $this->belongsToMany(Exam::class, 'student_exams', 'student_id', 'exam_id');
+        return $this->belongsToMany(Exam::class, 'cbt_student_exams', 'student_id', 'exam_id');
     }
 
     protected static function newFactory()

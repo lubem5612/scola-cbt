@@ -96,8 +96,8 @@ class CalculateBatchExamScores
     private function validateRequest()
     {
         $this->validate($this->request, [
-            'user_id' => 'required|exists:users,id',
-            'session_id' => 'sometimes|required|exists:sessions,id',
+            'user_id' => 'required|exists:fc_users,id',
+            'session_id' => 'sometimes|required|exists:cbt_sessions,id',
             'semester' => 'sometimes|required|string'
         ]);
 

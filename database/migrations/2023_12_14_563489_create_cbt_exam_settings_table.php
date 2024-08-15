@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExamSettingsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,10 @@ class CreateExamSettingsTable extends Migration
 
     public function up()
     {
-        Schema::create('exam_settings', function (Blueprint $table) {
+        Schema::create('cbt_exam_settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('exam_id')->constrained('exams')->cascadeOnDelete();
+            $table->foreignUuid('exam_id')->constrained('cbt_exams')->cascadeOnDelete();
             $table->boolean('show_max_scores')->default(false);
-//            $table->boolean('should_answer_first_question')->default(true);
             $table->boolean('display_question_randomly')->default(true);
             $table->boolean('allow_multiple_attempts')->default(true);
             $table->boolean('is_public_access')->default(false);
@@ -43,6 +42,6 @@ class CreateExamSettingsTable extends Migration
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('exam_settings');
+        Schema::dropIfExists('cbt_exam_settings');
     }
-}
+};
