@@ -32,7 +32,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'details'
+        'details',
+        'phone',
     ];
 
     public function staff() : HasOne
@@ -69,6 +70,11 @@ class User extends Authenticatable
             default:
                 return null;
         }
+    }
+    
+    public function getPhoneAttribute()
+    {
+        return $this->telephone;
     }
 
     protected static function newFactory()
