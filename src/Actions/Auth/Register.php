@@ -148,7 +148,7 @@ class Register
             'role' => 'nullable|string|in:admin,manager,student,staff,examiner',
 
             'department_id' => 'nullable|exists:cbt_departments,id',
-            'phone' => 'nullable|string|min:8|max:16',
+            'phone' => 'required|string|min:8|max:16',
             'photo' => 'nullable|file|max:3000|mimes:jpeg,jpg,png,webp,gif',
             'address' => 'nullable|string|max:255',
 
