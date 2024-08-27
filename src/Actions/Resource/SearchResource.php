@@ -121,6 +121,16 @@ class SearchResource
                 }
                 break;
             }
+            case "exam-questions": {
+                $exam = request()->query('exam_id');
+                if (isset($exam)) {
+                    $this->queryBuilder->where('exam_id', $exam);
+                }
+                if (isset($question)) {
+                    $this->queryBuilder->where('question_id', $question);
+                }
+                break;
+            }
             default:
                 return $this;
         }

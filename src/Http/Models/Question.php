@@ -17,14 +17,24 @@ class Question extends Model
         'id'
     ];
 
-    public function exam()
+    public function exams()
     {
-        return $this->belongsTo(Exam::class);
+        return $this->belongsToMany(Exam::class, 'cbt_exam_questions', 'question_id', 'exam_id');
     }
 
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function options()

@@ -72,8 +72,10 @@ class CreateQuestion
     private function validateRequest()
     {
         $data = $this->validate($this->request, [
-            'exam_id' => 'sometimes|required|exists:cbt_exams,id',
-            'department_id' => 'sometimes|required|exists:cbt_departments,id',
+            'user_id' => 'required|exists:fc_users,id',
+            'department_id' => 'required|exists:cbt_departments,id',
+            'course_id' => 'required|exists:cbt_courses,id',
+            'level' => 'required|in:100,200,300,400,500,600',
             'question_type' => 'required|string|max:50',
             'score_obtainable' => 'sometimes|required|integer',
             'question' => 'required|string',

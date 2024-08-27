@@ -39,15 +39,15 @@ class Exam extends Model
     {
         return  $this->BelongsToMany(Department::class, 'cbt_exam_departments', 'exam_id', 'department_id');
     }
-
+    
+    public function questions()
+    {
+        return $this->belongsToMany(Question::class, 'cbt_exam_questions', 'exam_id','question_id')->with(['options', 'answers']);
+    }
+    
     public function user() : BelongsTo
     {
         return  $this->belongsTo(User::class);
-    }
-
-    public function questions() : HasMany
-    {
-        return $this->hasMany(Question::class)->with(['options', 'answers']);
     }
 
     public function students()

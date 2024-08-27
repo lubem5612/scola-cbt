@@ -106,7 +106,7 @@ return [
         ],
 
         'exam-departments' => [
-            'table' => 'cbt_exam-departments',
+            'table' => 'cbt_exam_departments',
             'model' => \Transave\ScolaCbt\Http\Models\ExamDepartment::class,
             'rules' => [
                 'store' => [
@@ -123,6 +123,25 @@ return [
                 'pattern' => 'DESC',
             ],
             'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.departments', 'exam.session', 'department', 'department.faculty'],
+        ],
+        'exam-questions' => [
+            'table' => 'cbt_exam_questions',
+            'model' => \Transave\ScolaCbt\Http\Models\ExamQuestion::class,
+            'rules' => [
+                'store' => [
+                    'exam_id' => 'required|exists:cbt_exams,id',
+                    'question_id' => 'required|exists:cbt_questions,id',
+                ],
+                'update' => [
+                    'exam_id' => 'sometimes|required|exists:cbt_exams,id',
+                    'question_id' => 'sometimes|required|exists:cbt_questions,id',
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['exam', 'exam.user', 'exam.course', 'exam.departments', 'exam.session', 'question', 'question.course', 'question.user', 'question.department'],
         ],
         'exam-settings' => [
             'table' => 'cbt_exam_settings',
