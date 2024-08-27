@@ -123,6 +123,7 @@ class SearchResource
             }
             case "exam-questions": {
                 $exam = request()->query('exam_id');
+                $question = request()->query('question_id');
                 if (isset($exam)) {
                     $this->queryBuilder->where('exam_id', $exam);
                 }
