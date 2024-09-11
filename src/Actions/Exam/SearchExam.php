@@ -21,6 +21,14 @@ class SearchExam
         $level = request()->query('level');
         $semester = request()->query('semester');
         $mode = request()->query('exam_mode');
+        $student = request()->query('student_id');
+    
+        if (isset($student)) {
+            $this->queryBuilder = $this->queryBuilder
+                ->whereHas('students', function ($query) use ($student) {
+                    $query->where('cbt_students.id', $student);
+                });
+        }
 
         if (isset($department)) {
             $this->queryBuilder = $this->queryBuilder

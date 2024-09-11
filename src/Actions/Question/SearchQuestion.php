@@ -21,6 +21,14 @@ class SearchQuestion
         if (isset($department)) {
             $this->queryBuilder->where('department_id', $department);
         }
+        $exam = request()->query('exam_id');
+        if (isset($exam)) {
+            $this->queryBuilder
+                ->whereHas('exams', function ($query) use ($exam) {
+                    $query->where('cbt_exams.id', $exam);
+                });
+        }
+        
         $search = $this->searchParam;
         $this->queryBuilder->where(function ($query) use ($search) {
             $query->where('question_type', 'like', "%$search%")
