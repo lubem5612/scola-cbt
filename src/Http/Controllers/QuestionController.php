@@ -22,11 +22,11 @@ class QuestionController extends Controller
     }
 
     public function index(){
-        return (new SearchQuestion(Question::class, ['exam', 'options']))->execute();
+        return (new SearchQuestion(Question::class, ['exams', 'options']))->execute();
     }
 
     public function show($id){
-        return (new SearchQuestion(Question::class, ['exam', 'options'], $id))->execute();
+        return (new SearchQuestion(Question::class, ['exams', 'options'], $id))->execute();
     }
 
     public function create(Request $request){

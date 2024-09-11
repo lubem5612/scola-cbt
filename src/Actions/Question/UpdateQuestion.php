@@ -30,7 +30,7 @@ class UpdateQuestion
             $this->uploadOrReplaceQuestionFile();
             $this->updateQuestion();
             $this->updateOptions();
-            return $this->sendSuccess($this->question->refresh()->load('exam', 'options'), 'question updated successfully');
+            return $this->sendSuccess($this->question->refresh()->load('exams', 'options'), 'question updated successfully');
         } catch (\Exception $e) {
             return $this->sendServerError($e);
         }

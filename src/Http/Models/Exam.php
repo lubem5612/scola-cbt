@@ -42,7 +42,7 @@ class Exam extends Model
     
     public function questions()
     {
-        return $this->belongsToMany(Question::class, 'cbt_exam_questions', 'exam_id','question_id')->with(['options', 'answers']);
+        return $this->belongsToMany(Question::class, 'cbt_exam_questions', 'exam_id', 'question_id')->with(['options', 'answers']);
     }
     
     public function user() : BelongsTo
