@@ -33,7 +33,7 @@ class StudentExam extends Model
     public function getExamScoreAttribute()
     {
         $scores = 0;
-        $questions = Question::query()->where('exam_id', $this->exam_id)->get();
+        $questions = $this->exam()->first()->questions;
         $student = Student::query()->find($this->student_id);
         foreach ($questions as $question) {
             $answer = Answer::query()->where([
@@ -53,7 +53,7 @@ class StudentExam extends Model
     public function getEssayScoreAttribute()
     {
         $scores = 0;
-        $questions = Question::query()->where('exam_id', $this->exam_id)->get();
+        $questions = $this->exam()->first()->questions;
         $student = Student::query()->find($this->student_id);
         foreach ($questions as $question) {
             $answer = Answer::query()->where([
