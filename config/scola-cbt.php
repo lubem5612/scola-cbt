@@ -55,5 +55,13 @@ return [
     ],
 
     'max_score_obtainable' => env('CBT_MAX_EXAM_SCORE', 100),
+    
+    'difficulty_level' => [
+        'very_difficult' => 'very difficult',
+        'difficult' => 'difficult',
+        'moderate' => 'moderate',
+        'simple' => 'simple',
+        'very_simple' => 'very simple'
+    ],
 
 ];

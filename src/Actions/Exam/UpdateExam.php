@@ -7,7 +7,6 @@ namespace Transave\ScolaCbt\Actions\Exam;
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Exam;
 use Transave\ScolaCbt\Http\Models\ExamDepartment;
 use Transave\ScolaCbt\Http\Models\Session;

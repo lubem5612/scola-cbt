@@ -6,7 +6,6 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Question\CreateQuestion;
 use Transave\ScolaCbt\Actions\Question\DeleteQuestion;
-use Transave\ScolaCbt\Actions\Question\GetQuestion;
 use Transave\ScolaCbt\Actions\Question\SearchQuestion;
 use Transave\ScolaCbt\Actions\Question\UpdateQuestion;
 use Transave\ScolaCbt\Http\Models\Question;

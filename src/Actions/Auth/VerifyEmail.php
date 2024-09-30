@@ -7,12 +7,11 @@ namespace Transave\ScolaCbt\Actions\Auth;
 use Carbon\Carbon;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\User;
 
 class VerifyEmail
 {
     use ResponseHelper, ValidationHelper;
-    private User $user;
+    private $user;
     private array $request;
 
     public function __construct(array $request)
@@ -33,7 +32,7 @@ class VerifyEmail
     }
     private function setUser()
     {
-        $this->user = User::query()->where("token", $this->request["token"])->first();
+        $this->user = config('scola-cbt.auth_model')::query()->where("token", $this->request["token"])->first();
         if (!$this->user) return $this->sendError("User not found", [], 404);
 
         if ($this->user->is_verified) return $this->sendSuccess(null, 'User already verified');

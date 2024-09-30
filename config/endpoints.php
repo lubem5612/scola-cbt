@@ -162,6 +162,7 @@ return [
                     'grade_with_points' => 'sometimes|required|in:0,1',
                     'send_result_mail' => 'sometimes|required|in:0,1',
                     'send_congratulatory_mail' => 'sometimes|required|in:0,1',
+                    'show_student_result' => 'sometimes|required|in:0,1',
                 ],
                 'update' => [
                     'exam_id' => 'sometimes|required|exists:cbt_exams,id',
@@ -178,6 +179,7 @@ return [
                     'grade_with_points' => 'sometimes|required|in:0,1',
                     'send_result_mail' => 'sometimes|required|in:0,1',
                     'send_congratulatory_mail' => 'sometimes|required|in:0,1',
+                    'show_student_result' => 'sometimes|required|in:0,1',
                 ]
             ],
             'order' => [

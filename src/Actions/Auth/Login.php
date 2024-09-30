@@ -7,7 +7,6 @@ namespace Transave\ScolaCbt\Actions\Auth;
 use Illuminate\Support\Str;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\User;
 
 class Login
 {

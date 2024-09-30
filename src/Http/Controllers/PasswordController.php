@@ -7,7 +7,6 @@ namespace Transave\ScolaCbt\Http\Controllers;
 use Illuminate\Http\Request;
 use Transave\ScolaCbt\Actions\Auth\ForgotPassword;
 use Transave\ScolaCbt\Actions\Auth\ResetPassword;
-use Transave\ScolaCbt\Helpers\ResponseHelper;
 
 class PasswordController extends Controller
 {

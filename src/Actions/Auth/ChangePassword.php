@@ -5,14 +5,13 @@ namespace Transave\ScolaCbt\Actions\Auth;
 use Illuminate\Support\Facades\Hash;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
-use Transave\ScolaCbt\Http\Models\User;
 
 class ChangePassword
 {
     use ResponseHelper, ValidationHelper;
 
     private $request;
-    private User $user;
+    private $user;
 
     public function __construct(array $request)
     {
