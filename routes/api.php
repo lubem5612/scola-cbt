@@ -10,6 +10,7 @@ use Transave\ScolaCbt\Http\Controllers\QuestionController;
 use Transave\ScolaCbt\Http\Controllers\QuestionOptionController;
 use Transave\ScolaCbt\Http\Controllers\ResourceController;
 use Transave\ScolaCbt\Http\Controllers\ResultController;
+use Transave\ScolaCbt\Http\Controllers\SettingsController;
 use Transave\ScolaCbt\Http\Controllers\StudentController;
 use Transave\ScolaCbt\Http\Controllers\StudentExamController;
 use Transave\ScolaCbt\Http\Controllers\UserController;
@@ -106,6 +107,10 @@ Route::as('cbt.')->group(function () {
         });
     });
 
+    //settings
+    Route::prefix('settings')->as('settings.')->group(function (){
+        Route::get('difficulty-levels', [ SettingsController::class, 'difficultyLevel' ])->name('difficulty.level');
+    });
 
     //Results Routes
     Route::prefix('results')->as('results.')->group(function (){

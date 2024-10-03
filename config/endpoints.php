@@ -188,6 +188,29 @@ return [
             ],
             'relationships' => ['exam'],
         ],
+        'question-banks' => [
+            'table' => 'cbt_question_banks',
+            'model' => \Transave\ScolaCbt\Http\Models\Department::class,
+            'rules' => [
+                'store' => [
+                    'name' => 'required|string|unique:cbt_question_banks,name',
+                    'description' => 'sometimes|required|string|max:760',
+                    'level' => 'sometimes|required|string|in:100,200,300,400,500,600',
+                    'session_id' => 'sometimes|required|exists:cb_sessions,id',
+                ],
+                'update' => [
+                    'name' => 'sometimes|required|string',
+                    'description' => 'sometimes|required|string|max:760',
+                    'level' => 'sometimes|required|string|in:100,200,300,400,500,600',
+                    'session_id' => 'sometimes|required|exists:cb_sessions,id',
+                ]
+            ],
+            'order' => [
+                'column' => 'created_at',
+                'pattern' => 'DESC',
+            ],
+            'relationships' => ['faculty'],
+        ],
     ],
 
     "prefix" => "general",

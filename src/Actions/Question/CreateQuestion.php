@@ -79,6 +79,7 @@ class CreateQuestion
             'question_type' => 'required|string|max:50',
             'score_obtainable' => 'sometimes|required|integer',
             'question' => 'required|string',
+            'difficulty_level' => 'required|string|in:difficult,very_difficult,moderate,easy,very_easy',
             'file' => 'sometimes|required|file|max:40000|mimes:jpeg,png,jpg,gif,mp4,webm,ogg,mp3,wav',
             'answers' => 'sometimes|required|string',
             'options' => 'sometimes|required|array',

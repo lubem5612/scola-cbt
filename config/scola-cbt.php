@@ -60,8 +60,8 @@ return [
         'very_difficult' => 'very difficult',
         'difficult' => 'difficult',
         'moderate' => 'moderate',
-        'simple' => 'simple',
-        'very_simple' => 'very simple'
+        'easy' => 'easy',
+        'very_easy' => 'very easy'
     ],
 
 ];
