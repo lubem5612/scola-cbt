@@ -21,6 +21,10 @@ class SearchQuestion
         if (isset($department)) {
             $this->queryBuilder->where('department_id', $department);
         }
+        $questionBank = request()->query('question_bank_id');
+        if (isset($questionBank)) {
+            $this->queryBuilder->where('question_bank_id', $questionBank);
+        }
         $exam = request()->query('exam_id');
         if (isset($exam)) {
             $this->queryBuilder

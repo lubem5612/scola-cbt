@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Actions\Resource;
 
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 
 class SearchResource
@@ -112,6 +113,19 @@ class SearchResource
                         $query->Where('question_type', 'like', "%$search%")
                             ->orWhere('score_obtainable', 'like', "%$search%");
                     });
+                break;
+            }
+            case "question-banks": {
+                $search = $this->searchParam;
+                $session = request()->query('session_id');
+                if (isset($session)) {
+                    $this->queryBuilder->where('session_id', $session);
+                }
+                $this->queryBuilder->where(function(Builder $query) use ($search){
+                    $query->where('name', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%")
+                        ->orWhere('level', 'like', "%$search%");
+                });
                 break;
             }
             case "exam-settings": {

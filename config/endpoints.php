@@ -190,7 +190,7 @@ return [
         ],
         'question-banks' => [
             'table' => 'cbt_question_banks',
-            'model' => \Transave\ScolaCbt\Http\Models\Department::class,
+            'model' => \Transave\ScolaCbt\Http\Models\QuestionBank::class,
             'rules' => [
                 'store' => [
                     'name' => 'required|string|unique:cbt_question_banks,name',
@@ -209,7 +209,7 @@ return [
                 'column' => 'created_at',
                 'pattern' => 'DESC',
             ],
-            'relationships' => ['faculty'],
+            'relationships' => ['session'],
         ],
     ],
 
