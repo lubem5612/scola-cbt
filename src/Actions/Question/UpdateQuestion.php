@@ -84,6 +84,7 @@ class UpdateQuestion
             'question_id' => 'required|exists:cbt_questions,id',
             'department_id' => 'sometimes|required|exists:cbt_departments,id',
             'course_id' => 'sometimes|required|exists:cbt_courses,id',
+            'question_bank_id' => 'sometimes|required|exists:cbt_question_banks,id',
             'level' => 'sometimes|required|in:100,200,300,400,500,600',
             'question_type' => 'sometimes|required|string|max:50',
             'score_obtainable' => 'sometimes|required|integer',
