@@ -28,6 +28,7 @@ return new class extends Migration
         
         Schema::table('cbt_questions', function (Blueprint $table) {
             $table->integer('difficulty_level')->after('question')->nullable();
+            $table->foreignUuid('question_bank_id')->after('course_id')->nullable()->constrained('cbt_question_banks');
         });
     }
     
@@ -40,8 +41,10 @@ return new class extends Migration
     {
         Schema::dropIfExists('cbt_question_banks');
         
-        Schema::table('cbt_exam_settings', function (Blueprint $table) {
-            $table->dropColumn('show_student_result');
+        Schema::table('cbt_questions', function (Blueprint $table) {
+            $table->dropColumn('difficulty_level');
+            $table->dropForeign(['question_bank_id']);
+            $table->dropColumn('question_bank_id');
         });
     }
 };
