@@ -27,7 +27,7 @@ return new class extends Migration
         });
         
         Schema::table('cbt_questions', function (Blueprint $table) {
-            $table->integer('difficulty_level')->after('question')->nullable();
+            $table->string('difficulty_level', 100)->after('question')->nullable();
             $table->foreignUuid('question_bank_id')->after('course_id')->nullable()->constrained('cbt_question_banks');
         });
     }
