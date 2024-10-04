@@ -196,13 +196,13 @@ return [
                     'name' => 'required|string|unique:cbt_question_banks,name',
                     'description' => 'sometimes|required|string|max:760',
                     'level' => 'sometimes|required|string|in:100,200,300,400,500,600',
-                    'session_id' => 'sometimes|required|exists:cb_sessions,id',
+                    'session_id' => 'sometimes|required|exists:cbt_sessions,id',
                 ],
                 'update' => [
                     'name' => 'sometimes|required|string',
                     'description' => 'sometimes|required|string|max:760',
                     'level' => 'sometimes|required|string|in:100,200,300,400,500,600',
-                    'session_id' => 'sometimes|required|exists:cb_sessions,id',
+                    'session_id' => 'sometimes|required|exists:cbt_sessions,id',
                 ]
             ],
             'order' => [
