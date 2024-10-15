@@ -16,23 +16,29 @@ class FileUploadHelper
     public static $IS_UPLOADED = false;
     public static $MESSAGE = "";
     public static $ERROR = null;
+    private static $DRIVER = 'azure';
+    private static $DEFAULTCONFIG = [];
+    private static $BASE_STORAGE_PATH = '';
+    private static $STORAGE_ID = '';
 
     public static function UploadFile(UploadedFile $file, $folder)
     {
         try{
             $extension = $file->getClientOriginalExtension();
             $filename = uniqid().'.'.$extension;
+            self::setDefaultConfigurations();
 
-            $path = $file->storePubliclyAs($folder, $filename, 'azure');
+            $path = $file->storePubliclyAs($folder, $filename, self::$DRIVER);
             if ($path) {
-                if (env('AZURE_STORAGE_PREFIX')) {
-                    $data = config('scola-cbt.azure.storage_url').env('AZURE_STORAGE_PREFIX').'/'.$path;
-                }else {
-                    $data = config('scola-cbt.azure.storage_url').$path;
+                $uploadUrl = self::$BASE_STORAGE_PATH;
+                if (self::$DRIVER == 'azure' && env('AZURE_STORAGE_PREFIX')) {
+                    $uploadUrl = $uploadUrl.'/'.env('AZURE_STORAGE_PREFIX');
                 }
+                $uploadUrl = $uploadUrl.'/'.$path;
+                
                 self::$FILE_SIZE = $file->getSize();
                 self::$MIME_TYPE = $extension;
-                self::$UPLOADED_PATH = $data;
+                self::$UPLOADED_PATH = $uploadUrl;
                 self::$IS_UPLOADED = true;
                 self::$MESSAGE = "upload successful";
             }
@@ -67,12 +73,10 @@ class FileUploadHelper
     public static function DeleteFile($file_url)
     {
         try{
-            if(strpos($file_url, 'windows.net')) {
-                Storage::disk('azure')->delete(self::getFilePath($file_url));
-                self::$IS_UPLOADED = true;
-                return self::response();
-            }else
-                self::$MESSAGE = "file is not azure instance";
+            self::setDefaultConfigurations();
+    
+            Storage::disk(self::$DRIVER)->delete(self::getFilePath($file_url));
+            self::$IS_UPLOADED = true;
 
         }catch (\Exception $exception) {
             self::$IS_UPLOADED = false;
@@ -84,10 +88,19 @@ class FileUploadHelper
 
     private static function getFilePath($file_url)
     {
-        if (env('AZURE_STORAGE_PREFIX')) {
+        if (self::$DRIVER == 'azure' && env('AZURE_STORAGE_PREFIX')) {
             return Str::after($file_url, env('AZURE_STORAGE_PREFIX').'/');
         }
-        return Str::after($file_url, config('scola-cbt.azure.storage_url'));
+        return Str::after($file_url, self::$BASE_STORAGE_PATH);
+    }
+    
+    private static function setDefaultConfigurations ()
+    {
+        $driver = config('scola-cbt.file_storage.default_disk');
+        self::$DRIVER = $driver;
+        self::$DEFAULTCONFIG = config("scola-cbt.file_storage.disks.${$driver}");
+        self::$BASE_STORAGE_PATH = self::$DEFAULTCONFIG['storage_url'];
+        self::$STORAGE_ID = self::$DEFAULTCONFIG['id'];
     }
 
     private static function response()

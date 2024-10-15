@@ -50,9 +50,15 @@ return [
         'middleware' => 'api',
     ],
 
-    'azure' => [
-        'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER').'/',
-    ],
+//    'azure' => [
+//        'id' => '',
+//        'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER').'/',
+//    ],
+//
+//    's3' => [
+//        'storage_url' => 'https://'.env('AWS_BUCKET').'.s3.'.env('AWS_DEFAULT_REGION').'.amazonaws.com',
+//        'id' => 'amazonaws.com',
+//    ],
 
     'max_score_obtainable' => env('CBT_MAX_EXAM_SCORE', 100),
     
@@ -62,6 +68,30 @@ return [
         'moderate' => 'moderate',
         'easy' => 'easy',
         'very_easy' => 'very easy'
+    ],
+    
+    'file_storage' => [
+        
+        'default_disk' => env('FILESYSTEM_DISK', 'local'),
+    
+        'storage_prefix' => env('STORAGE_PREFIX', 'bookstore'),
+    
+        'disks' => [
+            'azure' => [
+                'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER'),
+                'id' => '.windows.net',
+            ],
+        
+            's3' => [
+                'storage_url' => 'https://'.env('AWS_BUCKET').'.s3.'.env('AWS_DEFAULT_REGION').'.amazonaws.com',
+                'id' => 'amazonaws.com',
+            ],
+        
+            'local' => [
+                'storage_url' => '',
+                'id' => '',
+            ],
+        ],
     ],
 
 ];

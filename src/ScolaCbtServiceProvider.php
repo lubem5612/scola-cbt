@@ -52,7 +52,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
 
         Config::set('auth.providers.users', [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model' => \config('scola-cbt.auth_model', User::class),
         ]);
 
         $router = $this->app->make(Router::class);
@@ -67,10 +67,22 @@ class ScolaCbtServiceProvider extends ServiceProvider
             'driver'            => 'azure',
             'local_address'     => env('AZURE_STORAGE_LOCAL_ADDRESS', 'local'),
             'name'              => env('AZURE_STORAGE_NAME', 'raadaastorage'),
-            'key'               => env('AZURE_STORAGE_KEY', "RP1BBdg2Zqu7Z43Hlgfo+dy3VfTmXTg5KMz6iJhHLltNd+cQPUzfkwBwMmZ6d2b6oUdUzwmwZWjkzQAKZlokoQ=="),
+            'key'               => env('AZURE_STORAGE_KEY', ""),
             'container'         => env('AZURE_STORAGE_CONTAINER', "raadaatesting"),
             'prefix'            => env('AZURE_STORAGE_PREFIX', "scola-cbt"),
             'url'               => env('AZURE_STORAGE_URL', null),
+        ]);
+        
+        Config::set('filesystems.disks.s3', [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
         ]);
 
     }
