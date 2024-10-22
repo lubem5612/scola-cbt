@@ -12,7 +12,10 @@ use Transave\ScolaCbt\Http\Models\Student;
 
 trait UserHelper
 {
-    
+    /**
+     * relationships imported from the package user model
+     * @return HasOne
+     */
     public function staff() : HasOne
     {
         return $this->hasOne(Staff::class)->with(['department', 'department.faculty']);
