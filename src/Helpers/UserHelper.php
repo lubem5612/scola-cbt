@@ -12,28 +12,6 @@ use Transave\ScolaCbt\Http\Models\Student;
 
 trait UserHelper
 {
-    use UUIDHelper;
-    protected $table = "fc_users";
-    
-    protected $guarded = [
-        "id"
-    ];
-    
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'is_verified',
-        'email_verified_at'
-    ];
-    
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-    
-    protected $appends = [
-        'details',
-        'phone'
-    ];
     
     public function staff() : HasOne
     {
