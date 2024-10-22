@@ -1,7 +1,14 @@
 <?php
 
 return [
-
+    /*
+     |
+     | Set the model for authentication
+     | you should set this to your application's user model i.e App\Models\User::class
+     | if this is not set, the package user model will be used
+     | the user model from your application should include the UserHelper trait from the package
+     |
+     */
     'auth_model' => \Transave\ScolaCbt\Http\Models\User::class,
 
     'app_env' => env('APP_ENV', 'development'),
