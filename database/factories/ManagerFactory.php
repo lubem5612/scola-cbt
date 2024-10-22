@@ -25,7 +25,7 @@ class ManagerFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'user_id' => User::factory(),
             'phone' => $this->faker->phoneNumber,
             'photo' => UploadedFile::fake()->image('photo.jpg')
         ];

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Student;
+use Transave\ScolaCbt\Http\Models\User;
 
 class Login
 {
@@ -45,9 +46,12 @@ class Login
 
     private function customLogin()
     {
-        $isAuth = auth()->guard('api')->attempt([$this->username => $this->data['email'], 'password' => $this->data['password']]);
-        if ($isAuth) {
-            $token = auth()->guard('api')->user()->createToken(uniqid())->plainTextToken;
+        $user = User::query()->where('email', $this->data['email'])->first();
+        if (empty($user)) return $this->sendError('email does not exists', [], 401);
+        
+        if (Hash::check($this->data['password'], $user->password)) {
+            Auth::login($user, true);
+            $token = Auth::user()->createToken(uniqid())->plainTextToken;
             return $this->sendSuccess($token, 'login successful');
         }
         return $this->sendError('authentication failed', [], 401);
@@ -55,7 +59,7 @@ class Login
     
     private function tokenLogin()
     {
-        $student = Student::query()->where('registration_number', $this->username())->first();
+        $student = Student::query()->where('registration_number', $this->data['email'])->first();
         if (empty($student))
             return $this->sendError('token not found for student', [], 401);
         $user = $student->user;

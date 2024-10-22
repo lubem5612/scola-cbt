@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Http\Notifications\ResetPasswordNotification;
 
 class ForgotPassword
@@ -38,7 +39,7 @@ class ForgotPassword
 
     private function setUser()
     {
-        $this->user = config('scola-cbt.auth_model')::query()->where("email", $this->request["email"])->first();
+        $this->user = User::query()->where("email", $this->request["email"])->first();
         return $this;
     }
 

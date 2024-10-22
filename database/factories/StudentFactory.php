@@ -28,7 +28,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'user_id' => User::factory(),
             'department_id' => Department::factory(),
             'phone' => $this->faker->phoneNumber,
             'registration_number' => $this->faker->randomDigit(),

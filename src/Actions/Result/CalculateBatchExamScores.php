@@ -6,6 +6,7 @@ namespace Transave\ScolaCbt\Actions\Result;
 
 use Illuminate\Support\Facades\Log;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class CalculateBatchExamScores
 {
@@ -37,7 +38,7 @@ class CalculateBatchExamScores
 
     private function getStudentUser()
     {
-        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        $this->user = User::query()->find($this->request['user_id']);
         $this->student = $this->user->student;
         return $this;
     }

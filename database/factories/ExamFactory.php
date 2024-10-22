@@ -17,7 +17,7 @@ class ExamFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'user_id' => User::factory(),
             'course_id' => Course::factory(),
             'faculty_id' => Faculty::factory(),
             'department_id' => Department::factory(),

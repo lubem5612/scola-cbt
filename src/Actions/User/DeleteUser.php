@@ -4,6 +4,7 @@ namespace Transave\ScolaCbt\Actions\User;
 
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class DeleteUser
 {
@@ -30,7 +31,7 @@ class DeleteUser
 
     private function getUser()
     {
-        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        $this->user = User::query()->find($this->request['user_id']);
         return $this;
     }
 

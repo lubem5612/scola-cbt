@@ -7,6 +7,7 @@ namespace Transave\ScolaCbt\Actions\User;
 use Illuminate\Support\Arr;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class UpdateUser
 {
@@ -47,7 +48,7 @@ class UpdateUser
 
     private function getUser()
     {
-        $this->user = config('scola-cbt.auth_model')::query()->find($this->validatedData['user_id']);
+        $this->user = User::query()->find($this->validatedData['user_id']);
         return $this;
     }
 

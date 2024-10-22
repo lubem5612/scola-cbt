@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Transave\ScolaCbt\Http\Models\Answer;
 use Transave\ScolaCbt\Http\Models\Option;
 use Transave\ScolaCbt\Http\Models\Question;
+use Transave\ScolaCbt\Http\Models\User;
 
 class AnswerFactory extends Factory
 {
@@ -22,7 +23,7 @@ class AnswerFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'user_id' => User::factory(),
             'question_id' => Question::factory(),
             'option_id' => Option::factory(),
             'content' => $this->faker->sentence(10),

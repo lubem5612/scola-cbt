@@ -14,6 +14,7 @@ use Transave\ScolaCbt\Http\Models\Examiner;
 use Transave\ScolaCbt\Http\Models\Manager;
 use Transave\ScolaCbt\Http\Models\Staff;
 use Transave\ScolaCbt\Http\Models\Student;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Http\Notifications\WelcomeNotification;
 
 class Register
@@ -53,7 +54,7 @@ class Register
         $data['role'] = $this->setUserRole();
         $data['telephone'] = $this->validatedData['phone'];
 
-        $this->user = config('scola-cbt.auth_model')::query()->create($data);
+        $this->user = User::query()->create($data);
         return $this;
     }
 

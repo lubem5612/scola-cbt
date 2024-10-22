@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
 use Transave\ScolaCbt\Http\Models\Department;
 use Transave\ScolaCbt\Http\Models\Examiner;
+use Transave\ScolaCbt\Http\Models\User;
 
 class ExaminerFactory extends Factory
 {
@@ -24,7 +25,7 @@ class ExaminerFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => config('scola-cbt.auth_model')::factory(),
+            'user_id' => User::factory(),
             'department_id' => Department::factory(),
             'phone' => $this->faker->phoneNumber,
             'photo' => UploadedFile::fake()->image('profile.jpg')

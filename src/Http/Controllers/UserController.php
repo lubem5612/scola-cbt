@@ -10,6 +10,7 @@ use Transave\ScolaCbt\Actions\Auth\ChangePassword;
 use Transave\ScolaCbt\Actions\User\DeleteUser;
 use Transave\ScolaCbt\Actions\User\SearchUsers;
 use Transave\ScolaCbt\Actions\User\UpdateUser;
+use Transave\ScolaCbt\Http\Models\User;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
      */
     public function users()
     {
-        return (new SearchUsers(config('scola-cbt.auth_model'), []))->execute();
+        return (new SearchUsers(User::class, []))->execute();
     }
 
     /**
@@ -37,7 +38,7 @@ class UserController extends Controller
      */
     public function user($id)
     {
-        return (new SearchUsers(config('scola-cbt.auth_model'), [], $id))->execute();
+        return (new SearchUsers(User::class, [], $id))->execute();
     }
 
     /**

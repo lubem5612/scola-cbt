@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
 use Transave\ScolaCbt\Http\Models\Student;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Imports\StudentImport;
 
 class BatchStudentUpload
@@ -52,7 +53,7 @@ class BatchStudentUpload
         
         $email = $this->setUserEmail($record);
         
-        return config('scola-cbt.auth_model')::query()->create([
+        return User::query()->create([
             'email' => $email,
             'first_name' => $record['first_name'],
             'last_name' => $record['last_name'],

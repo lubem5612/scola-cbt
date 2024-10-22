@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 
 class ResetPassword
 {
@@ -41,7 +42,7 @@ class ResetPassword
     private function setUser() 
     {
         $this->passwordReset = DB::table('password_resets')->where("token", $this->request['token'])->first();
-        $this->user = config('scola-cbt.auth_model')::query()->where("email", $this->passwordReset->email)->first();
+        $this->user = User::query()->where("email", $this->passwordReset->email)->first();
 
         if (empty($this->user)) {
             return $this->sendError("No user with the token supplied", [], 404);

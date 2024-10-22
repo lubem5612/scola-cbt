@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
+use Transave\ScolaCbt\Http\Models\User;
 use Transave\ScolaCbt\Http\Notifications\WelcomeNotification;
 
 class ResendEmailVerification
@@ -43,7 +44,7 @@ class ResendEmailVerification
 
     private function setUser()
     {
-        $this->user = config('scola-cbt.auth_model')::query()->find($this->request['user_id']);
+        $this->user = User::query()->find($this->request['user_id']);
         return $this;
     }
 
