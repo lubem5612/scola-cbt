@@ -5,6 +5,7 @@ namespace Transave\ScolaCbt\Actions\Answer;
 
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Transave\ScolaCbt\Helpers\FileUploadHelper;
 use Transave\ScolaCbt\Helpers\ResponseHelper;
 use Transave\ScolaCbt\Helpers\ValidationHelper;
@@ -48,7 +49,7 @@ class CreateAnswer
     {
         if (!array_key_exists('user_id', $this->validatedData))
         {
-            $this->validatedData['user_id'] = auth()->id();
+            $this->validatedData['user_id'] = Auth::id();
         }
         return $this;
     }
