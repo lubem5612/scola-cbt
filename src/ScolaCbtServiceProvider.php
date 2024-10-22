@@ -15,7 +15,6 @@ use Transave\ScolaCbt\Http\Middlewares\AllowIfManager;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfStaff;
 use Transave\ScolaCbt\Http\Middlewares\AllowIfStudent;
 use Transave\ScolaCbt\Http\Middlewares\VerifiedAccount;
-use Transave\ScolaCbt\Http\Models\User;
 
 class ScolaCbtServiceProvider extends ServiceProvider
 {
@@ -52,7 +51,7 @@ class ScolaCbtServiceProvider extends ServiceProvider
 
         Config::set('auth.providers.users', [
             'driver' => 'eloquent',
-            'model' => \config('scola-cbt.auth_model', User::class),
+            'model' => \config('scola-cbt.auth_model',  App\Models\User::class),
         ]);
 
         $router = $this->app->make(Router::class);
