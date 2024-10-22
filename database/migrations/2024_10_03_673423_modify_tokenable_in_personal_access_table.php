@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::table('personal_access_tokens', function (Blueprint $table) {
             if (Schema::hasColumn('personal_access_tokens', 'tokenable_id')){
-                $table->uuid('tokenable_id')->change();
+                $table->string('tokenable_id', 36)->change();
             }
         });
     }
