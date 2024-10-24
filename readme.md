@@ -16,6 +16,27 @@ $ composer require transave/scola-cbt
 ```
 
 ## Usage
+Follow these steps to use the `transave/scola-cbt` package
+- publish the scola-cbt.php file to you config folder with this command ` php artisan vendor:publish --tag=cbt-config` to publish the scola-cbt configuration.
+- edit `auth_model`  to your application `User` model class like so 
+``` bash
+ 'auth_model' => \App\Models\User::class,
+```
+- in your User model, add the package user helper class like so
+```$xslt
+  use Transave\ScolaCbt\Helpers\UserHelper;
+
+  class User extends Authenticable 
+  {
+       use HasApiTokens, HasFactory, Notifiable;
+       use UserHelper;
+  }
+```
+- you may also publish the package assets like so for the frontend to have access to them
+```$xslt
+ $ php artisan vendor:publish --tag=cbt-assets
+```
+
 
 ## Change log
 

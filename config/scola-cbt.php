@@ -56,17 +56,7 @@ return [
         'prefix' => 'cbt',
         'middleware' => 'api',
     ],
-
-//    'azure' => [
-//        'id' => '',
-//        'storage_url' => 'https://'.env('AZURE_STORAGE_NAME').'.blob.core.windows.net/'.env('AZURE_STORAGE_CONTAINER').'/',
-//    ],
-//
-//    's3' => [
-//        'storage_url' => 'https://'.env('AWS_BUCKET').'.s3.'.env('AWS_DEFAULT_REGION').'.amazonaws.com',
-//        'id' => 'amazonaws.com',
-//    ],
-
+    
     'max_score_obtainable' => env('CBT_MAX_EXAM_SCORE', 100),
     
     'difficulty_level' => [
@@ -81,7 +71,7 @@ return [
         
         'default_disk' => env('FILESYSTEM_DISK', 'local'),
     
-        'storage_prefix' => env('STORAGE_PREFIX', 'bookstore'),
+        'storage_prefix' => env('STORAGE_PREFIX', 'cbt'),
     
         'disks' => [
             'azure' => [
