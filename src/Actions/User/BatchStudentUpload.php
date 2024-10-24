@@ -70,7 +70,7 @@ class BatchStudentUpload
         if (Arr::exists($this->validatedData, 'department_id') && $this->validatedData['department_id']) {
             $record['department_id'] = $this->validatedData['department_id'];
         }
-        if (!Arr::exists($this->validatedData, 'level')) {
+        if (!Arr::exists($this->validatedData, 'current_level')) {
             $record['current_level'] = '100';
         }
         return Student::query()->create($record);
@@ -115,7 +115,7 @@ class BatchStudentUpload
     {
         $this->validatedData = $this->validate($this->request, [
             "department_id" => "sometimes|required|exists:cbt_departments,id",
-            "level" => "required|string|in:100,200,300,400,500,600,700",
+            "current_level" => "required|string|in:100,200,300,400,500,600,700",
             "file" => "required|file|max:5000"
         ]);
         return $this;
