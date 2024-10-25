@@ -18,6 +18,7 @@ class BatchStudentUpload
 {
     use ResponseHelper, ValidationHelper;
     private $request, $validatedData, $records = [], $successful = [], $failed = [];
+    private $addedDetails = [];
 
     public function __construct(array $request)
     {
@@ -70,9 +71,9 @@ class BatchStudentUpload
         if (Arr::exists($this->validatedData, 'department_id') && $this->validatedData['department_id']) {
             $record['department_id'] = $this->validatedData['department_id'];
         }
-        if (!Arr::exists($this->validatedData, 'current_level')) {
-            $record['current_level'] = '100';
-        }
+//        if (!Arr::exists($this->validatedData, 'current_level')) {
+//            $record['current_level'] = '100';
+//        }
         return Student::query()->create($record);
     }
 
@@ -83,8 +84,8 @@ class BatchStudentUpload
             $user = $this->createUser($record);
             if (!empty($user)) {
                 $record['user_id'] = $user->id;
-                $this->createStudent($record);
-                array_push($this->successful, $record);
+                $student = $this->createStudent($record);
+                array_push($this->successful, $student->load('user'));
             }else {
                 array_push($this->failed, $record);
                 continue;
