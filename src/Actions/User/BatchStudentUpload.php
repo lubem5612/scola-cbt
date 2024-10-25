@@ -18,7 +18,6 @@ class BatchStudentUpload
 {
     use ResponseHelper, ValidationHelper;
     private $request, $validatedData, $records = [], $successful = [], $failed = [];
-    private $addedDetails = [];
 
     public function __construct(array $request)
     {
@@ -64,19 +63,7 @@ class BatchStudentUpload
             'role' => 'student',
         ]);
     }
-
-    private function createStudent($record)
-    {
-        $record['registration_number'] = $this->setRegistrationNumber($record);
-        if (Arr::exists($this->validatedData, 'department_id') && $this->validatedData['department_id']) {
-            $record['department_id'] = $this->validatedData['department_id'];
-        }
-//        if (!Arr::exists($this->validatedData, 'current_level')) {
-//            $record['current_level'] = '100';
-//        }
-        return Student::query()->create($record);
-    }
-
+    
     private function batchCreation()
     {
         foreach ($this->records as $record) {
@@ -84,7 +71,14 @@ class BatchStudentUpload
             $user = $this->createUser($record);
             if (!empty($user)) {
                 $record['user_id'] = $user->id;
-                $student = $this->createStudent($record);
+                $record['current_level'] = $this->validatedData['current_level'];
+                
+                $record['registration_number'] = $this->setRegistrationNumber($record);
+                if (Arr::exists($this->validatedData, 'department_id') && $this->validatedData['department_id']) {
+                    $record['department_id'] = $this->validatedData['department_id'];
+                }
+                
+                $student = Student::query()->create($record);
                 array_push($this->successful, $student->load('user'));
             }else {
                 array_push($this->failed, $record);
