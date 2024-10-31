@@ -18,12 +18,12 @@ class CreateAnswer
 {
     use ResponseHelper, ValidationHelper;
     private $request, $validatedData;
-
+    
     public function __construct(array $request)
     {
         $this->request = $request;
     }
-
+    
     public function execute()
     {
         try {
@@ -38,13 +38,13 @@ class CreateAnswer
             return $this->sendServerError($e);
         }
     }
-
+    
     private function createAnswer()
     {
         $answer = Answer::query()->create($this->validatedData);
         return $this->sendSuccess($answer->load('user', 'question', 'option'), 'answer created successfully');
     }
-
+    
     private function setUser()
     {
         if (!array_key_exists('user_id', $this->validatedData))
@@ -53,7 +53,7 @@ class CreateAnswer
         }
         return $this;
     }
-
+    
     private function uploadFile()
     {
         if (request()->hasFile('file'))
@@ -65,20 +65,25 @@ class CreateAnswer
         }
         return $this;
     }
-
+    
     private function setAttempts()
     {
         $student = Student::query()->where('user_id', $this->validatedData['user_id'])->first();
-        $question = Question::query()->find($this->validatedData['question_id']);
-        $studentExam = StudentExam::query()->where([
-            'student_id' => $student->id,
-            'exam_id' => $question->exam_id
-        ])->latest()->first();
-        if (empty($studentExam)) $this->validatedData['attempts'] = 1;
-        else $this->validatedData['attempts'] = $studentExam->attempts;
+        if (!empty($student)) {
+            $question = Question::query()->find($this->validatedData['question_id']);
+            $studentExam = StudentExam::query()->where([
+                'student_id' => $student->id,
+                'exam_id' => $question->exam_id
+            ])->latest()->first();
+            if (empty($studentExam)) $this->validatedData['attempts'] = 1;
+            else $this->validatedData['attempts'] = $studentExam->attempts;
+        }else {
+            $this->validatedData['attempts'] = 1;
+        }
+        
         return $this;
     }
-
+    
     private function validateRequest()
     {
         $this->validate($this->request, [
