@@ -17,17 +17,16 @@ class FileUploadHelper
     public static $MESSAGE = "";
     public static $ERROR = null;
     private static $DRIVER = 'azure';
-    private static $DEFAULTCONFIG = [];
     private static $BASE_STORAGE_PATH = '';
-    private static $STORAGE_ID = '';
-
+    private static $STORAGE_PREFIX = 'cbt';
+    
     public static function UploadFile(UploadedFile $file, $folder)
     {
         try{
             $extension = $file->getClientOriginalExtension();
             $filename = uniqid().'.'.$extension;
             self::setDefaultConfigurations();
-
+            
             $path = $file->storePubliclyAs($folder, $filename, self::$DRIVER);
             if ($path) {
                 $uploadUrl = self::$BASE_STORAGE_PATH;
@@ -48,7 +47,7 @@ class FileUploadHelper
         }
         return self::response();
     }
-
+    
     public static function UploadOrReplaceFile(UploadedFile $file,  $folder, $model,  $column)
     {
         try{
@@ -59,25 +58,25 @@ class FileUploadHelper
                     return self::response();
                 }
             }
-
+            
             self::UploadFile($file, $folder);
             self::$MESSAGE = $model->$column? "file replaced successfully" : "file upload successful";
-
+            
         }catch (\Exception $exception) {
             self::$MESSAGE = $exception->getMessage();
             self::$ERROR = $exception->getTrace();
         }
         return self::response();
     }
-
+    
     public static function DeleteFile($file_url)
     {
         try{
             self::setDefaultConfigurations();
-    
+            
             Storage::disk(self::$DRIVER)->delete(self::getFilePath($file_url));
             self::$IS_UPLOADED = true;
-
+            
         }catch (\Exception $exception) {
             self::$IS_UPLOADED = false;
             self::$MESSAGE = $exception->getMessage();
@@ -85,7 +84,7 @@ class FileUploadHelper
         }
         return self::response();
     }
-
+    
     private static function getFilePath($file_url)
     {
         if (self::$DRIVER == 'azure' && env('AZURE_STORAGE_PREFIX')) {
@@ -98,11 +97,10 @@ class FileUploadHelper
     {
         $driver = config('scola-cbt.file_storage.default_disk');
         self::$DRIVER = $driver;
-        self::$DEFAULTCONFIG = config("scola-cbt.file_storage.disks.${$driver}");
-        self::$BASE_STORAGE_PATH = self::$DEFAULTCONFIG['storage_url'];
-        self::$STORAGE_ID = self::$DEFAULTCONFIG['id'];
+        self::$BASE_STORAGE_PATH = config("scola-cbt.file_storage.disks.{$driver}.storage_url");
+        self::$STORAGE_PREFIX = config("scola-cbt.file_storage.storage_prefix");
     }
-
+    
     private static function response()
     {
         return [
@@ -114,5 +112,4 @@ class FileUploadHelper
             "errors"        => self::$ERROR,
         ];
     }
-
 }
